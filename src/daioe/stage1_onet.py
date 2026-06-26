@@ -32,7 +32,7 @@ import re
 import numpy as np
 import pandas as pd
 
-from . import io, validate
+from . import io, stata_ops as so, validate
 
 # ----------------------------------------------------------------------------- helpers
 
@@ -142,26 +142,45 @@ def _build_abilities_weighted(cfg) -> pd.DataFrame:
     ab = ab.merge(meta[keep_meta], on="ElementName", how="inner", validate="m:1")
 
     # scaled scores: importance is 0-5, level is 0-7; divide by the natural max.
-    ab["scale_importance"] = np.where(
-        ab["ScaleName"] == "Importance", ab["DataValue"] / 5.0, np.nan
+    # Stata stores every gen/egen here as `float` (single). The do-file evaluates
+    # DataValue/5 and DataValue/7 in double, then stores the result float32; we
+    # mirror that by computing in float64 and so.f32() the stored column. Each
+    # downstream product/sum then consumes the float32-rounded operand, exactly as
+    # Stata's single-precision chain does (a pure-float64 chain drifts ~1e-7/step).
+    ab["scale_importance"] = so.f32(
+        np.where(ab["ScaleName"] == "Importance", ab["DataValue"] / 5.0, np.nan)
     )
-    ab["scale_level"] = np.where(
-        ab["ScaleName"] == "Level", ab["DataValue"] / 7.0, np.nan
+    ab["scale_level"] = so.f32(
+        np.where(ab["ScaleName"] == "Level", ab["DataValue"] / 7.0, np.nan)
     )
 
     grp = ["occ_code_onet", "ElementID"]
     # egen ..max.. by(occ,ElementID): collapse the Importance row and Level row
-    # (which are separate rows) onto one value per ability. NaN-safe max.
-    ab["level_scaled"] = ab.groupby(grp)["scale_level"].transform("max")
-    ab["importance_scaled"] = ab.groupby(grp)["scale_importance"].transform("max")
+    # (which are separate rows) onto one value per ability. NaN-safe max. egen max
+    # over a float32 column returns a float32; so.f32 the broadcast result.
+    ab["level_scaled"] = so.f32(ab.groupby(grp)["scale_level"].transform("max"))
+    ab["importance_scaled"] = so.f32(ab.groupby(grp)["scale_importance"].transform("max"))
 
     # "_new" per-occupation weight versions (carried for parity; NOT used in product).
-    ab["importance_sum"] = ab.groupby("occ_code_onet")["scale_importance"].transform("sum")
-    ab["importance_scaled_temp"] = ab["scale_importance"] / ab["importance_sum"]
-    ab["importance_scaled_new"] = ab.groupby(grp)["importance_scaled_temp"].transform("max")
-    ab["level_sum"] = ab.groupby("occ_code_onet")["scale_level"].transform("sum")
-    ab["level_scaled_temp"] = ab["scale_level"] / ab["level_sum"]
-    ab["level_scaled_new"] = ab.groupby(grp)["level_scaled_temp"].transform("max")
+    # egen sum() accumulates the float32 scores in a double accumulator then stores
+    # float32; sum a float64 VIEW of the float32 column (not float32-native, which
+    # would lose a ULP) and so.f32 the total. Each ratio is gen in double, stored f32.
+    ab["importance_sum"] = so.f32(
+        ab.assign(_si=ab["scale_importance"].astype("float64"))
+        .groupby("occ_code_onet")["_si"].transform("sum")
+    )
+    ab["importance_scaled_temp"] = so.f32(
+        ab["scale_importance"].astype("float64") / ab["importance_sum"].astype("float64")
+    )
+    ab["importance_scaled_new"] = so.f32(ab.groupby(grp)["importance_scaled_temp"].transform("max"))
+    ab["level_sum"] = so.f32(
+        ab.assign(_sl=ab["scale_level"].astype("float64"))
+        .groupby("occ_code_onet")["_sl"].transform("sum")
+    )
+    ab["level_scaled_temp"] = so.f32(
+        ab["scale_level"].astype("float64") / ab["level_sum"].astype("float64")
+    )
+    ab["level_scaled_new"] = so.f32(ab.groupby(grp)["level_scaled_temp"].transform("max"))
 
     # keep needed vars + drop duplicates (the Importance/Level rows collapse to one).
     keep = [
@@ -182,10 +201,25 @@ def _build_abilities_weighted(cfg) -> pd.DataFrame:
     ab = ab[keep].drop_duplicates().reset_index(drop=True)
 
     # element_impact_old = level_scaled*importance_scaled (FRS18 weight),
-    # then renormalise so the products sum to 1 within each occupation.
-    ab["element_impact_old"] = ab["level_scaled"] * ab["importance_scaled"]
-    ab["element_impact_old_sum"] = ab.groupby("occ_code_onet")["element_impact_old"].transform("sum")
-    ab["element_impact"] = ab["element_impact_old"] / ab["element_impact_old_sum"]
+    # then renormalise so the products sum to 1 within each occupation. The product
+    # multiplies two float32-stored columns; Stata evaluates it in double and stores
+    # the result float32, so promote both operands to a float64 view, multiply, then
+    # so.f32. egen sum() again accumulates in double over the float32 column (sum a
+    # float64 view, then so.f32). Doing this upstream makes element_impact bit-exact
+    # so Stage 4 need not re-derive it (its r_oj feeds the squared, x10, cumulated
+    # index where a 1-ULP error in any element amplifies to ~1e-5 over 12 years).
+    ei_old = so.f32(
+        ab["level_scaled"].astype("float64") * ab["importance_scaled"].astype("float64")
+    )
+    ab["element_impact_old"] = ei_old
+    ab["element_impact_old_sum"] = so.f32(
+        ab.assign(_eio=ei_old.astype("float64"))
+        .groupby("occ_code_onet")["_eio"].transform("sum")
+    )
+    ab["element_impact"] = so.f32(
+        ab["element_impact_old"].astype("float64")
+        / ab["element_impact_old_sum"].astype("float64")
+    )
     ab = ab.drop(columns=["element_impact_old", "element_impact_old_sum"])
 
     # column order to match the .dta (Title, ElementName placement etc.)
@@ -216,12 +250,16 @@ def _build_skills_weighted(cfg) -> pd.DataFrame:
     sk["skill"] = _clean_name(sk["ElementName"])
 
     # split level (/7) and importance (/5) out of the single DataValue column.
-    sk["level_temp"] = np.where(sk["ScaleName"] == "Level", sk["DataValue"] / 7.0, np.nan)
-    sk["importance_temp"] = np.where(
-        sk["ScaleName"] == "Importance", sk["DataValue"] / 5.0, np.nan
+    # `gen level_temp`/`importance_temp` store float32; compute in double, so.f32.
+    sk["level_temp"] = so.f32(
+        np.where(sk["ScaleName"] == "Level", sk["DataValue"] / 7.0, np.nan)
+    )
+    sk["importance_temp"] = so.f32(
+        np.where(sk["ScaleName"] == "Importance", sk["DataValue"] / 5.0, np.nan)
     )
 
     # collapse (first) occ_title ElementName ElementID (max) level importance, by(occ,skill)
+    # collapse (max) of a float32 source keeps float32; so.f32 the collapsed columns.
     g = sk.groupby(["occ_code_onet", "skill"], sort=False)
     coll = g.agg(
         occ_title_onet=("occ_title_onet", "first"),
@@ -230,11 +268,24 @@ def _build_skills_weighted(cfg) -> pd.DataFrame:
         level=("level_temp", "max"),
         importance=("importance_temp", "max"),
     ).reset_index()
+    coll["level"] = so.f32(coll["level"])
+    coll["importance"] = so.f32(coll["importance"])
 
-    # impact = level*importance, renormalised to sum 1 per occupation.
-    coll["skill_impact_unscaled"] = coll["level"] * coll["importance"]
-    coll["skill_impact_sum"] = coll.groupby("occ_code_onet")["skill_impact_unscaled"].transform("sum")
-    coll["skill_impact"] = coll["skill_impact_unscaled"] / coll["skill_impact_sum"]
+    # impact = level*importance, renormalised to sum 1 per occupation. Product of two
+    # float32 columns: evaluate in a float64 view then so.f32. egen sum accumulates in
+    # double over the float32 column (sum a float64 view), then so.f32; ratio likewise.
+    skill_impact_unscaled = so.f32(
+        coll["level"].astype("float64") * coll["importance"].astype("float64")
+    )
+    coll["skill_impact_unscaled"] = skill_impact_unscaled
+    coll["skill_impact_sum"] = so.f32(
+        coll.assign(_siu=skill_impact_unscaled.astype("float64"))
+        .groupby("occ_code_onet")["_siu"].transform("sum")
+    )
+    coll["skill_impact"] = so.f32(
+        coll["skill_impact_unscaled"].astype("float64")
+        / coll["skill_impact_sum"].astype("float64")
+    )
     coll = coll.drop(columns=["skill_impact_unscaled", "skill_impact_sum"])
 
     # assign the six O*NET skill categories.
@@ -274,32 +325,54 @@ def _build_social_and_abilities(skills_weighted, abilities_weighted) -> pd.DataF
     """Reproduce onet_social_skills_physical_abilities.dta (without conseq_error,
     which the Stata do-file leaves out of this particular file)."""
     # --- social skills: sum of level*importance over the six social skills ---
+    # `gen social_skills_temp = level*importance` multiplies two float32-stored
+    # columns; Stata evaluates the product in double and stores float32. We promote
+    # to a float64 view, multiply, then so.f32. The subsequent `collapse (sum)`
+    # accumulates these float32 values in a double accumulator and stores the result
+    # as `double` (onet_social_skills_physical_abilities.dta has social_skills double),
+    # so we sum a float64 view and KEEP it double (no f32 on the sum).
     sk = skills_weighted.copy()
-    sk["social_skills_temp"] = np.where(
-        sk["skill_type"] == "Social skills", sk["level"] * sk["importance"], np.nan
+    sk["social_skills_temp"] = so.f32(
+        np.where(
+            sk["skill_type"] == "Social skills",
+            sk["level"].astype("float64") * sk["importance"].astype("float64"),
+            np.nan,
+        )
     )
     social = (
-        sk.groupby("occ_code_onet", sort=False)["social_skills_temp"]
-        .sum(min_count=0)  # collapse (sum): missing treated as 0
+        sk.assign(_t=sk["social_skills_temp"].astype("float64"))
+        .groupby("occ_code_onet", sort=False)["_t"]
+        .sum(min_count=0)  # collapse (sum): double accumulator, missing treated as 0
         .reset_index(name="social_skills")
     )
 
     # --- the four/five ability-type sums (level_scaled*importance_scaled) ---
+    # Each `gen *_temp = level_scaled*importance_scaled` is float32 (double product of
+    # float32 operands, stored float32). The `collapse (sum)` again stores `double`.
     ab = abilities_weighted.copy()
-    prod = ab["level_scaled"] * ab["importance_scaled"]
+    prod = so.f32(
+        ab["level_scaled"].astype("float64") * ab["importance_scaled"].astype("float64")
+    )
     is_phys = ab["ability_type"] == "Physical Abilities"
     is_psy = ab["ability_type"] == "Psychomotor Abilities"
-    ab["phys_psychom_abilities_temp"] = np.where(is_phys | is_psy, prod, np.nan)
-    ab["physical_abilities_temp"] = np.where(is_phys, prod, np.nan)
-    ab["psychomotor_abilities_temp"] = np.where(is_psy, prod, np.nan)
-    ab["cognitive_abilities_temp"] = np.where(
-        ab["ability_type"] == "Cognitive Abilities", prod, np.nan
+    ab["phys_psychom_abilities_temp"] = so.f32(np.where(is_phys | is_psy, prod.astype("float64"), np.nan))
+    ab["physical_abilities_temp"] = so.f32(np.where(is_phys, prod.astype("float64"), np.nan))
+    ab["psychomotor_abilities_temp"] = so.f32(np.where(is_psy, prod.astype("float64"), np.nan))
+    ab["cognitive_abilities_temp"] = so.f32(
+        np.where(ab["ability_type"] == "Cognitive Abilities", prod.astype("float64"), np.nan)
     )
-    ab["sensory_abilities_temp"] = np.where(
-        ab["ability_type"] == "Sensory Abilities", prod, np.nan
+    ab["sensory_abilities_temp"] = so.f32(
+        np.where(ab["ability_type"] == "Sensory Abilities", prod.astype("float64"), np.nan)
     )
 
-    g = ab.groupby("occ_code_onet", sort=False)
+    # collapse (sum): accumulate a float64 view of each float32 _temp; result is double.
+    g = ab.assign(
+        **{c: ab[c].astype("float64") for c in [
+            "phys_psychom_abilities_temp", "physical_abilities_temp",
+            "psychomotor_abilities_temp", "cognitive_abilities_temp",
+            "sensory_abilities_temp",
+        ]}
+    ).groupby("occ_code_onet", sort=False)
     abil = g.agg(
         phys_psychom_abilities=("phys_psychom_abilities_temp", lambda s: s.sum(min_count=0)),
         physical_abilities=("physical_abilities_temp", lambda s: s.sum(min_count=0)),
@@ -312,12 +385,22 @@ def _build_social_and_abilities(skills_weighted, abilities_weighted) -> pd.DataF
     # merge 1:1 occ_code_onet (abilities is the master; social is the using file)
     out = abil.merge(social, on="occ_code_onet", how="left", validate="1:1")
 
-    # rescale each variable so the leading occupation scores 1.
+    # Rescale each variable so the leading occupation scores 1. This is the step that
+    # leaves the reference max at 0.99999998, NOT 1.0: in Stata the collapsed sum is
+    # stored `double`, but `egen max_value = max(var)` reads the variable's stored
+    # value and `max_value` is itself a `float` (single). So the denominator is the
+    # float32-ROUNDED maximum of the double sums, while the numerator stays the full
+    # double sum; `replace var = var/max_value` then divides double by float32-max in
+    # double and stores double. Mirror this exactly: numerator = double sum, denominator
+    # = so.f32(max of the double sum), division in float64. A pure-float64 chain (divide
+    # by the unrounded max) would give the leader exactly 1.0 and miss this sub-ULP
+    # residual, which Stage 4 amplifies past 1e-6 when it squares, x10s, and cumulates.
     for var in [
         "phys_psychom_abilities", "physical_abilities", "psychomotor_abilities",
         "cognitive_abilities", "sensory_abilities", "social_skills",
     ]:
-        out[var] = out[var] / out[var].max()
+        max_value = np.float64(so.f32(out[var].max()))  # egen max() stored float (single)
+        out[var] = out[var].astype("float64") / max_value
 
     cols = [
         "occ_code_onet", "occ_title_onet", "social_skills", "cognitive_abilities",

@@ -35,7 +35,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from . import io, validate
+from . import io, stata_ops as so, validate
 
 
 # --------------------------------------------------------------------------- #
@@ -348,7 +348,12 @@ def build_formated_data(cfg) -> pd.DataFrame:
     df.loc[df["metrics_name"] == "The Loebner Prize scored selection answers", "scale"] = "Percentage correct"
 
     # --- rescale (do-file 297-329) ---
-    df["value_scaled"] = _rescale(df)
+    # Stata evaluates each ln() expression in double from the double `value`, then
+    # STORES value_scaled as float32 (it is a plain `gen`/`replace`). Mirror this:
+    # compute in float64, then f32() the stored result so every downstream step
+    # (current_max, cmnew, delta, ...) consumes the float32-rounded value, matching
+    # Stata's single-precision storage chain bit-for-bit.
+    df["value_scaled"] = so.f32(_rescale(df))
 
     # --- SOTA frontier (do-file 339-343) ---
     # gsort metrics_name date -value_scaled : within metric, sort by date asc,
@@ -369,7 +374,9 @@ def build_formated_data(cfg) -> pd.DataFrame:
     run = vs.fillna(-np.inf).groupby(df["metrics_name"], sort=False).cummax()
     # rows before the first non-missing value_scaled stay missing
     seen = vs.notna().groupby(df["metrics_name"], sort=False).cummax().astype(bool)
-    df["current_max"] = run.where(seen, np.nan)
+    # current_max is a `gen`/`replace` of (already float32) value_scaled, so it is
+    # itself stored float32 in Stata; f32 the result (the .where re-introduces float64).
+    df["current_max"] = so.f32(run.where(seen, np.nan))
 
     # frontier = 1 where current_max changes vs the previous row in the metric.
     # Stata's "!=" treats missing as the largest value, so missing==missing and
@@ -433,9 +440,13 @@ def build_metrics_frontiers(cfg, formated: pd.DataFrame, measures: pd.DataFrame)
     skel = _yearly_index(cfg, measures)
     df = skel.merge(g, on=["metrics_name", "year"], how="outer")
     df = df.rename(columns={"current_max": "cm"})
+    # cm is the collapsed (max) of the float32 current_max, stored float32 in Stata.
+    # The collapse/merge widened it to float64; restore float32 so the delta chain
+    # below subtracts float32-rounded operands exactly as Stata does.
+    df["cm"] = so.f32(df["cm"])
 
-    # cmnew = cm if frontier==1 (do-file 372)
-    df["cmnew"] = np.where(df["frontier"] == 1.0, df["cm"], np.nan)
+    # cmnew = cm if frontier==1 (do-file 372); a `gen` of cm -> stored float32.
+    df["cmnew"] = so.f32(np.where(df["frontier"] == 1.0, df["cm"], np.nan))
 
     # --- restrict each metric to its observed year span (do-file 381-384) ---
     df["yearwithmetric"] = np.where(df["cm"].notna(), df["year"], np.nan)
@@ -453,9 +464,23 @@ def build_metrics_frontiers(cfg, formated: pd.DataFrame, measures: pd.DataFrame)
         same = df.groupby("metricid", sort=False)["metricid"].shift(k) == df["metricid"]
         return s.where(same)
 
-    cmnew = df["cmnew"]
+    # Stata evaluates each delta/deltanew expression in DOUBLE precision using the
+    # float32-STORED cmnew operands, then stores the float32 result. df["cmnew"] is a
+    # float32 column (correct stored values); take a float64 view of it for the
+    # arithmetic so subtractions run in double (not float32), then f32() the result.
+    # Doing the subtraction in float32 would lose a ULP (e.g. Atari Fishing Derby
+    # deltanew off by ~2.4e-7); the double-eval path matches Stata exactly.
+    df["cmnew"] = so.f32(df["cmnew"])  # ensure stored float32 before taking the view
+    cmnew = df["cmnew"].astype("float64")
+    df_arith = df.assign(_cmnew64=cmnew)
     Lid = {k: df.groupby("metricid", sort=False)["metricid"].shift(k) for k in range(1, 8)}
-    Lc = {k: lag("cmnew", k) for k in range(1, 8)}
+
+    def lag64(k):
+        s = df_arith.groupby("metricid", sort=False)["_cmnew64"].shift(k)
+        same = df_arith.groupby("metricid", sort=False)["metricid"].shift(k) == df_arith["metricid"]
+        return s.where(same)
+
+    Lc = {k: lag64(k) for k in range(1, 8)}
 
     # --- glapp: years since last SOTA jump (do-file 386-392) ---
     glapp = pd.Series(np.nan, index=df.index)
@@ -478,9 +503,12 @@ def build_metrics_frontiers(cfg, formated: pd.DataFrame, measures: pd.DataFrame)
     df["glapp"] = glapp
 
     # --- delta: year-on-year change when there is no gap (glapp missing) (do-file 402-403) ---
+    # delta = cmnew - L1.cmnew. Both operands are float32-stored; Stata evaluates the
+    # subtraction in double then stores delta as float32. f32() the result so the
+    # later deltafinal/mean match Stata's single-precision values.
     df["delta"] = np.nan
     nogap = df["glapp"].isna()
-    df.loc[nogap, "delta"] = (cmnew - Lc[1])[nogap]
+    df.loc[nogap, "delta"] = so.f32(cmnew - Lc[1])[nogap]
 
     # --- deltanew: spread a jump evenly across the gap years (do-file 404-419) ---
     df["deltanew"] = np.nan
@@ -494,28 +522,34 @@ def build_metrics_frontiers(cfg, formated: pd.DataFrame, measures: pd.DataFrame)
         same = df.groupby("metricid", sort=False)["metricid"].shift(-source_shift) == df["metricid"]
         df.loc[target_mask, "deltanew"] = src.where(same)[target_mask]
 
+    # Each `replace deltanew = (cmnew - Lk.cmnew)/k` stores deltanew as float32; the
+    # F-operator copies (setF) carry an already-float32 deltanew forward unchanged.
+    # f32() the spread-jump expressions so the stored deltanew matches Stata.
     # glapp==2
-    df.loc[g_ == 2, "deltanew"] = ((cmnew - Lc[2]) / 2)[g_ == 2]
+    df.loc[g_ == 2, "deltanew"] = so.f32((cmnew - Lc[2]) / 2)[g_ == 2]
     setF(df.groupby("metricid", sort=False)["glapp"].shift(-1) == 2, 1)
     # glapp==3
-    df.loc[g_ == 3, "deltanew"] = ((cmnew - Lc[3]) / 3)[g_ == 3]
+    df.loc[g_ == 3, "deltanew"] = so.f32((cmnew - Lc[3]) / 3)[g_ == 3]
     setF(df.groupby("metricid", sort=False)["glapp"].shift(-1) == 3, 1)
     setF(df.groupby("metricid", sort=False)["glapp"].shift(-2) == 3, 2)
     # glapp==4
-    df.loc[g_ == 4, "deltanew"] = ((cmnew - Lc[4]) / 4)[g_ == 4]
+    df.loc[g_ == 4, "deltanew"] = so.f32((cmnew - Lc[4]) / 4)[g_ == 4]
     setF(df.groupby("metricid", sort=False)["glapp"].shift(-1) == 4, 1)
     setF(df.groupby("metricid", sort=False)["glapp"].shift(-2) == 4, 2)
     setF(df.groupby("metricid", sort=False)["glapp"].shift(-3) == 4, 3)
     # glapp==5
-    df.loc[g_ == 5, "deltanew"] = ((cmnew - Lc[5]) / 5)[g_ == 5]
+    df.loc[g_ == 5, "deltanew"] = so.f32((cmnew - Lc[5]) / 5)[g_ == 5]
     setF(df.groupby("metricid", sort=False)["glapp"].shift(-1) == 5, 1)
     setF(df.groupby("metricid", sort=False)["glapp"].shift(-2) == 5, 2)
     setF(df.groupby("metricid", sort=False)["glapp"].shift(-3) == 5, 3)
     setF(df.groupby("metricid", sort=False)["glapp"].shift(-4) == 5, 4)
 
     # --- deltafinal (do-file 422-428) ---
-    df["delta"] = df["delta"].fillna(0.0)
-    df["deltanew"] = df["deltanew"].fillna(0.0)
+    # delta/deltanew are float32-stored; the `replace delta=0`/`deltanew=0` fills are
+    # exactly representable, and deltafinal just copies one float32 operand or 0. f32
+    # deltafinal so the (mean) collapse below averages Stata's single-precision values.
+    df["delta"] = so.f32(df["delta"].fillna(0.0))
+    df["deltanew"] = so.f32(df["deltanew"].fillna(0.0))
     df["deltafinal"] = np.nan
     df.loc[df["delta"] > 0, "deltafinal"] = df.loc[df["delta"] > 0, "delta"]
     df.loc[df["deltanew"] > 0, "deltafinal"] = df.loc[df["deltanew"] > 0, "deltanew"]
@@ -523,10 +557,25 @@ def build_metrics_frontiers(cfg, formated: pd.DataFrame, measures: pd.DataFrame)
     # i.e. not the first row of the metric panel.
     not_first = (df["metricid"] == Lid[1])
     df.loc[df["deltafinal"].isna() & not_first, "deltafinal"] = 0.0
+    df["deltafinal"] = so.f32(df["deltafinal"])
 
     # --- mean & count of deltafinal per (parent_name, year) (do-file 460-461) ---
-    df["mean"] = df.groupby(["parent_name", "year"])["deltafinal"].transform("mean")
-    df["count"] = df.groupby(["parent_name", "year"])["deltafinal"].transform("count").astype(float)
+    # egen mean = mean(deltafinal): Stata accumulates the (float32) deltafinals into a
+    # double running sum in dataset order, divides by the count, then stores float32.
+    # We must NOT use pandas transform("mean"): it uses a pairwise/compensated summation
+    # whose float64 result rounds to a different float32 in a few cells (e.g. "Simple
+    # video games" 2013: 0.9394483 vs Stata 0.9394482). transform("sum") instead does a
+    # plain sequential double accumulation that matches Stata's egen exactly; computing
+    # mean = sum/count and f32-storing it reproduces Stata's float32 mean bit-for-bit.
+    # deltafinal is stored float32; cast to float64 FIRST so the running sum accumulates
+    # in double (Stata's egen accumulator is double over the float32 values). Summing the
+    # float32 column directly would accumulate in float32 and lose a ULP.
+    _d64 = df["deltafinal"].astype("float64")
+    grp = _d64.groupby([df["parent_name"], df["year"]])
+    _sum = grp.transform("sum")               # double sequential sum, like Stata egen
+    _cnt = df.groupby(["parent_name", "year"])["deltafinal"].transform("count").astype(float)
+    df["mean"] = so.f32(_sum / _cnt)
+    df["count"] = so.f32(_cnt)
 
     # restore column order to match the target .dta
     cols = ["metrics_name", "year", "cm", "frontier", "threshold", "threshold_exists",

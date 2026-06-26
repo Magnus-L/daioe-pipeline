@@ -165,8 +165,13 @@ def _discount_square_scale(cfg, panel: pd.DataFrame, social: pd.DataFrame,
 
     # *** SOCIAL SKILLS DISCOUNTING (lines 169-181) ***
     # social_temp = (1 - social_skills) + social_weight; rescaled by the PANEL max.
-    # Each gen/egen/replace stores float32; cast at every storage step.
-    out["social_temp"] = _f32((1.0 - out["social_skills"]) + cfg.social_weight)
+    # Stata builds this in TWO statements: `gen social_temp = 1-social_skills` (stored
+    # float32) then `replace social_temp = social_temp + social_weight` (stored float32).
+    # The two float32 roundings differ from rounding (1-ss+weight) once in ~1162 rows;
+    # that 1-ULP difference in social_temp is amplified by the later square-and-scale into
+    # >1e-6 deviations, so we must mirror Stata's two-step rounding exactly.
+    out["social_temp"] = _f32(1.0 - out["social_skills"])           # gen (float32)
+    out["social_temp"] = _f32(out["social_temp"] + cfg.social_weight)  # replace (float32)
     social_temp_max = _f32(out["social_temp"].max())  # egen max() over ALL rows.
     out["social_score"] = _f32(out["social_temp"] / social_temp_max)
     out["exp_change"] = _f32(out["exp_change"] * out["social_score"])
