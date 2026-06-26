@@ -1,0 +1,8 @@
+# data is symlinked to the read-only Stata source and produced outputs — never commit
+data/
+reports/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+.ipynb_checkpoints/

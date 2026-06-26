@@ -1,0 +1,114 @@
+# DAIOE pipeline configuration.
+# Mirrors Code/0_2_settings.do from the Stata source. One run = one config.
+
+# --- horizon ---
+base_year: 2010          # first year of the cumulative panel (Eq6 sums from here)
+year_final: 2023         # last full year. Bump this for an annual refresh (Phase 2).
+
+# --- construction parameters (1_2_merge_and_construct_index.do) ---
+social_weight: 2         # delta in the social-skill discount (scalar social_weight)
+conseq_error_weight: 4   # consequence-of-error discount weight (currently DISABLED in Stata)
+apply_conseq_error: false
+scale_up: 10             # exp_change is multiplied by 10 after the social-square step
+
+# --- application categories (0_2_settings.do globals) ---
+app_categories:            # all 13 built internally
+  - allapps
+  - stratgames
+  - videogames
+  - imgrec
+  - imgcompr
+  - imggen
+  - readcompr
+  - lngmod
+  - translat
+  - speechrec
+  - roe
+  - genai
+  - redux
+app_categories_publication:  # the 11 kept in published panels
+  - allapps
+  - stratgames
+  - videogames
+  - imgrec
+  - imgcompr
+  - imggen
+  - readcompr
+  - lngmod
+  - translat
+  - speechrec
+  - genai
+
+# application-id membership for the composite categories.
+# PROVISIONAL — Stage 2 must verify against the inlist()/keep blocks in 1_1_AI_progress_data.do.
+app_id_membership:
+  allapps: [2, 5, 6, 7, 8, 9, 10, 11, 12]
+  genai:   [5, 7]                       # image generation + language modelling
+  redux:   [2, 6, 8, 9, 10, 11, 12]
+  roe:     [18]                          # robotics
+
+# --- comparator indices (varlist_indices_literature) ---
+comparator_cols:
+  - frs18_index_original
+  - frs18_index_new_weights
+  - frs21_aioe
+  - webb19_ai_score
+  - webb19_software_score
+  - webb19_robot_score
+  - fo17_p_computerisation
+  - open24_human_E1
+  - open24_human_E1_E2
+  - open24_human_E1_05xE2
+  - open24_gpt_automation
+
+# --- broad ability scores carried per occupation (varlist_occ_characteristics) ---
+occ_characteristic_cols:
+  - physical_abilities
+  - psychomotor_abilities
+  - phys_psychom_abilities
+  - cognitive_abilities
+  - sensory_abilities
+  - social_skills
+  - conseq_error
+
+# --- taxonomy registry (Stage 5). soc2010 is the base; others derive by crosswalk. ---
+taxonomies:
+  onet:
+    key: occ_code_onet
+    level_rule: null
+  soc2010:
+    key: occ_code_soc
+    level_rule: null
+  isco08:
+    key: ISCO08code
+    crosswalk: isco08_soc2010_crosswalk.dta
+    soc_key: SOC2010code
+    level_rule: substr        # 1-digit = first char
+  ssyk2012:
+    key: ssyk2012_4
+    crosswalk: ssyk2012_soc10_crosswalk.dta
+    soc_key: SOC2010code
+    level_rule: intdiv        # n-digit = int(code / 10**(4-n))
+  ssyk96:
+    key: ssyk96_4
+    crosswalk: ssyk96_soc10_crosswalk.dta
+    soc_key: SOC2010code
+    level_rule: intdiv
+  # --- Phase 3 additions (crosswalks: soc2018 present in repo; ssyk2025 BLOCKED on SCB) ---
+  # soc2018:   {key: SOC2018code, crosswalk: soc2010_to_soc2018.csv, soc_key: SOC2010code, level_rule: substr}
+  # ssyk2025:  {key: ssyk2025_4,  crosswalk: ssyk2025_soc10_crosswalk.dta, soc_key: SOC2010code, level_rule: intdiv}
+
+# --- output ---
+export_formats: [dta, csv, xlsx]   # csv is TAB-delimited (Stata delimiter(tab)); xlsx sheet "DAIOE"
+
+# --- validation tolerances ---
+tol_internal: 1.0e-6     # double-stored internal panels and intermediates
+tol_publication: 1.0e-5  # float32-stored publication panels
+
+# --- paths (relative to package root) ---
+paths:
+  raw: data/raw                 # -> Stata Data/1_data_ore (read-only symlink)
+  enriched_ref: data/enriched_ref   # -> Data/2_data_enriched (intermediate targets)
+  reference: data/reference     # -> Data/3_data_jewelry (final targets, + Publication/)
+  out: data/out
+  reports: reports
