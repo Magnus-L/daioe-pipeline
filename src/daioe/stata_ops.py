@@ -125,6 +125,57 @@ def pctl_rank(
     return result
 
 
+def f32(x):
+    """Cast to float32, mirroring Stata's single-precision storage, preserving NaN.
+
+    Stata stores the result of every ``gen``/``egen``/``replace`` as ``float`` (single
+    precision) unless the variable was explicitly declared ``double``. A float64 port
+    therefore drifts ~1e-7 per step from Stata; when the DAIOE chain later SQUARES and
+    multiplies by 10 and sums across applications, that drift is amplified past the 1e-6
+    gate. The fix is to cast to float32 at every step where Stata stored a float, so the
+    correctly-rounded float32 of the same real number matches Stata bit-for-bit.
+
+    Apply this AT EACH storage step (not only at the end): intermediate rounding matters,
+    e.g. ``delta = cmnew - L1.cmnew`` subtracts already-float32-rounded operands.
+    """
+    if isinstance(x, pd.Series):
+        return x.astype("float32")
+    if isinstance(x, np.ndarray):
+        return x.astype(np.float32)
+    return np.float32(x)
+
+
+def stata_storage_types(dta_path) -> dict[str, str]:
+    """Return {column: stata_storage_type} for a .dta (e.g. 'float', 'double', 'str8').
+
+    Use this to decide, per column, whether to mirror Stata with float32 ('float') or
+    float64 ('double'); pyreadstat itself widens every float to float64 on read, hiding
+    the stored precision, so this reads the metadata directly.
+    """
+    import pyreadstat
+
+    _df, meta = pyreadstat.read_dta(str(dta_path), metadataonly=True)
+    # pyreadstat exposes this as a {column: type} dict already (e.g. 'float', 'double').
+    return dict(meta.readstat_variable_types)
+
+
+def match_stata_dtypes(df: pd.DataFrame, dta_path) -> pd.DataFrame:
+    """Cast df's numeric columns to float32/float64 to match the .dta's stored types.
+
+    Returns a copy. Columns absent from the reference are left untouched.
+    """
+    types = stata_storage_types(dta_path)
+    out = df.copy()
+    for col, st in types.items():
+        if col not in out.columns:
+            continue
+        if st == "float":
+            out[col] = out[col].astype("float32")
+        elif st in ("double",):
+            out[col] = out[col].astype("float64")
+    return out
+
+
 def encode(series: pd.Series) -> pd.Series:
     """Mirror Stata ``encode`` (alphabetical levels, 1-based integer codes)."""
     codes, _ = pd.factorize(series, sort=True)
