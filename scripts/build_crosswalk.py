@@ -43,7 +43,7 @@ def parse_value(s: str) -> float:
 
 
 COLS = ["benchmark", "task", "dataset", "metric_col", "model_name",
-        "paper_date", "value_str", "value_float"]
+        "paper_date", "paper_title", "paper_url", "value_str", "value_float"]
 
 
 def flatten_dump() -> pd.DataFrame:
@@ -94,6 +94,8 @@ def flatten_dump() -> pd.DataFrame:
                 n_sota_rows += 1
                 model = row.get("model_name") or ""
                 date = str(row.get("paper_date") or "")
+                ptitle = row.get("paper_title") or ""
+                purl = row.get("paper_url") or ""
                 metrics = row.get("metrics") or {}
                 items = metrics.items() if isinstance(metrics, dict) else [
                     (m.get("key"), m.get("value")) for m in metrics
@@ -102,7 +104,8 @@ def flatten_dump() -> pd.DataFrame:
                     if val is None or val == "":  # null-padded union-struct fields
                         continue
                     records.append(
-                        (bench, task, dataset, str(mcol), model, date, str(val), parse_value(val))
+                        (bench, task, dataset, str(mcol), model, date, ptitle, purl,
+                         str(val), parse_value(val))
                     )
         for st in t.get("subtasks") or []:
             walk(st)
