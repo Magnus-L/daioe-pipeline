@@ -58,5 +58,9 @@ green, (2) empty-update run still bit-exact, (3) `scripts/refresh_report.py`
 shows zero ref-only rows (nothing lost), no negative progress means, no
 cumulative decreases, and a seam quantification consistent with
 `notes/track-a-seam-audit.md` (independently derived, full agreement 2026-07-07).
-Seam policy: pending Checkpoint 2 (Magnus + Erik) — see
-`notes/checkpoint2-seam-policy.md`.
+Seam policy DECIDED 2026-07-07 (Magnus; Erik notified): **freeze history** — the
+published 2010–2023 series is immutable; only year >2023 values are appended, with
+a documented vintage-splice at 2023. The Atari-backfill revision evidence is retained
+(`notes/track-a-seam-audit.md`) and is expected to be adopted in one step at the
+Economic Journal R&R, when the full series is re-run from the port.
+See `notes/checkpoint2-seam-policy.md`.
