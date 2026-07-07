@@ -62,3 +62,18 @@ on an SCB crosswalk.
 A column passes if max|got−ref| ≤ 1e-6 (internal/double) and matches float32 publication
 storage (1e-5); any worse column is flagged in the report rather than silently passed.
 **The Stata code is authoritative over the paper appendix** wherever they differ.
+
+## Refresh with benchmark updates (Phase 2, Track A)
+The 2024 refresh procedure (established 2026-07-07; see `notes/track-a-*.md`):
+1. Build/refresh the update workbook: `python scripts/build_crosswalk.py` (flattens
+   the PwC archive dump; cached) then `python scripts/build_update_workbook.py`
+   (extracts post-cutoff rows for the verified crosswalk into
+   `data/updates/measures_updates_2024plus.xlsx`).
+2. Point a config at it: `benchmark_updates: [data/updates/...xlsx]`, bump
+   `year_final` (see `config-refresh2024.yaml`).
+3. Run `python run_all.py --config config-refresh2024.yaml --stages 2,4,5
+   --no-validate` — full-deviation vs the frozen targets is EXPECTED in refresh
+   mode (the update revises history); use `python scripts/refresh_report.py` for
+   the seam quantification instead.
+4. Release gate: no 2024+ value circulates without `notes/track-a-coverage-audit.md`
+   attached; seam policy per `notes/checkpoint2-seam-policy.md`.

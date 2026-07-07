@@ -50,3 +50,13 @@ pytest -q                    # Stata-idiom shim unit tests
 ```
 The strict report shows 17/21 value targets PASS; the 4 "FAIL" are exclusively the 11
 `conseq_error` cells above. The tie-aware report shows 60/60 pctl columns PASS.
+
+## Refresh mode (Phase 2 addendum, 2026-07-07)
+With `benchmark_updates` active the frozen-target validation intentionally fails
+(the update revises 2016–2023); the refresh gates are instead: (1) `pytest -q`
+green, (2) empty-update run still bit-exact, (3) `scripts/refresh_report.py`
+shows zero ref-only rows (nothing lost), no negative progress means, no
+cumulative decreases, and a seam quantification consistent with
+`notes/track-a-seam-audit.md` (independently derived, full agreement 2026-07-07).
+Seam policy: pending Checkpoint 2 (Magnus + Erik) — see
+`notes/checkpoint2-seam-policy.md`.
