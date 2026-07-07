@@ -63,9 +63,10 @@ def flatten_dump() -> pd.DataFrame:
     Materialise ONE top-level row at a time: whole-shard to_pylist decodes the full
     null-padded struct for every row simultaneously and OOMs a 16 GB machine.
 
-    Validation targets from the A1 vintage probe (notes/track-a-provenance.md):
-    6,449 unique tasks, 155,456 SOTA rows. The record and memory valves abort if
-    output explodes, so a regression here can never re-freeze the machine.
+    Validation targets (deduplicated; see notes/track-a-provenance.md): 3,976 unique
+    tasks, 76,227 unique SOTA rows. (The A1 probe's 6,449 / 155,456 were walk counts
+    including embedded duplicates.) The record and memory valves abort if output
+    explodes, so a regression here can never re-freeze the machine.
     """
     import csv
     import resource
@@ -141,7 +142,7 @@ def flatten_dump() -> pd.DataFrame:
         records.clear()
 
     print(f"walk totals: {len(seen_tasks):,} unique tasks, {n_sota_rows:,} sota rows "
-          f"(A1 probe expects 6,449 / 155,456)", flush=True)
+          f"(expect 3,976 / 76,227 deduplicated)", flush=True)
 
     flat = pd.read_csv(tmp_csv, dtype={"value_str": str}, keep_default_na=False,
                        na_values=[], low_memory=False)
