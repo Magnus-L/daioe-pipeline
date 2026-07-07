@@ -1,16 +1,21 @@
+# REFRESH configuration (Phase 2 Track A, target year 2024).
+# The default config.yaml stays frozen at year_final 2023 with no updates
+# (bit-exact baseline). Run: python run_all.py --config config-refresh2024.yaml
+#      --stages 2,4,5 --no-validate ; then scripts/refresh_report.py
 # DAIOE pipeline configuration.
 # Mirrors Code/0_2_settings.do from the Stata source. One run = one config.
 
 # --- horizon ---
 base_year: 2010          # first year of the cumulative panel (Eq6 sums from here)
-year_final: 2023         # last full year. Bump this for an annual refresh (Phase 2).
+year_final: 2024         # Track A refresh: PwC last substantively collected year (Checkpoint 1, 2026-07-07).
 
 # --- Phase 2 refresh (Track A) ---
 # Update workbooks appended to the frozen measures sheet. Each must carry ONLY a
 # "measures" sheet whose metrics_name values already exist in the frozen metrics
 # sheet (basket-faithful; new benchmarks enter via Track B). Empty list = frozen
 # baseline, guaranteed bit-exact. The refresh run uses config-refresh2024.yaml.
-benchmark_updates: []
+benchmark_updates:
+  - data/updates/measures_updates_2024plus.xlsx
 
 # --- construction parameters (1_2_merge_and_construct_index.do) ---
 social_weight: 2         # delta in the social-skill discount (scalar social_weight)

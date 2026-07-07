@@ -146,6 +146,56 @@ def _datestr(x) -> str:
     return pd.Timestamp(x).strftime("%Y-%m-%d")
 
 
+def _load_updates(cfg) -> pd.DataFrame | None:
+    """Load Phase 2 update workbooks (cfg.benchmark_updates) with the Track A guards.
+
+    Contract (basket-faithful refresh): each workbook carries ONLY a "measures"
+    sheet; every metrics_name must already exist in the frozen metrics sheet (this
+    also guarantees a known scale type, since scale is keyed on metrics_name);
+    parent_name must agree with the frozen assignment; values numeric, dates parseable.
+    Violations raise, never pass silently: an unknown scale type downstream would
+    yield NaN value_scaled without error (_rescale has no error path).
+    """
+    if not cfg.benchmark_updates:
+        return None
+
+    frozen_metrics = io.read_excel_sheet(
+        cfg.raw_file("measures_metrics_newdata2023.xlsx"), sheet="metrics"
+    )
+    known = frozen_metrics.set_index("metrics_name")["parent_name"].to_dict()
+
+    frames = []
+    for p in cfg.benchmark_updates:
+        xl = pd.ExcelFile(p)
+        extra = [s for s in xl.sheet_names if s.lower() != "measures"]
+        if extra:
+            raise ValueError(
+                f"{p.name}: update workbooks must carry only a 'measures' sheet "
+                f"(found {extra}); new benchmarks enter via Track B, not the refresh."
+            )
+        upd = pd.read_excel(p, sheet_name="measures")
+        need = ["parent_name", "metrics_name", "papername", "name", "date", "value"]
+        missing = [c for c in need if c not in upd.columns]
+        if missing:
+            raise ValueError(f"{p.name}: missing columns {missing}")
+        upd = upd[need].copy()
+
+        unknown = sorted(set(upd["metrics_name"]) - set(known))
+        if unknown:
+            raise ValueError(
+                f"{p.name}: {len(unknown)} metrics_name value(s) not in the frozen "
+                f"metrics sheet (first 5: {unknown[:5]}); Track A is basket-faithful."
+            )
+        wrong_app = upd[upd.apply(lambda r: known[r["metrics_name"]] != r["parent_name"], axis=1)]
+        if len(wrong_app):
+            bad = wrong_app[["metrics_name", "parent_name"]].drop_duplicates().head(5)
+            raise ValueError(f"{p.name}: parent_name disagrees with frozen assignment:\n{bad}")
+        if not pd.to_numeric(upd["value"], errors="coerce").notna().all():
+            raise ValueError(f"{p.name}: non-numeric value cells present.")
+        frames.append(upd)
+    return pd.concat(frames, ignore_index=True)
+
+
 def _build_measures(cfg) -> pd.DataFrame:
     """Construct the merged MEASURES panel (do-file 144-176).
 
@@ -162,6 +212,12 @@ def _build_measures(cfg) -> pd.DataFrame:
     new = ms[["parent_name", "metrics_name", "papername", "name", "date", "value"]].copy()
     # drop if metrics_name=="" (do-file 148)
     new = new[new["metrics_name"].notna() & (new["metrics_name"].astype(str).str.strip() != "")]
+    # Phase 2 refresh: append update-workbook rows BEFORE the date/dedup steps so
+    # they flow through the identical idioms as the frozen rows. Empty list = no-op.
+    upd = _load_updates(cfg)
+    if upd is not None:
+        new = pd.concat([new, upd], ignore_index=True)
+        new = new[new["metrics_name"].notna() & (new["metrics_name"].astype(str).str.strip() != "")]
     # date as string key for the merge (Stata merges on the raw date string)
     new["date"] = new["date"].map(_datestr)
     # duplicates drop (do-file 149): full-row identical duplicates collapse

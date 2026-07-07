@@ -90,6 +90,12 @@ class Config:
     def tol_publication(self) -> float:
         return float(self.raw["tol_publication"])
 
+    @property
+    def benchmark_updates(self) -> list[Path]:
+        """Optional benchmark update workbooks appended to the frozen measures sheet
+        (Phase 2 annual refresh; empty list = frozen baseline, bit-exact)."""
+        return [(self.root / p).resolve() for p in (self.raw.get("benchmark_updates") or [])]
+
     # --- path resolution ---
     def path(self, key: str) -> Path:
         """Resolve a configured path key (raw, reference, enriched_ref, out, reports)."""
