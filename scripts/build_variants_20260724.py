@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data" / "out"
 BACKUP = ROOT / "data" / "out_backup_variants_tmp"
 WORK = ROOT / "data" / "variants_20260724"
-UPLOAD = Path.home() / "Documents/Workspace/projects/daioe/mona-batch/upload"
+UPLOAD = Path.home() / "Documents/Workspace/projects/daioe/mona-batch"
 PANEL = OUT / "daioe_panel_isco08.dta"
 
 # social_weight grid: label -> value (baseline delta = 2)
@@ -66,7 +66,7 @@ def main() -> None:
             cfg_path.write_text(yaml.safe_dump(cfg, sort_keys=False))
             # data/out holds 2024-refresh checkpoints; the FIRST run must rebuild
             # stages 1-3 under the frozen config so stage 4 sees matching inputs.
-            stages = "1,2,3,4,5" if i == 0 else "4,5"
+            stages = "4,5"  # checkpoints now FROZEN (restored raw, certified bit-exact 24 Jul eve)
             print(f"running variant {label} (social_weight={delta}, stages {stages}) ...")
             run_pipeline(cfg_path, stages)
             df = pd.read_stata(PANEL)
@@ -97,8 +97,8 @@ def main() -> None:
         wide.groupby("ISCO08code_str")["daioe_annual"]
         .transform(lambda s: s.rolling(3, min_periods=1).mean())
     )
-    wide = wide.rename(columns={"ISCO08code_str": "isco08_4"})
-    genai_keep = ["daioe_genai_base"]
+    wide = wide.rename(columns={"ISCO08code_str": "isco08_4", "daioe_genai_base": "daioe_genai"})
+    genai_keep = ["daioe_genai"]
     cols = (["isco08_4", "year", "daioe_base"] +
             [f"daioe_{v}" for v in ("d05", "d1", "d4", "nodw")] +
             ["daioe_annual", "daioe_ma3"] + genai_keep + ["social_skills"])
