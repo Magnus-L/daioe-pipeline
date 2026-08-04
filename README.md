@@ -55,6 +55,7 @@ statement — see the header of `requirements.txt`.
 
 ## Run
 ```bash
+python scripts/preflight.py        # check every input resolves BEFORE running
 python run_all.py                  # all stages + validation report
 python run_all.py --no-validate    # build only (see the note below)
 python run_all.py --stages 1,2,3   # subset
