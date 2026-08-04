@@ -1,6 +1,7 @@
 # data is symlinked to the read-only Stata source and produced outputs — never commit
 data/
 reports/
+.venv/
 __pycache__/
 *.pyc
 .pytest_cache/

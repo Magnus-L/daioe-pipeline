@@ -1,0 +1,31 @@
+# daioe-pipeline — pinned runtime environment.
+#
+# Verified 4 August 2026 on Python 3.10.9 (macOS arm64): `pytest -q` 12/12 green and
+# `python run_all.py --no-validate` reproduces the previously built panels bit-for-bit
+# (daioe_panel_soc: 10,876 x 50, 840 SOC codes; exp_cumul_allapps at 2023 identical to
+# the last stored digit for 15-1132 / 15-1133 / 15-1199).
+#
+# WHY numpy AND pandas ARE PINNED HARD
+# The port's whole claim is bit-exact reproduction of Erik's Stata construction, and
+# that rests on float32 storage semantics and on group-summation order inside
+# `collapse (mean)`. Both are library-version-sensitive: a newer pandas can change
+# groupby accumulation and silently move the last ULP, which is precisely the tolerance
+# the validation gate works at. Treat these two as part of the method, not as
+# housekeeping, and re-run the full validation before changing either.
+#
+# THREE OF THESE ARE IMPLICIT
+# pyarrow (parquet intermediates), xlrd (legacy .xls inputs) and openpyxl (.xlsx) are
+# never imported by name anywhere in src/; pandas loads them on demand. Reading the
+# source will not find them. All three were discovered by running the pipeline, which
+# is the only reliable way to establish this list.
+
+numpy==1.23.5
+pandas==1.5.3
+pyarrow==14.0.2
+pyreadstat==1.3.5
+openpyxl==3.1.5
+xlrd==2.0.1
+PyYAML==6.0.3
+scipy==1.15.3
+matplotlib==3.10.9
+pytest==9.1.1

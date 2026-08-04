@@ -41,12 +41,34 @@ reports/               validation_<ts>.md
 
 Stages 1–3 are independent; 4 needs 1–3; 5 needs 4.
 
+## Environment
+```bash
+python3.10 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python -m pytest -q          # expect 12 passed
+```
+Pinned and verified 4 Aug 2026 on Python 3.10.9. `numpy` and `pandas` are pinned hard
+because the bit-exactness claim depends on float32 storage semantics and on groupby
+summation order; re-run the full validation before changing either. Three dependencies
+(`pyarrow`, `xlrd`, `openpyxl`) are loaded implicitly by pandas and appear in no import
+statement — see the header of `requirements.txt`.
+
 ## Run
 ```bash
 python run_all.py                  # all stages + validation report
+python run_all.py --no-validate    # build only (see the note below)
 python run_all.py --stages 1,2,3   # subset
 pytest -q                          # shim unit tests
 ```
+A full build takes about 75 seconds.
+
+**Validation currently cannot run on a fresh checkout.** `data/reference` and
+`data/enriched_ref` point into `~/Downloads/DAIOE 20260527/`, which no longer exists;
+the July restore brought back `1_data_ore` only, so `data/raw` resolves and the other
+two do not. Every stage builds, and `--no-validate` completes, but `compare_to_dta`
+dies on the first missing target. Restoring `2_data_enriched` and `3_data_jewelry` from
+the same Drive share, into `data_source/DAIOE_20260527/Data/`, and repointing the two
+symlinks is what makes `run_all.py` green again.
 
 ## Annual update (Phase 2)
 Append the new year's benchmark rows to `measures_metrics_newdata2023.xlsx`, bump
@@ -55,8 +77,15 @@ targets; ≥2024 is checked for internal consistency.
 
 ## Add a taxonomy (Phase 3)
 Add an entry to `taxonomies` in `config.yaml` (crosswalk path, key, level rule) and drop
-the crosswalk into the data folder. SOC2018 crosswalk is available; SSYK2025 is blocked
-on an SCB crosswalk.
+the crosswalk into the data folder. SSYK2025 is blocked on an SCB crosswalk.
+
+**SOC2018**: this README and both configs previously said the crosswalk was present in
+the repo. It was not. It is now derived and audited — `scripts/build_soc2018_crosswalk_20260804.py`
+writes `data/derived/soc2010_to_soc2018.dta` (913 pairs) and
+`notes/soc2018-inventory-2026-08-04.md` records the round-trip verification and the two
+open decisions. It is deliberately **not** wired into `config.yaml`: the commented entry
+names a `.csv` where `_build_crosswalk_taxonomy` calls `read_dta`, and crosswalks resolve
+under `data/raw/`, which is a symlink into the delivered source tree.
 
 ## Validation bar
 A column passes if max|got−ref| ≤ 1e-6 (internal/double) and matches float32 publication
