@@ -2,11 +2,22 @@
 
 THE FINDING THIS EXISTS TO RECORD
 --------------------------------
-Every SOC2010 -> target crosswalk in ``data/raw/`` carries a weight column, and the
-construction ignores all of them. ``_build_crosswalk_taxonomy`` keeps only the two key
-columns plus whatever ``first_cols`` a builder names, and collapses with a simple
-unweighted mean; ``build_ssyk2012`` and ``build_ssyk96`` name nothing extra. Since the
-port reproduces Erik's Stata bit-for-bit, his code did not use them either.
+Established from the Stata source, not inferred from the port. Erik's
+``Code/DAIOE/20231207/1_3_add_indices_translate_taxonomies.do`` collapses to both SSYK
+taxonomies unweighted, and says so in a comment he left at BOTH points (lines 306 and
+408):
+
+    *Consider re-doing this but with weighted avg (and SSYK 1996?), to see if it makes
+    *a significant difference.
+    collapse (mean) exp_change* ... , by(SSYK2012kod year)
+
+The merge above it reads ``keepusing(SSYK2012kod)`` / ``keepusing(SSYK96kod)``, so the
+weight column is deliberately never brought into memory. This is therefore not a
+leftover column of unclear provenance: it is an open question the author flagged and
+never closed. This script closes it.
+
+The ISCO08 block (line 197) carries no such comment, consistent with its
+``share_of_soc10_occupations`` being exactly 1/n, where weighted and unweighted coincide.
 
 Whether that matters differs by taxonomy, and only one of the three is a real choice:
 
