@@ -328,7 +328,8 @@ def _build_crosswalk_taxonomy(
     crosswalk_file: str,
     target_key: str,
     soc_key_in_cw: str = "SOC2010code",
-    extra_cw_cols: list[str] | None = None,
+    extra_cw_cols: list[str] | None = None,   # NOTE: kept on the crosswalk but NOT collapsed;
+                                             # put pass-through columns in first_cols instead
     first_cols: list[str] | None = None,
 ) -> pd.DataFrame:
     """Translate the SOC panel to a target taxonomy via a 1:m crosswalk.
@@ -345,7 +346,14 @@ def _build_crosswalk_taxonomy(
     extra_cw_cols = extra_cw_cols or []
     first_cols = first_cols or []
 
-    cw = io.read_dta(cfg.raw_file(crosswalk_file))
+    # Delivered crosswalks live under data/raw (a symlink into the source tree). A crosswalk
+    # we derive ourselves must NOT be written there, or provenance stops being readable off
+    # the directory. Resolve raw first, then data/derived, so derived files are usable
+    # without muddying the delivered tree.
+    _cw_path = cfg.raw_file(crosswalk_file)
+    if not _cw_path.exists():
+        _cw_path = cfg.path("derived") / crosswalk_file
+    cw = io.read_dta(str(_cw_path))
     keep_cw = [soc_key_in_cw, target_key] + [c for c in (extra_cw_cols + first_cols) if c in cw.columns]
     cw = cw[keep_cw].copy()
 
@@ -441,6 +449,36 @@ def build_ssyk2012(cfg, soc: pd.DataFrame) -> pd.DataFrame:
     panel["SSYK2012kod_str"] = panel["ssyk2012_4"].astype(int).astype(str).str.zfill(4)
     panel = _add_digit_levels_intdiv(panel, "ssyk2012_4", "ssyk2012")
     panel = panel.sort_values(["ssyk2012_4", "year"], kind="mergesort").reset_index(drop=True)
+    return panel
+
+
+def build_soc2018(cfg, soc: pd.DataFrame) -> pd.DataFrame:
+    """SOC 2018 panel.
+
+    The crosswalk is BLS-derived (``soc2010_to_soc2018_BLS.dta``), not the O*NET
+    republication: the O*NET route goes through O*NET-SOC 2010 8-digit codes and picked up
+    13 spurious pairs when reduced to the SOC level.
+
+    Two structural facts are carried into the panel rather than left implicit, because
+    published side by side they would otherwise read as findings when they are artefacts of
+    the crosswalk:
+
+    * ``n_soc2010_sources`` -- how many SOC2010 codes were averaged into this target. A
+      residual "All Other" category enters the unweighted mean with the same weight as a
+      large detailed occupation.
+    * ``is_split`` -- the parent SOC2010 value is COPIED to every successor, because nothing
+      finer exists in the data. 29-1069 Physicians, All Other splits into eight SOC2018 codes
+      that all publish the same number; 15-1252 Software Developers and 15-1253 Software
+      Quality Assurance Analysts draw on the same three sources and are therefore identical.
+
+    The collapse rule is the simple unweighted mean used for ISCO08, SSYK2012 and SSYK96, for
+    consistency rather than because it is uniquely right.
+    """
+    panel = _build_crosswalk_taxonomy(
+        cfg, soc, "soc2010_to_soc2018_BLS.dta", target_key="SOC2018code",
+        first_cols=["SOC2018title", "n_soc2010_sources", "is_split"],
+    )
+    panel = panel.sort_values(["SOC2018code", "year"], kind="mergesort").reset_index(drop=True)
     return panel
 
 
@@ -557,7 +595,14 @@ def run(cfg, validate: bool = True) -> Stage5Result:  # noqa: ANN001
     isco = build_isco08(cfg, soc)
     ssyk2012 = build_ssyk2012(cfg, soc)
     ssyk96 = build_ssyk96(cfg, soc)
+    # SOC2018 is built and written but NOT added to internal_specs below. Those specs are
+    # the bit-exactness comparison against Erik's Stata panels, and no Stata SOC2018 panel
+    # exists to compare against. Adding it there would not strengthen validation; it would
+    # break the gate on a missing reference. Its own verification is the round-trip check in
+    # scripts/verify_soc2018_roundtrip_bls_20260806.py.
+    soc2018 = build_soc2018(cfg, soc)
 
+    io.write_dta(soc2018, out_dir / "daioe_panel_soc2018.dta")
     io.write_dta(onet, out_dir / "daioe_panel_onet.dta")
     io.write_dta(soc, out_dir / "daioe_panel_soc.dta")
     io.write_dta(isco, out_dir / "daioe_panel_isco08.dta")

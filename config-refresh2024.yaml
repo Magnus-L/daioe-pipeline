@@ -107,7 +107,7 @@ taxonomies:
     soc_key: SOC2010code
     level_rule: intdiv
   # --- Phase 3 additions (crosswalks: soc2018 present in repo; ssyk2025 BLOCKED on SCB) ---
-  # soc2018:   {key: SOC2018code, crosswalk: soc2010_to_soc2018.csv, soc_key: SOC2010code, level_rule: substr}
+  soc2018:   {key: SOC2018code, crosswalk: soc2010_to_soc2018_BLS.dta, soc_key: SOC2010code, level_rule: substr}
   # ssyk2025:  {key: ssyk2025_4,  crosswalk: ssyk2025_soc10_crosswalk.dta, soc_key: SOC2010code, level_rule: intdiv}
 
 # --- output ---
