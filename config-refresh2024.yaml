@@ -122,5 +122,6 @@ paths:
   raw: data/raw                 # -> Stata Data/1_data_ore (read-only symlink)
   enriched_ref: data/enriched_ref   # -> Data/2_data_enriched (intermediate targets)
   reference: data/reference     # -> Data/3_data_jewelry (final targets, + Publication/)
+  derived: data/derived       # files WE build (reconciled inputs, crosswalks); never Erik's
   out: data/out
   reports: reports

@@ -178,7 +178,29 @@ def _load_comparators(cfg) -> dict[str, pd.DataFrame]:
         columns={"occ_code": "occ_code_soc", "aioe": "frs21_aioe"}
     )[["occ_code_soc", "frs21_aioe"]]
 
-    webb = io.read_dta(raw("webb_indices_soc2010.dta")).rename(
+    # WEBB: read the RECONCILED raw file where one exists.
+    #
+    # The 27 May delivery is internally inconsistent on one variable.
+    # 1_data_ore/webb_indices_soc2010.dta (dated 2021-07-09) and the enriched
+    # copy disagree on robot_score for exactly eight occupations, by a factor of
+    # exactly 4.0 on every one, while agreeing to the bit on ai_score and
+    # software_score. Erik's raw-to-intermediate step for Webb is a pure rename
+    # with one dropped column and no arithmetic anywhere, so the enriched values
+    # ARE the raw values of whichever vintage built the reference: the delivered
+    # raw is simply stale. Reading it makes webb19_robot_score fail validation on
+    # 112 rows (8 occupations x 14 years) across all four panels.
+    #
+    # scripts/reconcile_webb_raw_20260806.py writes the reconciled file: the
+    # delivered raw with robot_score taken from the enriched vintage, schema and
+    # every other value preserved. It refuses to run if ai_score or
+    # software_score disagree, or if the ratio is not exactly 4.0 on every
+    # differing row, so it cannot quietly paper over a different problem later.
+    #
+    # Falls back to the delivered raw if the reconciled file is absent, so a
+    # fresh clone still runs; it will simply fail those 112 rows.
+    _webb_reconciled = cfg.path("derived") / "webb_indices_soc2010_reconciled.dta"
+    _webb_src = str(_webb_reconciled) if _webb_reconciled.exists() else raw("webb_indices_soc2010.dta")
+    webb = io.read_dta(_webb_src).rename(
         columns={
             "SOC2010code": "occ_code_soc",
             "ai_score": "webb19_ai_score",
