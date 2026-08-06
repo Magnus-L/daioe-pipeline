@@ -70,6 +70,14 @@ def collapse_mean(
 ) -> pd.DataFrame:
     """Mirror Stata ``collapse (mean) mean_cols (first) first_cols, by(by)``.
 
+    TESTED 6 Aug 2026 and NOT the cause of the conseq_error residual. Replacing
+    pandas' pairwise summation with an exact ``math.fsum`` group mean changed the
+    validation outcome by exactly nothing: the same 8 SOC cells and the same 1 cell
+    on each crosswalk panel still differ. So the residual is Stata's own per-group
+    accumulation landing either side of an exact half, not an artefact of how we
+    sum, and the "irreducible" label in stage5's docstring is now evidence rather
+    than assertion. Do not spend another afternoon on it; fsum is also ~3x slower.
+
     Stata ``collapse (mean)`` computes the mean of NON-missing values (NaN-skipping),
     returning missing only if every value in the group is missing. pandas
     ``groupby.mean`` skips NaN by default and returns NaN for an all-NaN group, which
