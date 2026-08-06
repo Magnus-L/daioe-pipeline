@@ -353,6 +353,40 @@ def _rescale(df: pd.DataFrame) -> pd.Series:
     # Model Entropy: ln((1/2^v)*100)  (entropy -> perplexity = 2^entropy)
     m = scale == "Model Entropy"
     vs[m] = np.log((1.0 / (2.0 ** v[m])) * 100.0)
+
+    # ---- domain guard (added 6 Aug 2026; inert on the frozen basket) ----------------
+    # Every transform above is logarithmic, so each has a domain boundary at which it
+    # diverges, and none of them raises. Two failure modes follow, both silent:
+    #   * an unknown or blank scale leaves value_scaled NaN, and the metric quietly
+    #     contributes nothing to its application's mean;
+    #   * a value at the boundary gives +/-inf, which propagates through delta,
+    #     deltafinal and the application mean into every occupation.
+    # Neither can happen on the frozen 149 (verified 6 Aug 2026: 0 unknown scales,
+    # 0 "Percentage correct" >= 100, 0 "Percentage error" <= 0, 0 non-finite results),
+    # so this guard changes no published value. It exists because the Epoch expansion
+    # candidates DO sit near the boundary: several exceed 0.92 accuracy and
+    # otis_mock_aime reaches exactly 1.000, which under "Percentage correct" is
+    # infinite. See notes/scaling-design-2026-08-06.md.
+    known = {"Percentage error", "FID", "Percentage correct", "BLEU score", "Score",
+             "ELO rating", "Perplexity", "Model Entropy"}
+    have_value = v.notna()
+    unknown = have_value & ~scale.isin(known)
+    if unknown.any():
+        bad = sorted(set(scale[unknown].astype(str)))[:5]
+        raise ValueError(
+            f"_rescale: {int(unknown.sum())} row(s) carry a value but an unrecognised "
+            f"scale {bad}. Add the transform to _rescale rather than letting the metric "
+            f"contribute NaN silently."
+        )
+    nonfinite = have_value & ~np.isfinite(vs)
+    if nonfinite.any():
+        d = df.loc[nonfinite, ["metrics_name", "scale", "value"]].drop_duplicates().head(5)
+        raise ValueError(
+            f"_rescale: {int(nonfinite.sum())} row(s) transform to a non-finite value, "
+            f"which would propagate into every occupation. Most often a benchmark that "
+            f"has reached its ceiling (accuracy 100, error 0) or a non-positive value "
+            f"under a log scale. Declare the metric saturated instead.\n{d}"
+        )
     return vs
 
 
