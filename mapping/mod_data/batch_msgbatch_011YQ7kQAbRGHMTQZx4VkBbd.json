@@ -1,0 +1,13 @@
+{
+  "model": "claude-opus-5",
+  "effort": "high",
+  "replicates": 3,
+  "tag": "activity_nonsocial",
+  "kind": "element_levels",
+  "blocks": [
+    "activity_nonsocial"
+  ],
+  "batch_id": "msgbatch_011YQ7kQAbRGHMTQZx4VkBbd",
+  "requests": 936,
+  "submitted_utc": "2026-08-07T18:26:37+00:00"
+}

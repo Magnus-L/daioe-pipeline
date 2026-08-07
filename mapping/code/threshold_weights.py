@@ -31,11 +31,14 @@ MAP = Path(__file__).resolve().parents[1]
 ROOT = MAP.parent
 RAWD = ROOT / "data" / "raw"
 
-# block -> (workbook, regex selecting that domain's leaf elements)
+# block -> (workbook, regex selecting that domain's leaf elements). The two activity blocks share
+# a workbook and a domain deliberately: their weights are shares of the SAME 41-activity domain, so
+# together they sum to 1 per occupation and the task-level construction is a complete decomposition.
 SOURCES = {
-    "ability":      ("Abilities_Onet_Feb2018_22_2.xlsx",       r"^1\.A\."),
-    "social_skill": ("Skills_Onet_Feb2018_22_2.xlsx",          r"^2\.[AB]\."),
-    "activity":     ("Work_Activities_Onet_Feb2018_22_2.xlsx", r"^4\.A\."),
+    "ability":            ("Abilities_Onet_Feb2018_22_2.xlsx",       r"^1\.A\."),
+    "social_skill":       ("Skills_Onet_Feb2018_22_2.xlsx",          r"^2\.[AB]\."),
+    "activity":           ("Work_Activities_Onet_Feb2018_22_2.xlsx", r"^4\.A\."),
+    "activity_nonsocial": ("Work_Activities_Onet_Feb2018_22_2.xlsx", r"^4\.A\."),
 }
 
 
