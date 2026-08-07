@@ -103,8 +103,15 @@ def _theta(scale: str, v: np.ndarray, h: float) -> np.ndarray:
     raise ValueError(f"_theta: unhandled scale {scale!r}")
 
 
-def build_capability(cfg) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Return (per-benchmark-year capability, per-application-year capability + s.e.)."""
+def build_capability(cfg, alpha: float = 1.0) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Return (per-benchmark-year capability, per-application-year capability + s.e.).
+
+    ``alpha`` is the discrimination slope, the second calibrated parameter of the design and
+    the analogue of delta in the social discount. It sets how sharply the information weight
+    concentrates around the human anchor: alpha -> 0 weights every benchmark nearly equally
+    and approaches the published unweighted treatment, while large alpha counts only
+    benchmarks close to parity. Grid it and report it the way delta is gridded.
+    """
     fd = pd.read_parquet(ROOT / "data/out/formated_data.parquet")
     sourced = load_sourced_anchors()
     # fill in the anchors the frozen sheet lacks, then apply the units erratum
@@ -137,7 +144,7 @@ def build_capability(cfg) -> tuple[pd.DataFrame, pd.DataFrame]:
         spans.append(full)
     bench = pd.concat(spans, ignore_index=True)
 
-    bench["pi"] = 1.0 / (1.0 + np.exp(-bench["theta"]))
+    bench["pi"] = 1.0 / (1.0 + np.exp(-alpha * bench["theta"]))
     bench["w"] = bench["pi"] * (1.0 - bench["pi"])
 
     # --- progress: information-weighted mean of WITHIN-benchmark changes -----------------
