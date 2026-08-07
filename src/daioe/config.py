@@ -96,6 +96,27 @@ class Config:
         (Phase 2 annual refresh; empty list = frozen baseline, bit-exact)."""
         return [(self.root / p).resolve() for p in (self.raw.get("benchmark_updates") or [])]
 
+    @property
+    def benchmark_extensions(self) -> list[Path]:
+        """Track B extension workbooks: NEW metrics and subdomains (the second door).
+
+        Distinct from ``benchmark_updates``, which is basket-faithful and refuses anything the
+        frozen sheet does not know. Each extension workbook carries a ``measures`` and a
+        ``metrics`` sheet; the loader's guards are in ``stage2_ai_progress._load_extensions``.
+        Empty list = frozen baseline, bit-exact.
+        """
+        return [(self.root / p).resolve() for p in (self.raw.get("benchmark_extensions") or [])]
+
+    @property
+    def frozen_year_final(self) -> int:
+        """Last year of the PUBLISHED window, which bounds where an extension may link.
+
+        Distinct from ``year_final``, which moves with each refresh. Freeze-history means no
+        extension may alter a value inside the published window, so the earliest admissible
+        chain point is this year plus one.
+        """
+        return int(self.raw.get("frozen_year_final", 2023))
+
     # --- path resolution ---
     def path(self, key: str) -> Path:
         """Resolve a configured path key (raw, reference, enriched_ref, out, reports)."""

@@ -106,12 +106,22 @@ def build_updates(specs: list[SeriesSpec], data_dir: Path) -> tuple[pd.DataFrame
         if spec.source != "epoch":
             continue
         spec.validate()
-        f = data_dir / f"{spec.source_series}_external.csv"
-        if not f.exists():
+        # Epoch names its own harness runs "<series>.csv" and externally collected scores
+        # "<series>_external.csv". The distinction is not cosmetic: an Epoch-run series has a
+        # single known evaluation protocol, while an external one carries whatever protocol the
+        # reporter used. Which file we read is therefore recorded in provenance, and a spec may
+        # declare it outright rather than rely on the naming.
+        candidates = ([data_dir / spec.source_file] if spec.source_file else
+                      [data_dir / f"{spec.source_series}.csv",
+                       data_dir / f"{spec.source_series}_external.csv"])
+        f = next((c for c in candidates if c.exists()), None)
+        if f is None:
             raise FileNotFoundError(
-                f"{spec.metrics_name}: {f.name} not in the Epoch dump. The series may have been "
-                f"renamed or withdrawn; do not substitute a similar one without re-checking."
+                f"{spec.metrics_name}: none of {[c.name for c in candidates]} is in the Epoch "
+                f"dump. The series may have been renamed or withdrawn; do not substitute a "
+                f"similar one without re-checking."
             )
+        harness = "epoch-run" if not f.name.endswith("_external.csv") else "external"
         df = pd.read_csv(f)
         for col in (spec.score_col, spec.date_col, "Model version"):
             if col not in df.columns:
@@ -120,7 +130,7 @@ def build_updates(specs: list[SeriesSpec], data_dir: Path) -> tuple[pd.DataFrame
                     f"Available: {sorted(df.columns)}"
                 )
         front, quarantine = _frontier(df, spec)
-        prov_files[f.name] = {"sha256": _sha256(f), **quarantine}
+        prov_files[f.name] = {"sha256": _sha256(f), "evaluation": harness, **quarantine}
         for _, r in front.iterrows():
             rows.append({
                 "parent_name": spec.parent_name,

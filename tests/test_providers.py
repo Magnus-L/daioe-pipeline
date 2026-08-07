@@ -114,5 +114,23 @@ def test_all_undated_is_fatal():
 
 
 def test_missing_series_file_names_the_metric(tmp_path: Path):
-    with pytest.raises(FileNotFoundError, match="not in the Epoch dump"):
+    with pytest.raises(FileNotFoundError, match="is in the Epoch"):
         epoch.build_updates([_spec(source_series="nope")], tmp_path)
+
+
+def test_epoch_run_and_external_files_are_distinguished(tmp_path: Path):
+    """Epoch names its own harness runs '<s>.csv' and collected scores '<s>_external.csv'.
+
+    The distinction is not cosmetic: an Epoch-run series has one known evaluation protocol
+    while an external one carries whatever the reporter used, so which file was read has to
+    reach provenance.
+    """
+    df = _frame([0.5, 0.7], ["2024-01-01", "2025-01-01"])
+    (tmp_path / "s.csv").write_text(df.to_csv(index=False))
+    _, prov = epoch.build_updates([_spec(value_multiplier=100.0)], tmp_path)
+    assert prov["files"]["s.csv"]["evaluation"] == "epoch-run"
+
+    (tmp_path / "s.csv").unlink()
+    (tmp_path / "s_external.csv").write_text(df.to_csv(index=False))
+    _, prov = epoch.build_updates([_spec(value_multiplier=100.0)], tmp_path)
+    assert prov["files"]["s_external.csv"]["evaluation"] == "external"

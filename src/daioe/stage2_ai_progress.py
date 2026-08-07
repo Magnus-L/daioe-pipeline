@@ -196,6 +196,122 @@ def _load_updates(cfg) -> pd.DataFrame | None:
     return pd.concat(frames, ignore_index=True)
 
 
+def _load_extensions(cfg) -> tuple[pd.DataFrame, pd.DataFrame] | None:
+    """Load Track B extension workbooks: the second, wider door.
+
+    ``_load_updates`` above is basket-faithful by design: it refuses any metric the frozen
+    sheet does not already know. That is correct for an annual refresh and fatal for growth,
+    because new benchmarks and new capability subdomains are exactly what the measure must
+    absorb as AI moves. This is the door they come through.
+
+    An extension workbook carries TWO sheets. ``measures`` holds the observations, in the same
+    schema as a refresh. ``metrics`` declares each new series, and the declarations are what
+    make admission checkable rather than discretionary. Per
+    ``notes/ADMISSION-rule-metrics-and-subdomains_2026-08-07.md``:
+
+      metrics_name, parent_name, scale, target, target_label, target_source,
+      protocol, chain_year, source, retrieved
+
+    Seven guards, each of which raises rather than passing silently:
+
+    1. the metric must NOT already exist; refreshes of known series use the other door;
+    2. ``scale`` must be one of the eight families, since it is keyed on metrics_name and an
+       unknown one yields NaN ``value_scaled`` with no error path;
+    3. ``target`` must be present and numeric, because a series with no anchor can never be
+       recognised as saturated and will behave like the 48 video-game series that were beaten
+       years before anyone noticed;
+    4. ``protocol`` must be pure_model or system_level and constant within a series; mixing is
+       what refuted HumanEval's archived tail;
+    5. ``chain_year`` must lie after the frozen window. Freeze-history is not negotiable: an
+       extension may not change a value that has been published;
+    6. no observation may predate its series' chain year, which is the same rule stated on the
+       data rather than on the declaration;
+    7. ``source`` and ``retrieved`` must be present, so a vintage can say where it came from.
+    """
+    paths = cfg.benchmark_extensions
+    if not paths:
+        return None
+
+    from .providers.registry import PROTOCOLS, SCALES
+
+    frozen_metrics = io.read_excel_sheet(
+        cfg.raw_file("measures_metrics_newdata2023.xlsx"), sheet="metrics"
+    )
+    known = set(frozen_metrics["metrics_name"].dropna().astype(str))
+    first_admissible_year = cfg.frozen_year_final + 1
+
+    m_frames, k_frames = [], []
+    for p in paths:
+        xl = pd.ExcelFile(p)
+        missing_sheets = {"measures", "metrics"} - set(s.lower() for s in xl.sheet_names)
+        if missing_sheets:
+            raise ValueError(
+                f"{p.name}: an extension workbook needs both a 'measures' and a 'metrics' "
+                f"sheet (missing {sorted(missing_sheets)}). The metrics sheet is what makes "
+                f"admission checkable; without it a new series has no declared scale or anchor."
+            )
+        meta = pd.read_excel(p, sheet_name="metrics")
+        obs = pd.read_excel(p, sheet_name="measures")
+
+        need_meta = ["metrics_name", "parent_name", "scale", "target", "protocol",
+                     "chain_year", "source", "retrieved"]
+        miss = [c for c in need_meta if c not in meta.columns]
+        if miss:
+            raise ValueError(f"{p.name}: metrics sheet missing {miss}")
+        need_obs = ["parent_name", "metrics_name", "papername", "name", "date", "value"]
+        miss = [c for c in need_obs if c not in obs.columns]
+        if miss:
+            raise ValueError(f"{p.name}: measures sheet missing {miss}")
+
+        # 1. not already known
+        clash = sorted(set(meta["metrics_name"].astype(str)) & known)
+        if clash:
+            raise ValueError(
+                f"{p.name}: {clash[:5]} already exist in the frozen metrics sheet. Refreshes of "
+                f"known series go through benchmark_updates, which is basket-faithful; this door "
+                f"is for new series only."
+            )
+        # 2-4, 7: declarations
+        for _, r in meta.iterrows():
+            nm = r["metrics_name"]
+            if r["scale"] not in SCALES:
+                raise ValueError(f"{p.name}: {nm}: scale {r['scale']!r} is not one of the eight "
+                                 f"families; add the transform explicitly rather than let it "
+                                 f"contribute NaN")
+            if pd.isna(r["target"]) or not np.isfinite(float(r["target"])):
+                raise ValueError(f"{p.name}: {nm}: a numeric anchor (target) is required; a "
+                                 f"series without one can never be retired on evidence")
+            if r["protocol"] not in PROTOCOLS:
+                raise ValueError(f"{p.name}: {nm}: protocol must be one of {sorted(PROTOCOLS)}")
+            if pd.isna(r["source"]) or pd.isna(r["retrieved"]):
+                raise ValueError(f"{p.name}: {nm}: source and retrieved are required for provenance")
+            # 5. chain year after the frozen window
+            cy = int(r["chain_year"])
+            if cy < first_admissible_year:
+                raise ValueError(
+                    f"{p.name}: {nm}: chain_year {cy} is inside the frozen window; the earliest "
+                    f"admissible link point is {first_admissible_year}. Freeze-history means an "
+                    f"extension may not change a published value."
+                )
+        # 6. the same rule, checked on the observations
+        chain = meta.set_index("metrics_name")["chain_year"].astype(int).to_dict()
+        yrs = pd.to_datetime(obs["date"], errors="coerce").dt.year
+        if yrs.isna().any():
+            bad = obs.loc[yrs.isna(), "date"].astype(str).tolist()[:5]
+            raise ValueError(f"{p.name}: unparseable dates {bad}")
+        early = obs[yrs < obs["metrics_name"].map(chain)]
+        if len(early):
+            raise ValueError(
+                f"{p.name}: {len(early)} observation(s) predate their series' chain year "
+                f"(first: {early.iloc[0]['metrics_name']} at {early.iloc[0]['date']}). A new "
+                f"series contributes from its link point forward, never before it."
+            )
+        m_frames.append(obs[need_obs])
+        k_frames.append(meta)
+
+    return pd.concat(m_frames, ignore_index=True), pd.concat(k_frames, ignore_index=True)
+
+
 def _build_measures(cfg) -> pd.DataFrame:
     """Construct the merged MEASURES panel (do-file 144-176).
 
@@ -214,6 +330,10 @@ def _build_measures(cfg) -> pd.DataFrame:
     new = new[new["metrics_name"].notna() & (new["metrics_name"].astype(str).str.strip() != "")]
     # Phase 2 refresh: append update-workbook rows BEFORE the date/dedup steps so
     # they flow through the identical idioms as the frozen rows. Empty list = no-op.
+    ext = _load_extensions(cfg)
+    if ext is not None:
+        ext_obs, _ = ext
+        new = pd.concat([new, ext_obs[new.columns]], ignore_index=True)
     upd = _load_updates(cfg)
     if upd is not None:
         new = pd.concat([new, upd], ignore_index=True)
@@ -315,6 +435,20 @@ def _build_axis_label(cfg) -> pd.DataFrame:
     # metrics_name is unique across the merged metrics (verified), so m:1 merge
     # on metrics_name below is well-defined.
     al = al.drop_duplicates(subset=["metrics_name"]).reset_index(drop=True)
+
+    # Track B: append the declarations of any extension series, so their scale and anchor
+    # reach _rescale and the threshold logic exactly as the frozen ones do. No-op when no
+    # extension is configured, which keeps the frozen build bit-exact.
+    ext = _load_extensions(cfg)
+    if ext is not None:
+        _, meta = ext
+        add = meta.rename(columns={"scale": "scale", "target": "target"})
+        add["axis_label"] = add.get("axis_label", add["scale"])
+        add["target_label"] = add.get("target_label", "declared anchor")
+        al = pd.concat(
+            [al, add[["axis_label", "metrics_name", "scale", "target", "target_label"]]],
+            ignore_index=True,
+        ).drop_duplicates(subset=["metrics_name"]).reset_index(drop=True)
     return al
 
 

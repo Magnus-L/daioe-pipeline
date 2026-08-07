@@ -52,6 +52,7 @@ class SeriesSpec:
     protocol: str
     licence: str
     value_multiplier: float = 1.0   # e.g. 100.0 to bring a 0-1 proportion onto a 0-100 scale
+    source_file: str = ""           # declare it when the default naming does not apply
     source_note: str = ""
 
     def validate(self) -> None:
