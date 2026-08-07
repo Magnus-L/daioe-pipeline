@@ -191,3 +191,19 @@ ai_app_id,ability_id,label,frs_score,note
 12,43,low,0.0,[Software engineering] does little for 'Peripheral Vision' (the ability to see objects or the movement of objects to one's side when the eyes are looking ahead). FRS 2018 scores this pair 0.00.
 12,47,low,0.0,[Software engineering] does little for 'Glare Sensitivity' (the ability to see objects in the presence of glare or bright lighting). FRS 2018 scores this pair 0.00.
 12,52,low,0.0,[Software engineering] does little for 'Speech Clarity' (the ability to speak clearly so others can understand you). FRS 2018 scores this pair 0.00.
+13,8,high,1.0,[Conversation] engages 'Deductive Reasoning' (the ability to apply general rules to specific problems to produce answers that make sense). FRS 2018 scores this pair 1.00.
+13,1,high,0.75,[Conversation] engages 'Oral Comprehension' (the ability to listen to and understand information and ideas presented through spoken words and sentences). FRS 2018 scores this pair 0.75.
+13,3,high,0.75,[Conversation] engages 'Oral Expression' (the ability to communicate information and ideas in speaking so others will understand). FRS 2018 scores this pair 0.75.
+13,4,high,0.75,[Conversation] engages 'Written Expression' (the ability to communicate information and ideas in writing so others will understand). FRS 2018 scores this pair 0.75.
+13,9,high,0.75,[Conversation] engages 'Inductive Reasoning' (the ability to combine pieces of information to form general rules or conclusions (including finding relationships among seemingly unrelated events)). FRS 2018 scores this pair 0.75.
+13,14,high,0.75,"[Conversation] engages 'Memorization' (the ability to remember information such as words, numbers, pictures, and procedures). FRS 2018 scores this pair 0.75."
+13,51,high,0.75,[Conversation] engages 'Speech Recognition' (the ability to identify and understand the speech of another person). FRS 2018 scores this pair 0.75.
+13,52,high,0.75,[Conversation] engages 'Speech Clarity' (the ability to speak clearly so others can understand you). FRS 2018 scores this pair 0.75.
+13,13,low,0.0,"[Conversation] does little for 'Number Facility' (the ability to add, subtract, multiply, or divide quickly and correctly). FRS 2018 scores this pair 0.00."
+13,24,low,0.0,"[Conversation] does little for 'Finger Dexterity' (the ability to make precisely coordinated movements of the fingers of one or both hands to grasp, manipulate, or assemble very small objects). FRS 2018 scores this pair 0.00."
+13,28,low,0.0,[Conversation] does little for 'Rate Control' (the ability to time your movements or the movement of equipment in anticipation of changes in speed and/or direction of a moving object or scene). FRS 2018 scores this pair 0.00.
+13,32,low,0.0,"[Conversation] does little for 'Static Strength' (the ability to exert maximum muscle force to lift, push, pull, or carry objects). FRS 2018 scores this pair 0.00."
+13,35,low,0.0,[Conversation] does little for 'Trunk Strength' (the ability to use abdominal and lower back muscles to support part of the body repeatedly or continuously without fatiguing). FRS 2018 scores this pair 0.00.
+13,39,low,0.0,"[Conversation] does little for 'Gross Body Coordination' (the ability to coordinate the movement of your arms, legs, and torso together when the whole body is in motion). FRS 2018 scores this pair 0.00."
+13,43,low,0.0,[Conversation] does little for 'Peripheral Vision' (the ability to see objects or the movement of objects to one's side when the eyes are looking ahead). FRS 2018 scores this pair 0.00.
+13,47,low,0.0,[Conversation] does little for 'Glare Sensitivity' (the ability to see objects in the presence of glare or bright lighting). FRS 2018 scores this pair 0.00.

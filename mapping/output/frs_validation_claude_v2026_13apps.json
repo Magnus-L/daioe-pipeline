@@ -1,0 +1,138 @@
+{
+  "matrix": "output/mapping_matrix_claude_v2026_13apps.csv",
+  "applications_compared": 13,
+  "all_cells": {
+    "n": 676,
+    "pearson": 0.8912,
+    "spearman": 0.8608,
+    "mae": 0.0835,
+    "bias": -0.0217
+  },
+  "held_out": {
+    "n": 468,
+    "pearson": 0.7778,
+    "spearman": 0.7927,
+    "mae": 0.0978,
+    "bias": -0.0208
+  },
+  "anchored_cells_excluded": 208,
+  "per_application_held_out": [
+    {
+      "ai_app_id": 1,
+      "name": "Abstract strategy games",
+      "n": 36,
+      "pearson": 0.7537,
+      "spearman": 0.6514,
+      "mae": 0.1694,
+      "bias": -0.1306
+    },
+    {
+      "ai_app_id": 2,
+      "name": "Real-time video games",
+      "n": 36,
+      "pearson": 0.62,
+      "spearman": 0.6337,
+      "mae": 0.2103,
+      "bias": -0.1169
+    },
+    {
+      "ai_app_id": 3,
+      "name": "Image recognition",
+      "n": 36,
+      "pearson": 0.7164,
+      "spearman": 0.7121,
+      "mae": 0.12,
+      "bias": -0.0106
+    },
+    {
+      "ai_app_id": 4,
+      "name": "Visual question answering",
+      "n": 36,
+      "pearson": 0.9155,
+      "spearman": 0.9011,
+      "mae": 0.0772,
+      "bias": 0.0328
+    },
+    {
+      "ai_app_id": 5,
+      "name": "Generating images",
+      "n": 36,
+      "pearson": 0.7371,
+      "spearman": 0.7498,
+      "mae": 0.0825,
+      "bias": -0.0047
+    },
+    {
+      "ai_app_id": 6,
+      "name": "Reading comprehension",
+      "n": 36,
+      "pearson": 0.8861,
+      "spearman": 0.8717,
+      "mae": 0.0425,
+      "bias": 0.0231
+    },
+    {
+      "ai_app_id": 7,
+      "name": "Language modeling",
+      "n": 36,
+      "pearson": 0.8767,
+      "spearman": 0.9201,
+      "mae": 0.0658,
+      "bias": 0.0269
+    },
+    {
+      "ai_app_id": 8,
+      "name": "Translation",
+      "n": 36,
+      "pearson": 0.7148,
+      "spearman": 0.7959,
+      "mae": 0.07,
+      "bias": -0.0506
+    },
+    {
+      "ai_app_id": 9,
+      "name": "Speech recognition",
+      "n": 36,
+      "pearson": 0.6593,
+      "spearman": 0.8052,
+      "mae": 0.0936,
+      "bias": -0.0714
+    },
+    {
+      "ai_app_id": 10,
+      "name": "Agentic task execution",
+      "n": 36,
+      "pearson": 0.8027,
+      "spearman": 0.7887,
+      "mae": 0.13,
+      "bias": 0.0189
+    },
+    {
+      "ai_app_id": 11,
+      "name": "Mathematical and scientific reasoning",
+      "n": 36,
+      "pearson": 0.7866,
+      "spearman": 0.7959,
+      "mae": 0.0778,
+      "bias": 0.0139
+    },
+    {
+      "ai_app_id": 12,
+      "name": "Software engineering",
+      "n": 36,
+      "pearson": 0.8723,
+      "spearman": 0.8953,
+      "mae": 0.0553,
+      "bias": 0.0192
+    },
+    {
+      "ai_app_id": 13,
+      "name": "Conversation",
+      "n": 36,
+      "pearson": 0.847,
+      "spearman": 0.8993,
+      "mae": 0.0764,
+      "bias": -0.0208
+    }
+  ]
+}
