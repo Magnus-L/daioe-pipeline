@@ -129,6 +129,40 @@ def test_excluding_anchored_cells_lowers_agreement():
     assert v.stats(held)["pearson"] < v.stats(comp)["pearson"]
 
 
+# --------------------------- the two id systems ---------------------------
+
+def test_mapping_ids_are_not_daioe_ids(apps):
+    """The mapping pipeline numbers applications 1-12 in its own space; DAIOE numbers them in
+    another. They coincide for exactly one of the twelve, so anything that assumes they align
+    misattributes eleven rows of the matrix to the wrong applications, silently and plausibly.
+    """
+    differ = int((apps.ai_app_id != apps.daioe_app_id).sum())
+    assert differ >= 10, f"only {differ} of {len(apps)} ids differ; check the crosswalk is real"
+    assert apps.daioe_app_id.is_unique
+
+
+def test_crosswalk_matches_daioe_and_software_engineering_reuses_id_4(apps):
+    """`_APP_ID`'s keys are FRS row names, so the crosswalk is a lookup, not a judgement.
+
+    Software engineering matters most here: DAIOE already carries
+    "generating computer programs from specifications" as application 4, it was simply never in
+    `allapps`. Minting a new id for it would have created one application under two ids, and the
+    two would then have been aggregated as if they were different things.
+    """
+    sys.path.insert(0, str(ROOT / "src"))
+    from daioe.stage2_ai_progress import _APP_ID
+
+    for _, a in apps.iterrows():
+        expected = _APP_ID.get(str(a.frs_row).strip().lower())
+        if a.daioe_id_status == "existing":
+            assert expected == a.daioe_app_id, f"{a['name']} should map to DAIOE id {expected}"
+        else:
+            assert expected is None, f"{a['name']} is marked new but DAIOE already knows it"
+
+    se = apps.set_index("name").loc["Software engineering"]
+    assert se.daioe_app_id == 4 and se.daioe_id_status == "existing"
+
+
 # --------------------------- request construction ---------------------------
 
 def test_sweep_sample_avoids_anchored_cells_and_is_stratified():
