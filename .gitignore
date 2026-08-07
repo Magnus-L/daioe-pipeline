@@ -7,3 +7,6 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 .ipynb_checkpoints/
+
+# regenerable batch payloads (rebuild with --dry-run)
+mapping/mod_data/batch_requests_*.jsonl

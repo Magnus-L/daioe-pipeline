@@ -1,0 +1,102 @@
+{
+  "matrix": "output/mapping_matrix_9x58_v2018.csv",
+  "applications_compared": 9,
+  "all_cells": {
+    "n": 468,
+    "pearson": 0.7762,
+    "spearman": 0.7859,
+    "mae": 0.1258,
+    "bias": -0.098
+  },
+  "held_out": {
+    "n": 416,
+    "pearson": 0.6887,
+    "spearman": 0.7405,
+    "mae": 0.1397,
+    "bias": -0.1085
+  },
+  "anchored_cells_excluded": 52,
+  "per_application_held_out": [
+    {
+      "ai_app_id": 1,
+      "name": "Abstract strategy games",
+      "n": 42,
+      "pearson": 0.841,
+      "spearman": 0.7582,
+      "mae": 0.1696,
+      "bias": -0.1637
+    },
+    {
+      "ai_app_id": 2,
+      "name": "Real-time video games",
+      "n": 47,
+      "pearson": 0.4002,
+      "spearman": 0.522,
+      "mae": 0.2473,
+      "bias": -0.141
+    },
+    {
+      "ai_app_id": 3,
+      "name": "Image recognition",
+      "n": 42,
+      "pearson": 0.5887,
+      "spearman": 0.6499,
+      "mae": 0.1577,
+      "bias": -0.1161
+    },
+    {
+      "ai_app_id": 4,
+      "name": "Visual question answering",
+      "n": 51,
+      "pearson": 0.6135,
+      "spearman": 0.6728,
+      "mae": 0.1863,
+      "bias": -0.1618
+    },
+    {
+      "ai_app_id": 5,
+      "name": "Generating images",
+      "n": 46,
+      "pearson": 0.6916,
+      "spearman": 0.6744,
+      "mae": 0.1033,
+      "bias": -0.0924
+    },
+    {
+      "ai_app_id": 6,
+      "name": "Reading comprehension",
+      "n": 45,
+      "pearson": 0.8949,
+      "spearman": 0.8886,
+      "mae": 0.0667,
+      "bias": -0.0389
+    },
+    {
+      "ai_app_id": 7,
+      "name": "Language modeling",
+      "n": 51,
+      "pearson": 0.8365,
+      "spearman": 0.9308,
+      "mae": 0.0931,
+      "bias": -0.049
+    },
+    {
+      "ai_app_id": 8,
+      "name": "Translation",
+      "n": 46,
+      "pearson": 0.8037,
+      "spearman": 0.8008,
+      "mae": 0.1141,
+      "bias": -0.1141
+    },
+    {
+      "ai_app_id": 9,
+      "name": "Speech recognition",
+      "n": 46,
+      "pearson": 0.5292,
+      "spearman": 0.5896,
+      "mae": 0.1196,
+      "bias": -0.1033
+    }
+  ]
+}

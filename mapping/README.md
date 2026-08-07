@@ -50,28 +50,56 @@ the register of the existing nine and to be explicit about the measured object. 
 definition says plainly that the object is the model *with* its scaffolding, because that is what
 a firm deploys and because the protocol-purity doctrine requires the object to be declared.
 
-## Three things that must be settled before this is run, and none is optional
+## The v2 pipeline (7 Aug 2026): what replaced the three blockers
 
-**1. New applications currently have no anchors, and the prompt is different without them.**
-`estimate_mapping.py` groups anchors by application (`anchors_by_app.get(app_id)`), so
-applications 10 to 12 would be scored with empty high/low examples while the original nine were
-scored with up to five of each. That is not the same instrument. The FRS-derived anchors cannot
-be extended mechanically, because a new application has no FRS row to derive them from, so
-someone has to write a handful of high and low examples per new application. That is a small,
-bounded research judgement and it belongs to Magnus and Erik, not to the tool.
+Full reasoning in `notes/MAPPING-claude-port-and-frs16_2026-08-07.md`. In short:
 
-**2. The whole matrix must be re-scored in one run, not appended to.**
-The existing rows were scored by `gpt-4o` and `gpt-4o-mini` in October 2018-vantage prompting.
-Appending rows scored by any other model, or at any other vantage, recreates precisely the
-defect that argued for adopting this matrix in the first place: a hybrid in which the relative
-weight of an old subdomain against a new one depends on which instrument scored it. Re-score all
-twelve together.
+**Blocker 1 (new applications have no anchors) is mostly gone.** FRS 2018 scored **sixteen**
+applications, not nine, and three of the seven DAIOE never used are the subdomains we are adding:
+agentic execution, maths and science reasoning, and software engineering. Their anchors are derived
+from FRS by the same procedure as everyone else's. Only the agentic mapping is a judgement rather
+than a lookup, and the evidence for it is set out in the note.
 
-**3. It needs an OpenAI API key, and that is Magnus's call.**
-`call_llm` uses the OpenAI SDK directly. Roughly 12 applications x 58 abilities x 2 models is
-about 1,400 short calls. The content sent is public O*NET ability definitions and our own
-application definitions, with no register or personal data, so it sits in the green zone, but it
-is an egress decision and the key is not mine to supply.
+**Blocker 2 (re-score everything in one run) stands, and is now enforced.** `applications_v2.csv`
+carries all twelve, and `estimate_mapping_claude.py` scores them together or not at all.
+
+**Blocker 3 is now an Anthropic key, not an OpenAI one.** Same green-zone payload, same egress
+decision. `ANTHROPIC_API_KEY` or `ant auth login`.
+
+Two further defects turned up while porting and are fixed here: the published run passed **no
+application definitions at all** (`app.get("short_definition", "")` against a file with no such
+column), and anchor coverage ranged from 17 high / 17 low to 1 high / 0 low across the nine, so the
+applications were never scored by the same instrument.
+
+## v2 files
+
+| | |
+|---|---|
+| `raw_data/applications_v2.csv` | twelve applications, each with a definition and its declared FRS row |
+| `code/build_anchors_v2.py` | balanced anchors, each application's own top-8 / bottom-8 from its FRS row |
+| `raw_data/anchors_v2.csv` | the anchors themselves |
+| `mod_data/anchor_cells_v2.csv` | the held-out set: cells whose FRS value the prompt reveals |
+| `code/estimate_mapping_claude.py` | the scorer: Opus 5, structured outputs, batch, caching, replicates |
+| `code/validate_mapping_v2.py` | agreement with FRS, reported both all-cells and held-out |
+
+## What the published validation figure is worth
+
+`validate_mapping_v2.py` reproduces Online Appendix J exactly (Pearson 0.7762, MAE 0.1258, n=468),
+which is how we know the alignment is right. Excluding the 52 cells whose FRS value appeared in the
+prompt that produced them, it is **0.6887**. The appendix is not wrong about what it computed, but
+0.689 is the bar a new run must clear, not 0.776.
+
+## Run order
+
+    python code/build_anchors_v2.py
+    python code/estimate_mapping_claude.py --dry-run                      # requests + cost, no API
+    for e in low medium high xhigh; do                                    # ~$0.44 each
+      python code/estimate_mapping_claude.py --sync --sample 5 --replicates 1 --effort $e --tag sweep_$e
+      python code/validate_mapping_v2.py --matrix output/mapping_matrix_claude_vsweep_$e.csv --label sweep_$e
+    done
+    python code/estimate_mapping_claude.py --submit --effort <winner>     # full run, ~$11-15
+    python code/estimate_mapping_claude.py --collect <BATCH_ID>
+    python code/validate_mapping_v2.py --matrix output/mapping_matrix_claude_v2026.csv
 
 ## What follows once the matrix exists
 
