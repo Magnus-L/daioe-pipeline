@@ -1,0 +1,10 @@
+{
+  "model": "claude-opus-5",
+  "effort": "high",
+  "replicates": 3,
+  "tag": "levels",
+  "kind": "activity_levels",
+  "batch_id": "msgbatch_011Yqss36mNXTSd4nXAEwq6a",
+  "requests": 663,
+  "submitted_utc": "2026-08-07T17:01:21+00:00"
+}
