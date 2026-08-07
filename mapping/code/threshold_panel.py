@@ -52,14 +52,14 @@ tw = _load("threshold_weights")
 
 def load_attained(blocks: list[str], elements: pd.DataFrame) -> pd.DataFrame:
     """Attained level per (application, element), assembled from the level-scoring runs."""
-    frames = []
-    for tag in ("activity", "ability_social_skill"):
-        p = MAP / "mod_data" / f"levels_cells_{tag}.csv"
-        if p.exists():
-            frames.append(pd.read_csv(p))
+    # Glob rather than a hardcoded tag list: a hardcoded list silently dropped the
+    # activity_nonsocial file when it arrived, and C2 degenerated to the social block while
+    # reporting success. Duplicate cells across files keep the last-written value.
+    frames = [pd.read_csv(p) for p in sorted((MAP / "mod_data").glob("levels_cells_*.csv"))]
     if not frames:
         raise SystemExit("no level-scoring output found; run score_activity_levels.py first")
-    lv = pd.concat(frames, ignore_index=True)
+    lv = (pd.concat(frames, ignore_index=True)
+          .drop_duplicates(["ai_app_id", "ability_id"], keep="last"))
 
     keep = elements[elements.block.isin(blocks)]
     lv = lv[lv.ability_id.isin(keep.ability_id)]
