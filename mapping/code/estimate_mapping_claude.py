@@ -196,27 +196,73 @@ def build_requests(apps, abilities, anchors, replicates: int, effort: str, max_t
 # ------------------------------- execution -------------------------------
 
 def _client():
+    """Build a client, bridging to the `ant` CLI profile when the SDK is too old to read it.
+
+    Credential resolution is ANTHROPIC_API_KEY, then ANTHROPIC_AUTH_TOKEN, then an `ant auth login`
+    profile. Recent SDKs walk that whole chain themselves; the version pinned here (0.91.0) stops
+    after the two environment variables, so a machine authenticated only by `ant auth login` fails
+    with "Could not resolve authentication method" even though a valid profile exists. Rather than
+    upgrade the SDK underneath other code in this environment, fetch the profile's short-lived
+    access token and pass it explicitly.
+
+    OAuth access tokens are bearer tokens rather than API keys, so they go in `auth_token` and need
+    the oauth beta header. They are short-lived and are not refreshed once handed over, which is why
+    this is called per run rather than cached.
+    """
+    import subprocess
+
     import anthropic
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print("note: ANTHROPIC_API_KEY is unset; relying on an `ant auth login` profile.", file=sys.stderr)
-    return anthropic.Anthropic()
+
+    if os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"):
+        return anthropic.Anthropic()
+
+    try:
+        token = subprocess.run(
+            ["ant", "auth", "print-credentials", "--access-token"],
+            capture_output=True, text=True, check=True, timeout=30,
+        ).stdout.strip()
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise SystemExit(
+            "No credential found. Set ANTHROPIC_API_KEY, or run `ant auth login`.\n"
+            f"(tried the ant CLI and it failed: {exc})"
+        ) from exc
+    if not token:
+        raise SystemExit("`ant auth print-credentials --access-token` returned nothing; try `ant auth login` again.")
+
+    print("auth: using the ant profile's OAuth token (short-lived)", file=sys.stderr)
+    return anthropic.Anthropic(
+        auth_token=token,
+        default_headers={"anthropic-beta": "oauth-2025-04-20"},
+    )
 
 
-def run_sync(reqs: list[dict], sleep: float = 0.0) -> pd.DataFrame:
-    """Score synchronously. For calibration sweeps, where waiting on a batch is the wrong trade."""
+def run_sync(reqs: list[dict], workers: int = 8) -> pd.DataFrame:
+    """Score synchronously, a few at a time. For calibration sweeps, where a batch wait is the
+    wrong trade.
+
+    Modest concurrency rather than none: the cells are independent, and 240 sequential calls at
+    high effort is most of an hour. Results are keyed by custom_id, so completion order is
+    irrelevant. The SDK already retries 429 and 5xx with backoff, so no throttling here.
+    """
+    from concurrent.futures import ThreadPoolExecutor
+
     client = _client()
-    rows = []
-    for i, req in enumerate(reqs, 1):
+
+    def one(req: dict) -> dict:
         try:
             resp = client.messages.create(**req["params"])
             text = next(b.text for b in resp.content if b.type == "text")
-            rows.append(_row(req["custom_id"], json.loads(text), resp.usage))
+            return _row(req["custom_id"], json.loads(text), resp.usage)
         except Exception as exc:                                   # noqa: BLE001
-            rows.append(_row(req["custom_id"], None, None, error=str(exc)))
-        if i % 20 == 0:
-            print(f"  {i}/{len(reqs)}", file=sys.stderr)
-        if sleep:
-            time.sleep(sleep)
+            return _row(req["custom_id"], None, None, error=str(exc))
+
+    rows, done = [], 0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for row in pool.map(one, reqs):
+            rows.append(row)
+            done += 1
+            if done % 20 == 0 or done == len(reqs):
+                print(f"  {done}/{len(reqs)}", file=sys.stderr)
     return pd.DataFrame(rows)
 
 
@@ -261,7 +307,8 @@ def _row(custom_id: str, parsed: dict | None, usage, error: str = "") -> dict:
     row = {
         "ai_app_id": app_id, "ability_id": ability_id, "replicate": replicate,
         "r": np.nan, "rationale": "", "confidence": "", "error": error,
-        "input_tokens": np.nan, "output_tokens": np.nan, "cache_read_tokens": np.nan,
+        "input_tokens": np.nan, "output_tokens": np.nan,
+        "cache_read_tokens": np.nan, "cache_write_tokens": np.nan,
     }
     if parsed is not None:
         row["r"] = float(np.clip(float(parsed.get("r", np.nan)), 0.0, 1.0))
@@ -270,7 +317,9 @@ def _row(custom_id: str, parsed: dict | None, usage, error: str = "") -> dict:
     if usage is not None:
         row["input_tokens"] = getattr(usage, "input_tokens", np.nan)
         row["output_tokens"] = getattr(usage, "output_tokens", np.nan)
+        # input_tokens is the uncached remainder only; the prompt total is the sum of all three.
         row["cache_read_tokens"] = getattr(usage, "cache_read_input_tokens", np.nan)
+        row["cache_write_tokens"] = getattr(usage, "cache_creation_input_tokens", np.nan)
     return row
 
 
