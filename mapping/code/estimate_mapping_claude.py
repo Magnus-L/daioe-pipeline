@@ -392,6 +392,11 @@ def estimate_cost(reqs: list[dict], batch: bool) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--apps", default=str(RAW / "applications_v2.csv"))
+    ap.add_argument("--abilities", default=str(RAW / "abilities.csv"),
+                    help="element list to score against; abilities_v2.csv adds the 17 O*NET "
+                         "'Interacting With Others' work activities")
+    ap.add_argument("--only-ids", default="",
+                    help="comma-separated ability_id range/list, e.g. 59-75, to score a subset")
     ap.add_argument("--anchors", default=str(RAW / "anchors_v2.csv"))
     ap.add_argument("--replicates", type=int, default=3)
     ap.add_argument("--effort", default="high", choices=["low", "medium", "high", "xhigh", "max"])
@@ -409,7 +414,16 @@ def main() -> None:
     args = ap.parse_args()
 
     apps = pd.read_csv(args.apps)
-    abilities = pd.read_csv(RAW / "abilities.csv")
+    abilities = pd.read_csv(args.abilities)
+    if args.only_ids:
+        keep: set[int] = set()
+        for part in args.only_ids.split(","):
+            if "-" in part:
+                lo, hi = (int(x) for x in part.split("-"))
+                keep |= set(range(lo, hi + 1))
+            else:
+                keep.add(int(part))
+        abilities = abilities[abilities.ability_id.isin(keep)]
     anchors = pd.read_csv(args.anchors)
 
     meta = {"model": MODEL, "effort": args.effort, "replicates": args.replicates,

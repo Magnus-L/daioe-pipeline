@@ -69,6 +69,37 @@ def load_progress() -> pd.DataFrame:
     return s[["application", "year", "mean"]].rename(columns={"mean": "progress"})
 
 
+def load_activity_weights() -> pd.DataFrame:
+    """Occupation weights for O*NET's own 4.A.4 'Interacting With Others' work activities.
+
+    Built the same way as `element_impact` for abilities: level x importance, each normalised to its
+    own scale maximum so the two count equally, then shares within the block. O*NET scores level
+    1-7 and importance 1-5, matching how Engberg and the published pipeline handle both.
+
+    These 17 activities are O*NET's published social branch, not anyone's curation of it, which is
+    the point: they give the granularity the six social skills lack (leadership, care, negotiation,
+    service, teaching are separate here) while remaining a citation to O*NET.
+    """
+    d = pd.read_excel(ROOT / "data" / "raw" / "Work_Activities_Onet_Feb2018_22_2.xlsx")
+    d.columns = [c.strip() for c in d.columns]
+    leaf = d[d["Element ID"].astype(str).str.match(r"^4\.A\.\d+\.[a-z]\.\d+$")]
+    wide = leaf.pivot_table(index=["O*NET-SOC Code", "Element ID"], columns="Scale ID",
+                            values="Data Value").reset_index()
+    wide["v"] = (wide["LV"] / 7.0) * (wide["IM"] / 5.0)
+    w = wide.pivot_table(index="O*NET-SOC Code", columns="Element ID", values="v")
+    w.index.name = "occ_code_onet"
+
+    # Normalise over EVERY work activity, then keep the social ones. Normalising within the 17
+    # would make each occupation's social block sum to 1, and `combine` would then hand every
+    # occupation the same 50 per cent social weight, erasing the cross-occupation variation in
+    # social intensity that this whole exercise exists to measure. Sharing against the full activity
+    # domain is also what `skill_impact` already does for the six social skills, whose block sums to
+    # a varying 0.21 rather than to 1.
+    w = w.div(w.sum(axis=1), axis=0)
+    social = [c for c in w.columns if str(c).startswith("4.A.4.")]
+    return w[social]
+
+
 def load_weights(social_share: float | None) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Occupation weight profiles: 52-ability (r_oj) and the 58-element extension.
 
@@ -83,15 +114,31 @@ def load_weights(social_share: float | None) -> tuple[pd.DataFrame, pd.DataFrame
     sk = sk[sk.skill.isin(SOCIAL_SKILL_NAMES)]
     w6 = sk.pivot_table(index="occ_code_onet", columns="skill", values="skill_impact")
 
-    w58 = w52.join(w6, how="inner")
-    if social_share is not None:
-        # Rescale the social block to a stated share of total weight, for sensitivity.
-        cur = w58[SOCIAL_SKILL_NAMES].sum(axis=1)
-        rest = w58.drop(columns=SOCIAL_SKILL_NAMES).sum(axis=1)
-        factor = (social_share / (1.0 - social_share)) * rest / cur.replace(0, np.nan)
-        w58[SOCIAL_SKILL_NAMES] = w58[SOCIAL_SKILL_NAMES].mul(factor.fillna(0.0), axis=0)
-    w58 = w58.div(w58.sum(axis=1), axis=0)                       # renormalise to 1
+    w58 = combine(w52, w6, social_share)
     return w52, w58
+
+
+def combine(backbone: pd.DataFrame, block: pd.DataFrame, share: float | None) -> pd.DataFrame:
+    """Attach a social block to the 52-ability backbone and renormalise to 1.
+
+    The social block is a *slot*, not an addition: the six social skills and the seventeen
+    'Interacting With Others' activities are alternative occupants of it, never both. Three of the
+    six skills have near-exact activity counterparts (persuasion / selling or influencing,
+    negotiation / resolving conflicts, instructing / training and teaching), so using both would
+    count the same work twice.
+
+    `share` forces the block to a stated fraction of total weight; None keeps whatever share O*NET's
+    own scores imply, which varies by occupation and is the specification we want, since that
+    variation is the social intensity the measure is trying to see.
+    """
+    cols = list(block.columns)
+    out = backbone.join(block, how="inner")
+    if share is not None:
+        cur = out[cols].sum(axis=1)
+        rest = out.drop(columns=cols).sum(axis=1)
+        factor = (share / (1.0 - share)) * rest / cur.replace(0, np.nan)
+        out[cols] = out[cols].mul(factor.fillna(0.0), axis=0)
+    return out.div(out.sum(axis=1), axis=0)
 
 
 def load_social_score(delta: float) -> pd.Series:
