@@ -196,9 +196,16 @@ def main() -> None:
     scored = sorted(set(progress.application) & set(M_new.index))
     M_frs = matrix_frs18(scored)
 
+    # A2 splits what an A -> B contrast otherwise confounds. Going from A to B changes two things
+    # at once: the six social abilities enter the mapping matrix, AND the occupation-level discount
+    # comes off. Magnus's earlier prototype varied only the second (and with a different discount
+    # rule), which is why it saw agreement of 0.971 where this file first reported 0.913. With A2
+    # in between, A -> A2 is the cost of admitting social abilities and A2 -> B is the cost of
+    # retiring the discount, and the two can be told apart.
     panels = {
         "R0": build_panel(M_frs, w52, progress, social_score, args.scale_up),
         "A":  build_panel(M_new, w52, progress, social_score, args.scale_up),
+        "A2": build_panel(M_new, w58, progress, social_score, args.scale_up),
         "B":  build_panel(M_new, w58, progress, None, args.scale_up),
     }
     for k, v in panels.items():
