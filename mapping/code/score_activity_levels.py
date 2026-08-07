@@ -178,6 +178,10 @@ def collect_levels(emc, batch_id: str) -> pd.DataFrame:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--block", default="activity",
+                    help="comma-separated element blocks from abilities_v2.csv: "
+                         "activity, ability, social_skill. All 75 elements are anchored by O*NET.")
+    ap.add_argument("--tag", default="", help="output suffix; defaults to the block list")
     ap.add_argument("--replicates", type=int, default=3)
     ap.add_argument("--effort", default="high")
     ap.add_argument("--max-tokens", type=int, default=4000)
@@ -195,20 +199,25 @@ def main() -> None:
 
     apps = pd.read_csv(RAW / "applications_v2.csv")
     els = pd.read_csv(RAW / "abilities_v2.csv")
-    acts = els[els.block == "activity"]
+    blocks = [b.strip() for b in args.block.split(",")]
+    unknown = set(blocks) - set(els.block.unique())
+    if unknown:
+        raise SystemExit(f"unknown block(s) {sorted(unknown)}; have {sorted(els.block.unique())}")
+    acts = els[els.block.isin(blocks)]
+    tag = args.tag or "_".join(blocks)
     anchors = pd.read_excel(ROOT / "data" / "raw" / "onet_level_scale_anchors.xlsx")
     anchors.columns = [c.strip() for c in anchors.columns]
 
     if args.collect:
         scores = collect_levels(emc, args.collect)
-        scores.to_csv(MOD / "activity_levels_raw.csv", index=False)
+        scores.to_csv(MOD / f"levels_raw_{tag}.csv", index=False)
         cell = scores[scores.attained_level.notna()].groupby(["ai_app_id", "ability_id"]).agg(
             level=("attained_level", "median"), lo=("attained_level", "min"),
             hi=("attained_level", "max"), n=("attained_level", "size")).reset_index()
         cell["range"] = cell.hi - cell.lo
-        cell.to_csv(MOD / "activity_levels_cells.csv", index=False)
+        cell.to_csv(MOD / f"levels_cells_{tag}.csv", index=False)
         cell.pivot(index="ai_app_id", columns="ability_id", values="level").to_csv(
-            OUT / "activity_levels_matrix.csv")
+            OUT / f"levels_matrix_{tag}.csv")
         print(f"cells {len(cell)}  errors {int(scores.error.astype(bool).sum())}  "
               f"median replicate range {cell['range'].median():.2f}")
         return
@@ -222,7 +231,7 @@ def main() -> None:
         print(reqs[0]["params"]["messages"][0]["content"])
         return
     emc.submit_batch(reqs, {"model": MODEL, "effort": args.effort, "replicates": args.replicates,
-                            "tag": "levels", "kind": "activity_levels"})
+                            "tag": tag, "kind": "element_levels", "blocks": blocks})
 
 
 if __name__ == "__main__":
