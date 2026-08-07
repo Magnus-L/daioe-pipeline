@@ -1,0 +1,15 @@
+{
+  "vantage": "sweep_medium",
+  "model": "claude-opus-5",
+  "effort": "medium",
+  "replicates": 1,
+  "anchors_shown_per_direction": 5,
+  "applications": 12,
+  "abilities": 58,
+  "requests": 60,
+  "errors": 0,
+  "cells": 60,
+  "median_replicate_range": 0.0,
+  "cells_with_range_ge_0_25": 0,
+  "run_utc": "2026-08-07T14:53:36+00:00"
+}

@@ -1,0 +1,2 @@
+ai_app_id,ability_id,replicate,r,rationale,confidence,error,input_tokens,output_tokens,cache_read_tokens
+1,1,0,0.0,"Board-game search agents operate on discrete board states with no speech or language input, so they contribute nothing to understanding spoken words.",high,,66,67,0

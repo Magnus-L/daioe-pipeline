@@ -1,0 +1,10 @@
+{
+  "model": "claude-opus-5",
+  "effort": "high",
+  "replicates": 3,
+  "anchors_shown_per_direction": 5,
+  "tag": "2026",
+  "batch_id": "msgbatch_01PhkbNauk6qQ1GLo5HC15X7",
+  "requests": 2088,
+  "submitted_utc": "2026-08-07T15:00:06+00:00"
+}

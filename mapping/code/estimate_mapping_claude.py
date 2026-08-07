@@ -266,12 +266,30 @@ def run_sync(reqs: list[dict], workers: int = 8) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def submit_batch(reqs: list[dict]) -> str:
+def submit_batch(reqs: list[dict], meta: dict) -> str:
+    """Submit, and write a sidecar recording the settings the batch was built with.
+
+    Submit and collect are separate invocations, often hours apart, so the arguments present at
+    collect time are not evidence of what was run. Without the sidecar a run report cheerfully
+    records the collect-time defaults: a one-replicate batch collected with the default flags is
+    reported as three replicates, and the provenance is quietly wrong.
+    """
     client = _client()
     batch = client.messages.batches.create(requests=reqs)
     print(f"batch id: {batch.id}\nstatus:   {batch.processing_status}")
     (MOD / "last_batch_id.txt").write_text(batch.id)
+    (MOD / f"batch_{batch.id}.json").write_text(json.dumps(
+        {**meta, "batch_id": batch.id, "requests": len(reqs),
+         "submitted_utc": datetime.now(timezone.utc).isoformat(timespec="seconds")}, indent=2))
     return batch.id
+
+
+def load_batch_meta(batch_id: str) -> dict:
+    path = MOD / f"batch_{batch_id}.json"
+    if not path.exists():
+        print(f"note: no sidecar for {batch_id}; run settings taken from the data itself.", file=sys.stderr)
+        return {}
+    return json.loads(path.read_text())
 
 
 def collect_batch(batch_id: str) -> pd.DataFrame:
@@ -394,8 +412,13 @@ def main() -> None:
     abilities = pd.read_csv(RAW / "abilities.csv")
     anchors = pd.read_csv(args.anchors)
 
+    meta = {"model": MODEL, "effort": args.effort, "replicates": args.replicates,
+            "anchors_shown_per_direction": SHOW_ANCHORS, "tag": args.tag}
+
     if args.collect:
+        meta.update(load_batch_meta(args.collect))
         scores = collect_batch(args.collect)
+        args.tag = meta.get("tag", args.tag)
     else:
         sample = sample_cells(apps, abilities, args.sample, args.seed) if args.sample else None
         reqs = build_requests(apps, abilities, anchors, args.replicates, args.effort,
@@ -415,7 +438,7 @@ def main() -> None:
             print(first["messages"][0]["content"])
             return
         if args.submit:
-            submit_batch(reqs)
+            submit_batch(reqs, meta)
             return
         scores = run_sync(reqs)
 
@@ -429,10 +452,11 @@ def main() -> None:
     n_err = int(scores.error.astype(bool).sum())
     report = {
         "vantage": args.tag,
-        "model": MODEL,
-        "effort": args.effort,
-        "replicates": args.replicates,
-        "anchors_shown_per_direction": SHOW_ANCHORS,
+        "model": meta.get("model", MODEL),
+        "effort": meta.get("effort", args.effort),
+        # Derived from the data rather than the flags: this is what was actually scored.
+        "replicates": int(scores.replicate.nunique()),
+        "anchors_shown_per_direction": meta.get("anchors_shown_per_direction", SHOW_ANCHORS),
         "applications": int(apps.ai_app_id.nunique()),
         "abilities": int(abilities.ability_id.nunique()),
         "requests": int(len(scores)),

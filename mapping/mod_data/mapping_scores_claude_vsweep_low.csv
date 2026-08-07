@@ -1,0 +1,61 @@
+ai_app_id,ability_id,replicate,r,rationale,confidence,error,input_tokens,output_tokens,cache_read_tokens,cache_write_tokens
+1,9,0,0.85,"Game-playing agents learn general position-evaluation patterns and heuristics from many specific states, effectively inducing rules and relationships from data, though the induction is confined to a fixed closed domain.",medium,,79,90,0,1538
+1,13,0,0.3,"Game engines compute evaluations and search arithmetic internally at high speed, but plain arithmetic tasks are not a core sub-task of the agent's output, so support is indirect.",medium,,61,85,0,1538
+1,17,0,0.75,"Game engines rapidly compare board positions and pattern-match features at superhuman speed, closely analogous to the closure/speed abilities scored 1.00, though the visual letter/number comparison framing is only partially matched.",medium,,81,98,0,1538
+1,28,0,0.02,"Board game agents operate on discrete static states with no continuous motion, timing, or motor control of equipment, so they contribute essentially nothing to anticipatory rate adjustment.",high,,77,84,1538,0
+1,38,0,0.0,"Board-game search agents produce discrete move decisions with no bodily actuation, so they contribute nothing to repeated physical bending, stretching, or reaching.",high,,80,76,0,1538
+2,22,0,0.0,Game-playing agents act through virtual controls with no physical limb stabilization; steadiness of a real arm is outside the application's output space.,high,,77,68,0,1488
+2,27,0,0.75,"Game agents map perceptual signals to discrete action choices under time pressure, which is exactly choice-reaction selection speed, though the response is virtual rather than bodily movement.",medium,,75,82,0,1488
+2,47,0,0.0,"Game-playing agents operate on rendered digital input and involve no physical optical robustness to bright light, so they do nothing for glare-tolerant human vision.",high,,61,73,0,1488
+2,48,0,0.05,Game-playing agents act primarily on visual/state input under time pressure; auditory detection and pitch/loudness discrimination are not core to the trained agent's task.,high,,69,79,1488,0
+2,49,0,0.05,"Game-playing agents act on visual/state input under time pressure; selective attention to one auditory stream amid distractors is not a core function of the agent, though attention-like filtering is loosely analogous.",medium,,64,88,1488,0
+3,2,0,0.15,"Image recognition labels visual objects and can read text present in images only incidentally; it does not comprehend meaning of written passages, so support is marginal and indirect.",medium,,57,78,0,1474
+3,8,0,0.2,"Image recognition applies learned category rules to specific instances, a shallow analogue of rule application, but it does no explicit logical inference or multi-step derivation from general premises.",medium,,64,80,0,1474
+3,21,0,0.15,"Image recognition operates on single still images and does not manage attention across multiple concurrent tasks or information streams, though automated visual monitoring can offload one stream of attention.",medium,,59,79,0,1474
+3,24,0,0.03,"Image recognition outputs labels for still images and involves no motor control or manipulation; at best it could inform a separate robotic system, which is outside this application.",high,,83,72,0,1474
+3,25,0,0.1,"Image recognition only labels objects in still images; it provides no motor control loop, though vision can feed a separate control system indirectly.",high,,71,67,0,1474
+4,15,0,0.75,"VQA requires rapidly integrating fragmentary visual details into a coherent interpretation to answer a question, which is the core of speed of closure; it falls short only where the pattern-making is non-visual or highly abstract.",medium,,66,96,0,1494
+4,18,0,0.55,"VQA can identify objects and their relative positions in a scene from imagery, supporting egocentric spatial reasoning, but it lacks continuous self-localization, navigation over time, and embodied motion cues.",medium,,65,92,1494,0
+4,19,0,0.5,"VQA involves spatial reasoning over image content and can answer questions about object arrangement, but mentally simulating transformations/rearrangements into a novel imagined configuration is only partially supported and remains a known weakness.",medium,,62,95,1494,0
+4,26,0,0.0,"VQA outputs text answers about images and has no motor control or actuation, so it contributes nothing to coordinating limbs.",high,,78,66,1494,0
+4,32,0,0.0,Static strength is purely physical force exertion; a multimodal image-question model provides no actuation or physical assistance.,high,,64,63,1494,0
+5,17,0,0.15,"Image generation synthesises new images rather than rapidly comparing sets of stimuli for similarities and differences; any support is incidental (e.g., producing reference visuals), since discrimination tasks belong to recognition/classification models.",medium,,81,101,0,1494
+5,23,0,0.0,"Image synthesis produces pixels, not physical manipulation; it cannot grasp or assemble objects, matching the zero scores for other motor abilities.",high,,82,76,0,1494
+5,32,0,0.0,"Image synthesis produces visual outputs and exerts no physical force, so it cannot substitute for or assist maximal lifting, pushing or carrying.",high,,64,76,0,1494
+5,39,0,0.0,"Image synthesis produces static visual output and cannot perform or assist whole-body motor coordination, which requires physical embodiment.",high,,73,68,0,1494
+5,45,0,0.35,"Image generation produces and composes color and shading, so it embodies color choice, but its core task is synthesis rather than discriminating or matching subtle differences in existing colors, which requires perceptual judgment against a reference.",medium,,63,94,1494,0
+6,1,0,0.3,"The application operates on supplied text, so it handles the comprehension/inference core once speech is transcribed, but audio input and prosodic/conversational cues are not part of it.",medium,,66,81,0,1526
+6,23,0,0.0,Reading comprehension is a purely text-based question-answering capability with no motor or physical manipulation component.,high,,82,58,0,1526
+6,26,0,0.0,"Reading comprehension is a text-in/text-out capability with no motor control or physical actuation component, so it contributes nothing to coordinating limbs.",high,,78,75,0,1526
+6,37,0,0.0,"Reading comprehension is a purely textual inference task with no physical or motor component, so it does nothing for bodily flexibility.",high,,69,67,0,1526
+6,41,0,0.05,Reading comprehension operates on supplied digital text and involves no visual perception of close-range detail; any link is incidental to reading being a near-vision task for humans.,high,,56,78,1526,0
+7,26,0,0.0,Text prediction provides no motor control or physical coordination; the ability is purely psychomotor with no codifiable text-based component.,high,,78,67,0,1488
+7,27,0,0.0,Response Orientation is a psychomotor speed-of-choice ability requiring physical response to sensory signals; a text-predicting model provides no motor output or perceptual reaction capability.,high,,75,86,1488,0
+7,32,0,0.0,Text prediction provides no physical force exertion; the ability is purely musculoskeletal with no codifiable linguistic component.,high,,64,67,1488,0
+7,36,0,0.0,Stamina is purely aerobic physical endurance; a text-predicting model has no bearing on cardiorespiratory exertion.,high,,61,69,1488,0
+7,42,0,0.0,"Language modeling produces text and has no visual sensing capability, so it cannot perceive distant detail.",high,,47,59,1488,0
+8,6,0,0.2,"Translation models generate fluent alternative phrasings and idiomatic renderings, which touches creative language choice, but their objective is fidelity to a source rather than generating novel ideas or solutions.",medium,,74,88,1431,0
+8,17,0,0.15,"Translation models internally align and compare token sequences, but the ability's core task of rapid visual comparison of symbols/patterns is not what a text translation system delivers as output.",medium,,81,79,1431,0
+8,30,0,0.0,"Translation is a purely linguistic text-to-text capability with no motor or physical output, so it does nothing for repeated fine motor movement.",high,,72,71,0,1431
+8,41,0,0.05,"Translation operates on digital text and produces text; it does not perform visual detail perception (no OCR/vision component is core here), offering at most incidental relief from close reading of foreign text.",high,,56,82,0,1431
+8,51,0,0.3,"Text translation does not itself process audio; it only supports understanding speech once transcribed, so support is indirect and depends on a separate ASR component.",medium,,54,71,1431,0
+9,19,0,0.0,Speech-to-text transcription operates on audio and produces text; it provides no spatial transformation or mental imagery of rearranged objects.,high,,62,71,0,1460
+9,22,0,0.0,Speech transcription produces text from audio and has no bearing on motor control or physical steadiness of the arm and hand.,high,,77,62,0,1460
+9,33,0,0.0,Speech transcription involves no physical force exertion or muscular endurance; the modalities are entirely disjoint.,high,,77,59,1460,0
+9,34,0,0.0,Speech transcription involves no physical force production or body propulsion; the modalities are entirely disjoint.,high,,79,56,1460,0
+9,36,0,0.0,"Speech transcription involves no physical exertion or cardiovascular endurance; the output is text, unrelated to sustaining bodily effort.",high,,61,70,1460,0
+10,26,0,0.0,Multilimb coordination is a purely physical motor ability requiring bodily control; a digital-only agent performing software and API tasks contributes nothing to it.,high,,78,77,0,1562
+10,27,0,0.05,"Response Orientation is a psychomotor speed ability tied to physical movement selection; agentic software execution involves no bodily response to signals, though trivially it selects among actions digitally.",high,,75,83,0,1562
+10,43,0,0.0,Peripheral vision is an embodied visual-field capability tied to human eye physiology; a digital agent operating software and APIs does nothing for it.,high,,69,74,0,1562
+10,49,0,0.1,"Digital agentic execution operates on text, tools and code, not on live acoustic streams; only indirectly via audio-processing tools it might invoke for source separation, which is not core to the application as defined.",medium,,64,90,1562,0
+10,52,0,0.1,"Agentic task execution operates in digital text/tool environments; articulate spoken output is not core to it, though scaffolding could invoke TTS incidentally.",medium,,54,78,1562,0
+11,19,0,0.35,"Formal reasoning systems handle some geometric and spatial-transformation problems symbolically, but mental imagery of rearranged objects is largely outside their core text/symbolic derivation tasks.",medium,,62,89,0,1597
+11,22,0,0.0,Formal symbolic reasoning has no physical motor component; steadiness of arm and hand is unaffected.,high,,77,60,1597,0
+11,46,0,0.0,Formal reasoning over symbolic problems provides no low-light visual sensing capability.,high,,50,55,0,1597
+11,47,0,0.0,Formal symbolic reasoning has no bearing on visual perception under bright light conditions.,high,,61,56,0,1597
+11,51,0,0.02,Formal reasoning over text problems involves no audio perception or speech comprehension; the modality is entirely outside the application's scope.,high,,54,66,1597,0
+12,1,0,0.15,"The application's inputs are written issues and code, not speech; spoken-language understanding is not core to its pipeline, though shared language-comprehension machinery gives faint indirect support.",medium,,66,82,1547,0
+12,15,0,0.6,"Coding agents must rapidly synthesize scattered code, logs and issue text into a coherent model of the bug, which is closely analogous to pattern closure, though the perceptual/gestalt aspect of the ability is not directly exercised.",medium,,66,104,0,1547
+12,23,0,0.0,"Software engineering AI produces code patches; it involves no physical grasping or object manipulation, so it supports none of this ability's motor sub-tasks.",high,,82,73,0,1547
+12,42,0,0.0,Resolving code issues and writing patches involves no distance visual perception; the application operates on text in a codebase and offers nothing for seeing details at a distance.,high,,47,74,1547,0
+12,51,0,0.02,The application operates on text-based code and issues; understanding spoken audio is not part of its pipeline.,high,,54,58,1547,0

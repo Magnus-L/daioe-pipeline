@@ -1,0 +1,3 @@
+ai_app_id,ability_id,replicate,r,rationale,confidence,error,input_tokens,output_tokens,cache_read_tokens,cache_write_tokens
+1,1,0,0.0,"Board-game agents operate on discrete board states with no audio input or language understanding, so they contribute nothing to comprehending spoken information.",high,,66,70,0,1538
+1,2,0,0.05,"A board-game agent operates on discrete board states and move encodings, not natural-language text; it neither ingests nor interprets written prose, so it contributes essentially nothing to reading comprehension beyond trivial parsing of game notation.",high,,57,205,1538,0
