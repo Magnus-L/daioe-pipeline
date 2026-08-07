@@ -1,0 +1,523 @@
+ai_app_id,ability_id,app_name,ability_name,r_primary,r_secondary,r_mean,conf_primary,conf_secondary
+1,1,Abstract strategy games,Oral Comprehension,0.0,0.0,0.0,high,high
+1,2,Abstract strategy games,Written Comprehension,0.25,0.25,0.25,high,medium
+1,3,Abstract strategy games,Oral Expression,0.0,0.0,0.0,high,high
+1,4,Abstract strategy games,Written Expression,0.25,0.25,0.25,high,high
+1,5,Abstract strategy games,Fluency of Ideas,0.25,0.25,0.25,medium,medium
+1,6,Abstract strategy games,Originality,0.25,0.5,0.375,medium,medium
+1,7,Abstract strategy games,Problem Sensitivity,1.0,0.75,0.875,high,high
+1,8,Abstract strategy games,Deductive Reasoning,1.0,1.0,1.0,high,high
+1,9,Abstract strategy games,Inductive Reasoning,0.75,0.75,0.75,high,high
+1,10,Abstract strategy games,Information Ordering,0.75,0.75,0.75,high,high
+1,11,Abstract strategy games,Category Flexibility,0.5,0.75,0.625,medium,high
+1,12,Abstract strategy games,Mathematical Reasoning,0.75,0.75,0.75,high,high
+1,13,Abstract strategy games,Number Facility,0.25,0.25,0.25,medium,medium
+1,14,Abstract strategy games,Memorization,0.25,0.25,0.25,medium,medium
+1,15,Abstract strategy games,Speed of Closure,0.5,0.75,0.625,medium,high
+1,16,Abstract strategy games,Flexibility of Closure,0.5,0.5,0.5,medium,medium
+1,17,Abstract strategy games,Perceptual Speed,0.25,0.5,0.375,medium,medium
+1,18,Abstract strategy games,Spatial Orientation,0.0,0.25,0.125,high,medium
+1,19,Abstract strategy games,Visualization,0.5,0.75,0.625,medium,high
+1,20,Abstract strategy games,Selective Attention,0.25,0.5,0.375,medium,medium
+1,21,Abstract strategy games,Time Sharing,0.25,0.25,0.25,medium,medium
+1,22,Abstract strategy games,Arm-Hand Steadiness,0.0,0.0,0.0,high,high
+1,23,Abstract strategy games,Manual Dexterity,0.0,0.0,0.0,high,high
+1,24,Abstract strategy games,Finger Dexterity,0.0,0.0,0.0,high,high
+1,25,Abstract strategy games,Control Precision,0.0,0.25,0.125,high,medium
+1,26,Abstract strategy games,Multilimb Coordination,0.0,0.0,0.0,high,high
+1,27,Abstract strategy games,Response Orientation,0.0,0.25,0.125,high,medium
+1,28,Abstract strategy games,Rate Control,0.0,0.25,0.125,high,medium
+1,29,Abstract strategy games,Reaction Time,0.0,0.25,0.125,high,medium
+1,30,Abstract strategy games,Wrist-Finger Speed,0.0,0.0,0.0,high,high
+1,31,Abstract strategy games,Speed of Limb Movement,0.0,0.0,0.0,high,high
+1,32,Abstract strategy games,Static Strength,0.0,0.0,0.0,high,high
+1,33,Abstract strategy games,Dynamic Strength,0.0,0.0,0.0,high,high
+1,34,Abstract strategy games,Explosive Strength,0.0,0.0,0.0,high,high
+1,35,Abstract strategy games,Trunk Strength,0.0,0.0,0.0,high,high
+1,36,Abstract strategy games,Stamina,0.0,0.0,0.0,high,high
+1,37,Abstract strategy games,Extent Flexibility,0.0,0.0,0.0,high,high
+1,38,Abstract strategy games,Dynamic Flexibility,0.0,0.0,0.0,high,high
+1,39,Abstract strategy games,Gross Body Coordination,0.0,0.0,0.0,high,high
+1,40,Abstract strategy games,Gross Body Equilibrium,0.0,0.0,0.0,high,high
+1,41,Abstract strategy games,Near Vision,0.0,0.0,0.0,high,high
+1,42,Abstract strategy games,Far Vision,0.0,0.0,0.0,high,high
+1,43,Abstract strategy games,Peripheral Vision,0.0,0.0,0.0,high,high
+1,44,Abstract strategy games,Depth Perception,0.0,0.0,0.0,high,high
+1,45,Abstract strategy games,Visual Color Discrimination,0.0,0.0,0.0,high,high
+1,46,Abstract strategy games,Night Vision,0.0,0.0,0.0,high,high
+1,47,Abstract strategy games,Glare Sensitivity,0.0,0.0,0.0,high,high
+1,48,Abstract strategy games,Hearing Sensitivity,0.0,0.0,0.0,high,high
+1,49,Abstract strategy games,Auditory Attention,0.0,0.0,0.0,high,high
+1,50,Abstract strategy games,Sound Localization,0.0,0.0,0.0,high,high
+1,51,Abstract strategy games,Speech Recognition,0.0,0.0,0.0,high,high
+1,52,Abstract strategy games,Speech Clarity,0.0,0.0,0.0,high,high
+1,53,Abstract strategy games,Social Perceptiveness,0.0,0.25,0.125,high,medium
+1,54,Abstract strategy games,Coordination,0.0,0.25,0.125,high,medium
+1,55,Abstract strategy games,Persuasion,0.0,0.25,0.125,high,medium
+1,56,Abstract strategy games,Negotiation,0.0,0.25,0.125,high,medium
+1,57,Abstract strategy games,Instructing,0.0,0.25,0.125,high,medium
+1,58,Abstract strategy games,Service Orientation,0.0,0.25,0.125,high,medium
+2,1,Real-time video games,Oral Comprehension,0.0,0.25,0.125,high,medium
+2,2,Real-time video games,Written Comprehension,0.0,0.0,0.0,high,high
+2,3,Real-time video games,Oral Expression,0.0,0.25,0.125,high,medium
+2,4,Real-time video games,Written Expression,0.0,0.0,0.0,high,high
+2,5,Real-time video games,Fluency of Ideas,0.0,0.25,0.125,high,medium
+2,6,Real-time video games,Originality,0.0,0.25,0.125,high,medium
+2,7,Real-time video games,Problem Sensitivity,0.25,0.25,0.25,medium,medium
+2,8,Real-time video games,Deductive Reasoning,0.25,0.25,0.25,medium,medium
+2,9,Real-time video games,Inductive Reasoning,0.25,0.25,0.25,medium,medium
+2,10,Real-time video games,Information Ordering,0.25,0.25,0.25,medium,medium
+2,11,Real-time video games,Category Flexibility,0.25,0.25,0.25,medium,medium
+2,12,Real-time video games,Mathematical Reasoning,0.0,0.25,0.125,high,medium
+2,13,Real-time video games,Number Facility,0.0,0.25,0.125,high,medium
+2,14,Real-time video games,Memorization,0.25,0.25,0.25,medium,medium
+2,15,Real-time video games,Speed of Closure,0.5,0.5,0.5,medium,medium
+2,16,Real-time video games,Flexibility of Closure,0.25,0.5,0.375,medium,medium
+2,17,Real-time video games,Perceptual Speed,0.5,0.75,0.625,medium,high
+2,18,Real-time video games,Spatial Orientation,0.75,0.75,0.75,high,high
+2,19,Real-time video games,Visualization,0.25,0.5,0.375,medium,medium
+2,20,Real-time video games,Selective Attention,0.5,0.75,0.625,medium,high
+2,21,Real-time video games,Time Sharing,0.75,0.75,0.75,high,high
+2,22,Real-time video games,Arm-Hand Steadiness,0.75,0.75,0.75,high,high
+2,23,Real-time video games,Manual Dexterity,0.75,0.75,0.75,high,high
+2,24,Real-time video games,Finger Dexterity,0.75,0.75,0.75,high,high
+2,25,Real-time video games,Control Precision,0.5,0.75,0.625,medium,high
+2,26,Real-time video games,Multilimb Coordination,0.5,0.75,0.625,medium,high
+2,27,Real-time video games,Response Orientation,0.75,0.75,0.75,high,high
+2,28,Real-time video games,Rate Control,0.75,0.75,0.75,high,high
+2,29,Real-time video games,Reaction Time,0.75,0.75,0.75,high,high
+2,30,Real-time video games,Wrist-Finger Speed,0.75,0.75,0.75,high,high
+2,31,Real-time video games,Speed of Limb Movement,0.25,0.75,0.5,medium,high
+2,32,Real-time video games,Static Strength,0.0,0.0,0.0,high,high
+2,33,Real-time video games,Dynamic Strength,0.0,0.25,0.125,high,medium
+2,34,Real-time video games,Explosive Strength,0.0,0.0,0.0,high,high
+2,35,Real-time video games,Trunk Strength,0.0,0.0,0.0,high,high
+2,36,Real-time video games,Stamina,0.0,0.0,0.0,high,high
+2,37,Real-time video games,Extent Flexibility,0.0,0.25,0.125,high,medium
+2,38,Real-time video games,Dynamic Flexibility,0.0,0.25,0.125,high,medium
+2,39,Real-time video games,Gross Body Coordination,0.25,0.75,0.5,medium,high
+2,40,Real-time video games,Gross Body Equilibrium,0.0,0.25,0.125,high,medium
+2,41,Real-time video games,Near Vision,0.0,0.25,0.125,high,medium
+2,42,Real-time video games,Far Vision,0.0,0.25,0.125,high,medium
+2,43,Real-time video games,Peripheral Vision,0.25,0.75,0.5,medium,high
+2,44,Real-time video games,Depth Perception,0.5,0.5,0.5,medium,medium
+2,45,Real-time video games,Visual Color Discrimination,0.25,0.5,0.375,medium,medium
+2,46,Real-time video games,Night Vision,0.0,0.0,0.0,high,high
+2,47,Real-time video games,Glare Sensitivity,0.0,0.25,0.125,high,medium
+2,48,Real-time video games,Hearing Sensitivity,0.0,0.25,0.125,high,medium
+2,49,Real-time video games,Auditory Attention,0.0,0.25,0.125,high,medium
+2,50,Real-time video games,Sound Localization,0.0,0.25,0.125,high,medium
+2,51,Real-time video games,Speech Recognition,0.0,0.25,0.125,high,medium
+2,52,Real-time video games,Speech Clarity,0.0,0.25,0.125,high,medium
+2,53,Real-time video games,Social Perceptiveness,0.0,0.25,0.125,high,medium
+2,54,Real-time video games,Coordination,0.5,0.75,0.625,medium,high
+2,55,Real-time video games,Persuasion,0.0,0.25,0.125,high,medium
+2,56,Real-time video games,Negotiation,0.0,0.1,0.05,high,high
+2,57,Real-time video games,Instructing,0.0,0.25,0.125,high,medium
+2,58,Real-time video games,Service Orientation,0.0,0.25,0.125,high,medium
+3,1,Image recognition,Oral Comprehension,0.0,0.0,0.0,high,high
+3,2,Image recognition,Written Comprehension,0.0,0.0,0.0,high,high
+3,3,Image recognition,Oral Expression,0.0,0.0,0.0,high,high
+3,4,Image recognition,Written Expression,0.0,0.0,0.0,high,high
+3,5,Image recognition,Fluency of Ideas,0.0,0.0,0.0,high,high
+3,6,Image recognition,Originality,0.0,0.25,0.125,high,medium
+3,7,Image recognition,Problem Sensitivity,0.0,0.0,0.0,high,high
+3,8,Image recognition,Deductive Reasoning,0.0,0.0,0.0,high,high
+3,9,Image recognition,Inductive Reasoning,0.25,0.25,0.25,medium,medium
+3,10,Image recognition,Information Ordering,0.25,0.25,0.25,medium,medium
+3,11,Image recognition,Category Flexibility,0.25,0.25,0.25,medium,medium
+3,12,Image recognition,Mathematical Reasoning,0.0,0.0,0.0,high,high
+3,13,Image recognition,Number Facility,0.0,0.0,0.0,high,high
+3,14,Image recognition,Memorization,0.25,0.25,0.25,medium,medium
+3,15,Image recognition,Speed of Closure,0.5,0.25,0.375,medium,medium
+3,16,Image recognition,Flexibility of Closure,0.75,0.75,0.75,high,high
+3,17,Image recognition,Perceptual Speed,0.75,0.75,0.75,high,high
+3,18,Image recognition,Spatial Orientation,0.25,0.5,0.375,medium,medium
+3,19,Image recognition,Visualization,0.25,0.25,0.25,high,high
+3,20,Image recognition,Selective Attention,0.25,0.25,0.25,high,medium
+3,21,Image recognition,Time Sharing,0.0,0.25,0.125,high,medium
+3,22,Image recognition,Arm-Hand Steadiness,0.0,0.0,0.0,high,high
+3,23,Image recognition,Manual Dexterity,0.0,0.0,0.0,high,high
+3,24,Image recognition,Finger Dexterity,0.0,0.0,0.0,high,high
+3,25,Image recognition,Control Precision,0.0,0.25,0.125,high,medium
+3,26,Image recognition,Multilimb Coordination,0.0,0.0,0.0,high,high
+3,27,Image recognition,Response Orientation,0.0,0.25,0.125,high,medium
+3,28,Image recognition,Rate Control,0.0,0.25,0.125,high,medium
+3,29,Image recognition,Reaction Time,0.25,0.25,0.25,medium,medium
+3,30,Image recognition,Wrist-Finger Speed,0.0,0.0,0.0,high,high
+3,31,Image recognition,Speed of Limb Movement,0.0,0.0,0.0,high,high
+3,32,Image recognition,Static Strength,0.0,0.0,0.0,high,high
+3,33,Image recognition,Dynamic Strength,0.0,0.0,0.0,high,high
+3,34,Image recognition,Explosive Strength,0.0,0.0,0.0,high,high
+3,35,Image recognition,Trunk Strength,0.0,0.0,0.0,high,high
+3,36,Image recognition,Stamina,0.0,0.0,0.0,high,high
+3,37,Image recognition,Extent Flexibility,0.0,0.0,0.0,high,high
+3,38,Image recognition,Dynamic Flexibility,0.0,0.0,0.0,high,high
+3,39,Image recognition,Gross Body Coordination,0.0,0.0,0.0,high,high
+3,40,Image recognition,Gross Body Equilibrium,0.0,0.0,0.0,high,high
+3,41,Image recognition,Near Vision,1.0,1.0,1.0,high,high
+3,42,Image recognition,Far Vision,0.75,0.75,0.75,high,high
+3,43,Image recognition,Peripheral Vision,0.75,0.75,0.75,medium,high
+3,44,Image recognition,Depth Perception,1.0,1.0,1.0,high,high
+3,45,Image recognition,Visual Color Discrimination,1.0,1.0,1.0,high,high
+3,46,Image recognition,Night Vision,0.0,0.25,0.125,high,medium
+3,47,Image recognition,Glare Sensitivity,0.0,0.25,0.125,high,medium
+3,48,Image recognition,Hearing Sensitivity,0.0,0.0,0.0,high,high
+3,49,Image recognition,Auditory Attention,0.0,0.0,0.0,high,high
+3,50,Image recognition,Sound Localization,0.0,0.0,0.0,high,high
+3,51,Image recognition,Speech Recognition,0.0,0.0,0.0,high,high
+3,52,Image recognition,Speech Clarity,0.0,0.0,0.0,high,high
+3,53,Image recognition,Social Perceptiveness,0.0,0.0,0.0,high,high
+3,54,Image recognition,Coordination,0.0,0.25,0.125,high,medium
+3,55,Image recognition,Persuasion,0.0,0.0,0.0,high,high
+3,56,Image recognition,Negotiation,0.0,0.0,0.0,high,high
+3,57,Image recognition,Instructing,0.0,0.25,0.125,high,medium
+3,58,Image recognition,Service Orientation,0.0,0.25,0.125,high,medium
+4,1,Visual question answering,Oral Comprehension,0.0,0.25,0.125,high,medium
+4,2,Visual question answering,Written Comprehension,0.25,0.25,0.25,medium,medium
+4,3,Visual question answering,Oral Expression,0.0,0.25,0.125,high,medium
+4,4,Visual question answering,Written Expression,0.25,0.25,0.25,medium,medium
+4,5,Visual question answering,Fluency of Ideas,0.75,0.5,0.625,high,medium
+4,6,Visual question answering,Originality,0.25,0.25,0.25,medium,medium
+4,7,Visual question answering,Problem Sensitivity,0.25,0.25,0.25,medium,medium
+4,8,Visual question answering,Deductive Reasoning,0.5,0.5,0.5,medium,medium
+4,9,Visual question answering,Inductive Reasoning,0.5,0.5,0.5,medium,medium
+4,10,Visual question answering,Information Ordering,0.25,0.25,0.25,medium,medium
+4,11,Visual question answering,Category Flexibility,0.25,0.25,0.25,medium,medium
+4,12,Visual question answering,Mathematical Reasoning,0.25,0.25,0.25,medium,medium
+4,13,Visual question answering,Number Facility,0.0,0.25,0.125,high,medium
+4,14,Visual question answering,Memorization,0.25,0.25,0.25,medium,medium
+4,15,Visual question answering,Speed of Closure,0.5,0.5,0.5,medium,medium
+4,16,Visual question answering,Flexibility of Closure,0.25,0.5,0.375,medium,medium
+4,17,Visual question answering,Perceptual Speed,0.5,0.25,0.375,medium,medium
+4,18,Visual question answering,Spatial Orientation,0.25,0.25,0.25,medium,medium
+4,19,Visual question answering,Visualization,0.25,0.25,0.25,medium,medium
+4,20,Visual question answering,Selective Attention,0.25,0.25,0.25,medium,medium
+4,21,Visual question answering,Time Sharing,0.25,0.25,0.25,medium,medium
+4,22,Visual question answering,Arm-Hand Steadiness,0.0,0.0,0.0,high,high
+4,23,Visual question answering,Manual Dexterity,0.0,0.0,0.0,high,high
+4,24,Visual question answering,Finger Dexterity,0.0,0.0,0.0,high,high
+4,25,Visual question answering,Control Precision,0.0,0.25,0.125,high,medium
+4,26,Visual question answering,Multilimb Coordination,0.0,0.0,0.0,high,high
+4,27,Visual question answering,Response Orientation,0.0,0.25,0.125,high,medium
+4,28,Visual question answering,Rate Control,0.0,0.25,0.125,high,medium
+4,29,Visual question answering,Reaction Time,0.0,0.25,0.125,high,medium
+4,30,Visual question answering,Wrist-Finger Speed,0.0,0.0,0.0,high,high
+4,31,Visual question answering,Speed of Limb Movement,0.0,0.0,0.0,high,high
+4,32,Visual question answering,Static Strength,0.0,0.0,0.0,high,high
+4,33,Visual question answering,Dynamic Strength,0.0,0.0,0.0,high,high
+4,34,Visual question answering,Explosive Strength,0.0,0.0,0.0,high,high
+4,35,Visual question answering,Trunk Strength,0.0,0.0,0.0,high,high
+4,36,Visual question answering,Stamina,0.0,0.0,0.0,high,high
+4,37,Visual question answering,Extent Flexibility,0.0,0.0,0.0,high,high
+4,38,Visual question answering,Dynamic Flexibility,0.0,0.0,0.0,high,high
+4,39,Visual question answering,Gross Body Coordination,0.0,0.0,0.0,high,high
+4,40,Visual question answering,Gross Body Equilibrium,0.0,0.0,0.0,high,high
+4,41,Visual question answering,Near Vision,0.25,0.25,0.25,medium,medium
+4,42,Visual question answering,Far Vision,0.0,0.25,0.125,high,medium
+4,43,Visual question answering,Peripheral Vision,0.0,0.0,0.0,high,high
+4,44,Visual question answering,Depth Perception,0.25,0.25,0.25,medium,medium
+4,45,Visual question answering,Visual Color Discrimination,0.25,0.25,0.25,medium,medium
+4,46,Visual question answering,Night Vision,0.0,0.0,0.0,high,high
+4,47,Visual question answering,Glare Sensitivity,0.0,0.0,0.0,high,high
+4,48,Visual question answering,Hearing Sensitivity,0.0,0.0,0.0,high,high
+4,49,Visual question answering,Auditory Attention,0.0,0.0,0.0,high,high
+4,50,Visual question answering,Sound Localization,0.0,0.0,0.0,high,high
+4,51,Visual question answering,Speech Recognition,0.0,0.0,0.0,high,high
+4,52,Visual question answering,Speech Clarity,0.0,0.0,0.0,high,high
+4,53,Visual question answering,Social Perceptiveness,0.25,0.25,0.25,medium,medium
+4,54,Visual question answering,Coordination,0.0,0.25,0.125,high,medium
+4,55,Visual question answering,Persuasion,0.0,0.25,0.125,high,medium
+4,56,Visual question answering,Negotiation,0.0,0.25,0.125,high,medium
+4,57,Visual question answering,Instructing,0.25,0.25,0.25,medium,medium
+4,58,Visual question answering,Service Orientation,0.0,0.25,0.125,high,medium
+5,1,Generating images,Oral Comprehension,0.0,0.0,0.0,high,high
+5,2,Generating images,Written Comprehension,0.0,0.25,0.125,high,medium
+5,3,Generating images,Oral Expression,0.0,0.25,0.125,high,medium
+5,4,Generating images,Written Expression,0.0,0.25,0.125,high,medium
+5,5,Generating images,Fluency of Ideas,0.5,0.75,0.625,medium,medium
+5,6,Generating images,Originality,0.75,1.0,0.875,medium,high
+5,7,Generating images,Problem Sensitivity,0.0,0.25,0.125,high,medium
+5,8,Generating images,Deductive Reasoning,0.25,0.25,0.25,high,high
+5,9,Generating images,Inductive Reasoning,0.25,0.25,0.25,high,high
+5,10,Generating images,Information Ordering,0.25,0.25,0.25,medium,medium
+5,11,Generating images,Category Flexibility,0.25,0.25,0.25,high,medium
+5,12,Generating images,Mathematical Reasoning,0.0,0.0,0.0,high,high
+5,13,Generating images,Number Facility,0.0,0.0,0.0,high,high
+5,14,Generating images,Memorization,0.25,0.25,0.25,high,high
+5,15,Generating images,Speed of Closure,0.25,0.5,0.375,medium,medium
+5,16,Generating images,Flexibility of Closure,0.0,0.25,0.125,high,medium
+5,17,Generating images,Perceptual Speed,0.25,0.25,0.25,medium,medium
+5,18,Generating images,Spatial Orientation,0.25,0.25,0.25,medium,medium
+5,19,Generating images,Visualization,1.0,1.0,1.0,high,high
+5,20,Generating images,Selective Attention,0.0,0.25,0.125,high,medium
+5,21,Generating images,Time Sharing,0.0,0.25,0.125,high,medium
+5,22,Generating images,Arm-Hand Steadiness,0.0,0.0,0.0,high,high
+5,23,Generating images,Manual Dexterity,0.0,0.0,0.0,high,high
+5,24,Generating images,Finger Dexterity,0.0,0.0,0.0,high,high
+5,25,Generating images,Control Precision,0.0,0.0,0.0,high,high
+5,26,Generating images,Multilimb Coordination,0.0,0.0,0.0,high,high
+5,27,Generating images,Response Orientation,0.0,0.0,0.0,high,high
+5,28,Generating images,Rate Control,0.0,0.0,0.0,high,high
+5,29,Generating images,Reaction Time,0.0,0.0,0.0,high,high
+5,30,Generating images,Wrist-Finger Speed,0.0,0.0,0.0,high,high
+5,31,Generating images,Speed of Limb Movement,0.0,0.0,0.0,high,high
+5,32,Generating images,Static Strength,0.0,0.0,0.0,high,high
+5,33,Generating images,Dynamic Strength,0.0,0.0,0.0,high,high
+5,34,Generating images,Explosive Strength,0.0,0.0,0.0,high,high
+5,35,Generating images,Trunk Strength,0.0,0.0,0.0,high,high
+5,36,Generating images,Stamina,0.0,0.0,0.0,high,high
+5,37,Generating images,Extent Flexibility,0.0,0.0,0.0,high,high
+5,38,Generating images,Dynamic Flexibility,0.0,0.0,0.0,high,high
+5,39,Generating images,Gross Body Coordination,0.0,0.0,0.0,high,high
+5,40,Generating images,Gross Body Equilibrium,0.0,0.0,0.0,high,high
+5,41,Generating images,Near Vision,0.0,0.0,0.0,high,high
+5,42,Generating images,Far Vision,0.0,0.0,0.0,high,high
+5,43,Generating images,Peripheral Vision,0.0,0.0,0.0,high,high
+5,44,Generating images,Depth Perception,0.0,0.25,0.125,high,medium
+5,45,Generating images,Visual Color Discrimination,0.25,0.75,0.5,medium,high
+5,46,Generating images,Night Vision,0.0,0.0,0.0,high,high
+5,47,Generating images,Glare Sensitivity,0.0,0.0,0.0,high,high
+5,48,Generating images,Hearing Sensitivity,0.0,0.0,0.0,high,high
+5,49,Generating images,Auditory Attention,0.0,0.0,0.0,high,high
+5,50,Generating images,Sound Localization,0.0,0.0,0.0,high,high
+5,51,Generating images,Speech Recognition,0.0,0.0,0.0,high,high
+5,52,Generating images,Speech Clarity,0.0,0.0,0.0,high,high
+5,53,Generating images,Social Perceptiveness,0.0,0.25,0.125,high,medium
+5,54,Generating images,Coordination,0.0,0.0,0.0,high,high
+5,55,Generating images,Persuasion,0.0,0.25,0.125,high,medium
+5,56,Generating images,Negotiation,0.0,0.0,0.0,high,high
+5,57,Generating images,Instructing,0.0,0.25,0.125,high,medium
+5,58,Generating images,Service Orientation,0.0,0.25,0.125,high,medium
+6,1,Reading comprehension,Oral Comprehension,0.0,0.25,0.125,high,medium
+6,2,Reading comprehension,Written Comprehension,1.0,1.0,1.0,high,high
+6,3,Reading comprehension,Oral Expression,0.0,0.25,0.125,high,medium
+6,4,Reading comprehension,Written Expression,0.25,0.5,0.375,medium,medium
+6,5,Reading comprehension,Fluency of Ideas,0.25,0.25,0.25,medium,medium
+6,6,Reading comprehension,Originality,0.25,0.25,0.25,medium,medium
+6,7,Reading comprehension,Problem Sensitivity,0.25,0.25,0.25,medium,medium
+6,8,Reading comprehension,Deductive Reasoning,0.5,0.75,0.625,medium,high
+6,9,Reading comprehension,Inductive Reasoning,1.0,0.75,0.875,high,high
+6,10,Reading comprehension,Information Ordering,0.25,0.25,0.25,medium,medium
+6,11,Reading comprehension,Category Flexibility,0.25,0.25,0.25,medium,medium
+6,12,Reading comprehension,Mathematical Reasoning,0.25,0.25,0.25,medium,medium
+6,13,Reading comprehension,Number Facility,0.0,0.25,0.125,high,medium
+6,14,Reading comprehension,Memorization,0.25,0.25,0.25,medium,medium
+6,15,Reading comprehension,Speed of Closure,0.5,0.5,0.5,medium,medium
+6,16,Reading comprehension,Flexibility of Closure,0.25,0.5,0.375,medium,medium
+6,17,Reading comprehension,Perceptual Speed,0.0,0.25,0.125,high,medium
+6,18,Reading comprehension,Spatial Orientation,0.0,0.0,0.0,high,high
+6,19,Reading comprehension,Visualization,0.0,0.25,0.125,high,medium
+6,20,Reading comprehension,Selective Attention,0.25,0.5,0.375,medium,medium
+6,21,Reading comprehension,Time Sharing,0.0,0.25,0.125,high,medium
+6,22,Reading comprehension,Arm-Hand Steadiness,0.0,0.0,0.0,high,high
+6,23,Reading comprehension,Manual Dexterity,0.0,0.0,0.0,high,high
+6,24,Reading comprehension,Finger Dexterity,0.0,0.0,0.0,high,high
+6,25,Reading comprehension,Control Precision,0.0,0.0,0.0,high,high
+6,26,Reading comprehension,Multilimb Coordination,0.0,0.0,0.0,high,high
+6,27,Reading comprehension,Response Orientation,0.0,0.25,0.125,high,medium
+6,28,Reading comprehension,Rate Control,0.0,0.0,0.0,high,high
+6,29,Reading comprehension,Reaction Time,0.0,0.0,0.0,high,high
+6,30,Reading comprehension,Wrist-Finger Speed,0.0,0.0,0.0,high,high
+6,31,Reading comprehension,Speed of Limb Movement,0.0,0.0,0.0,high,high
+6,32,Reading comprehension,Static Strength,0.0,0.0,0.0,high,high
+6,33,Reading comprehension,Dynamic Strength,0.0,0.0,0.0,high,high
+6,34,Reading comprehension,Explosive Strength,0.0,0.0,0.0,high,high
+6,35,Reading comprehension,Trunk Strength,0.0,0.0,0.0,high,high
+6,36,Reading comprehension,Stamina,0.0,0.0,0.0,high,high
+6,37,Reading comprehension,Extent Flexibility,0.0,0.0,0.0,high,high
+6,38,Reading comprehension,Dynamic Flexibility,0.0,0.0,0.0,high,high
+6,39,Reading comprehension,Gross Body Coordination,0.0,0.0,0.0,high,high
+6,40,Reading comprehension,Gross Body Equilibrium,0.0,0.0,0.0,high,high
+6,41,Reading comprehension,Near Vision,0.0,0.0,0.0,high,high
+6,42,Reading comprehension,Far Vision,0.0,0.0,0.0,high,high
+6,43,Reading comprehension,Peripheral Vision,0.0,0.0,0.0,high,high
+6,44,Reading comprehension,Depth Perception,0.0,0.0,0.0,high,high
+6,45,Reading comprehension,Visual Color Discrimination,0.0,0.0,0.0,high,high
+6,46,Reading comprehension,Night Vision,0.0,0.0,0.0,high,high
+6,47,Reading comprehension,Glare Sensitivity,0.0,0.0,0.0,high,high
+6,48,Reading comprehension,Hearing Sensitivity,0.0,0.0,0.0,high,high
+6,49,Reading comprehension,Auditory Attention,0.0,0.0,0.0,high,high
+6,50,Reading comprehension,Sound Localization,0.0,0.0,0.0,high,high
+6,51,Reading comprehension,Speech Recognition,0.0,0.0,0.0,high,high
+6,52,Reading comprehension,Speech Clarity,0.0,0.25,0.125,high,medium
+6,53,Reading comprehension,Social Perceptiveness,0.25,0.25,0.25,medium,medium
+6,54,Reading comprehension,Coordination,0.0,0.0,0.0,high,high
+6,55,Reading comprehension,Persuasion,0.25,0.25,0.25,medium,medium
+6,56,Reading comprehension,Negotiation,0.25,0.25,0.25,medium,medium
+6,57,Reading comprehension,Instructing,0.25,0.5,0.375,medium,medium
+6,58,Reading comprehension,Service Orientation,0.25,0.25,0.25,medium,medium
+7,1,Language modeling,Oral Comprehension,0.25,0.5,0.375,medium,medium
+7,2,Language modeling,Written Comprehension,0.75,0.75,0.75,high,high
+7,3,Language modeling,Oral Expression,0.5,0.75,0.625,medium,high
+7,4,Language modeling,Written Expression,0.75,0.75,0.75,high,high
+7,5,Language modeling,Fluency of Ideas,0.75,0.75,0.75,high,high
+7,6,Language modeling,Originality,0.5,0.25,0.375,medium,medium
+7,7,Language modeling,Problem Sensitivity,0.25,0.25,0.25,medium,medium
+7,8,Language modeling,Deductive Reasoning,0.5,0.25,0.375,medium,medium
+7,9,Language modeling,Inductive Reasoning,0.5,0.25,0.375,medium,medium
+7,10,Language modeling,Information Ordering,0.5,0.5,0.5,medium,medium
+7,11,Language modeling,Category Flexibility,1.0,1.0,1.0,high,high
+7,12,Language modeling,Mathematical Reasoning,0.25,0.0,0.125,medium,high
+7,13,Language modeling,Number Facility,0.0,0.0,0.0,high,high
+7,14,Language modeling,Memorization,0.5,0.25,0.375,medium,medium
+7,15,Language modeling,Speed of Closure,0.5,0.5,0.5,medium,medium
+7,16,Language modeling,Flexibility of Closure,0.25,0.25,0.25,medium,medium
+7,17,Language modeling,Perceptual Speed,0.0,0.25,0.125,high,medium
+7,18,Language modeling,Spatial Orientation,0.0,0.0,0.0,high,high
+7,19,Language modeling,Visualization,0.0,0.25,0.125,high,medium
+7,20,Language modeling,Selective Attention,0.25,0.25,0.25,medium,medium
+7,21,Language modeling,Time Sharing,0.25,0.25,0.25,medium,medium
+7,22,Language modeling,Arm-Hand Steadiness,0.0,0.0,0.0,high,high
+7,23,Language modeling,Manual Dexterity,0.0,0.0,0.0,high,high
+7,24,Language modeling,Finger Dexterity,0.0,0.0,0.0,high,high
+7,25,Language modeling,Control Precision,0.0,0.0,0.0,high,high
+7,26,Language modeling,Multilimb Coordination,0.0,0.0,0.0,high,high
+7,27,Language modeling,Response Orientation,0.0,0.25,0.125,high,medium
+7,28,Language modeling,Rate Control,0.0,0.0,0.0,high,high
+7,29,Language modeling,Reaction Time,0.0,0.0,0.0,high,high
+7,30,Language modeling,Wrist-Finger Speed,0.0,0.0,0.0,high,high
+7,31,Language modeling,Speed of Limb Movement,0.0,0.0,0.0,high,high
+7,32,Language modeling,Static Strength,0.0,0.0,0.0,high,high
+7,33,Language modeling,Dynamic Strength,0.0,0.0,0.0,high,high
+7,34,Language modeling,Explosive Strength,0.0,0.0,0.0,high,high
+7,35,Language modeling,Trunk Strength,0.0,0.0,0.0,high,high
+7,36,Language modeling,Stamina,0.0,0.0,0.0,high,high
+7,37,Language modeling,Extent Flexibility,0.0,0.0,0.0,high,high
+7,38,Language modeling,Dynamic Flexibility,0.0,0.0,0.0,high,high
+7,39,Language modeling,Gross Body Coordination,0.0,0.0,0.0,high,high
+7,40,Language modeling,Gross Body Equilibrium,0.0,0.0,0.0,high,high
+7,41,Language modeling,Near Vision,0.0,0.0,0.0,high,high
+7,42,Language modeling,Far Vision,0.0,0.0,0.0,high,high
+7,43,Language modeling,Peripheral Vision,0.0,0.0,0.0,high,high
+7,44,Language modeling,Depth Perception,0.0,0.0,0.0,high,high
+7,45,Language modeling,Visual Color Discrimination,0.0,0.0,0.0,high,high
+7,46,Language modeling,Night Vision,0.0,0.0,0.0,high,high
+7,47,Language modeling,Glare Sensitivity,0.0,0.0,0.0,high,high
+7,48,Language modeling,Hearing Sensitivity,0.0,0.0,0.0,high,high
+7,49,Language modeling,Auditory Attention,0.0,0.25,0.125,high,medium
+7,50,Language modeling,Sound Localization,0.0,0.0,0.0,high,high
+7,51,Language modeling,Speech Recognition,0.25,0.25,0.25,medium,medium
+7,52,Language modeling,Speech Clarity,0.0,0.25,0.125,high,medium
+7,53,Language modeling,Social Perceptiveness,0.5,0.5,0.5,medium,medium
+7,54,Language modeling,Coordination,0.75,0.5,0.625,high,medium
+7,55,Language modeling,Persuasion,0.75,0.75,0.75,medium,high
+7,56,Language modeling,Negotiation,0.75,0.75,0.75,high,medium
+7,57,Language modeling,Instructing,0.5,0.5,0.5,medium,medium
+7,58,Language modeling,Service Orientation,0.25,0.25,0.25,medium,medium
+8,1,Translation,Oral Comprehension,0.25,0.25,0.25,medium,medium
+8,2,Translation,Written Comprehension,0.75,0.75,0.75,high,high
+8,3,Translation,Oral Expression,0.25,0.5,0.375,medium,medium
+8,4,Translation,Written Expression,1.0,1.0,1.0,high,high
+8,5,Translation,Fluency of Ideas,0.0,0.25,0.125,high,medium
+8,6,Translation,Originality,0.25,0.25,0.25,medium,high
+8,7,Translation,Problem Sensitivity,0.0,0.25,0.125,high,medium
+8,8,Translation,Deductive Reasoning,0.25,0.25,0.25,medium,medium
+8,9,Translation,Inductive Reasoning,0.25,0.25,0.25,medium,medium
+8,10,Translation,Information Ordering,0.25,0.25,0.25,medium,medium
+8,11,Translation,Category Flexibility,0.25,0.25,0.25,medium,medium
+8,12,Translation,Mathematical Reasoning,0.0,0.0,0.0,high,high
+8,13,Translation,Number Facility,0.0,0.0,0.0,high,high
+8,14,Translation,Memorization,0.25,0.25,0.25,medium,medium
+8,15,Translation,Speed of Closure,0.25,0.25,0.25,high,high
+8,16,Translation,Flexibility of Closure,0.25,0.25,0.25,high,high
+8,17,Translation,Perceptual Speed,0.0,0.0,0.0,high,high
+8,18,Translation,Spatial Orientation,0.0,0.0,0.0,high,high
+8,19,Translation,Visualization,0.0,0.25,0.125,high,medium
+8,20,Translation,Selective Attention,0.0,0.25,0.125,high,medium
+8,21,Translation,Time Sharing,0.0,0.25,0.125,high,medium
+8,22,Translation,Arm-Hand Steadiness,0.0,0.0,0.0,high,high
+8,23,Translation,Manual Dexterity,0.0,0.0,0.0,high,high
+8,24,Translation,Finger Dexterity,0.0,0.0,0.0,high,high
+8,25,Translation,Control Precision,0.0,0.0,0.0,high,high
+8,26,Translation,Multilimb Coordination,0.0,0.0,0.0,high,high
+8,27,Translation,Response Orientation,0.0,0.0,0.0,high,high
+8,28,Translation,Rate Control,0.0,0.0,0.0,high,high
+8,29,Translation,Reaction Time,0.0,0.0,0.0,high,high
+8,30,Translation,Wrist-Finger Speed,0.0,0.0,0.0,high,high
+8,31,Translation,Speed of Limb Movement,0.0,0.0,0.0,high,high
+8,32,Translation,Static Strength,0.0,0.0,0.0,high,high
+8,33,Translation,Dynamic Strength,0.0,0.0,0.0,high,high
+8,34,Translation,Explosive Strength,0.0,0.0,0.0,high,high
+8,35,Translation,Trunk Strength,0.0,0.0,0.0,high,high
+8,36,Translation,Stamina,0.0,0.0,0.0,high,high
+8,37,Translation,Extent Flexibility,0.0,0.0,0.0,high,high
+8,38,Translation,Dynamic Flexibility,0.0,0.0,0.0,high,high
+8,39,Translation,Gross Body Coordination,0.0,0.0,0.0,high,high
+8,40,Translation,Gross Body Equilibrium,0.0,0.0,0.0,high,high
+8,41,Translation,Near Vision,0.0,0.0,0.0,high,high
+8,42,Translation,Far Vision,0.0,0.0,0.0,high,high
+8,43,Translation,Peripheral Vision,0.0,0.0,0.0,high,high
+8,44,Translation,Depth Perception,0.0,0.0,0.0,high,high
+8,45,Translation,Visual Color Discrimination,0.0,0.0,0.0,high,high
+8,46,Translation,Night Vision,0.0,0.0,0.0,high,high
+8,47,Translation,Glare Sensitivity,0.0,0.0,0.0,high,high
+8,48,Translation,Hearing Sensitivity,0.0,0.0,0.0,high,high
+8,49,Translation,Auditory Attention,0.0,0.0,0.0,high,high
+8,50,Translation,Sound Localization,0.0,0.0,0.0,high,high
+8,51,Translation,Speech Recognition,0.25,0.25,0.25,medium,medium
+8,52,Translation,Speech Clarity,0.0,0.25,0.125,high,medium
+8,53,Translation,Social Perceptiveness,0.0,0.25,0.125,high,medium
+8,54,Translation,Coordination,0.0,0.25,0.125,high,medium
+8,55,Translation,Persuasion,0.0,0.25,0.125,high,medium
+8,56,Translation,Negotiation,0.0,0.25,0.125,high,medium
+8,57,Translation,Instructing,0.25,0.25,0.25,medium,medium
+8,58,Translation,Service Orientation,0.0,0.25,0.125,high,medium
+9,1,Speech recognition,Oral Comprehension,1.0,0.75,0.875,high,high
+9,2,Speech recognition,Written Comprehension,0.0,0.0,0.0,high,high
+9,3,Speech recognition,Oral Expression,0.0,0.5,0.25,high,medium
+9,4,Speech recognition,Written Expression,0.0,0.25,0.125,high,medium
+9,5,Speech recognition,Fluency of Ideas,0.0,0.25,0.125,high,medium
+9,6,Speech recognition,Originality,0.0,0.0,0.0,high,high
+9,7,Speech recognition,Problem Sensitivity,0.0,0.0,0.0,high,high
+9,8,Speech recognition,Deductive Reasoning,0.0,0.0,0.0,high,high
+9,9,Speech recognition,Inductive Reasoning,0.0,0.25,0.125,high,medium
+9,10,Speech recognition,Information Ordering,0.25,0.25,0.25,high,high
+9,11,Speech recognition,Category Flexibility,0.0,0.25,0.125,high,medium
+9,12,Speech recognition,Mathematical Reasoning,0.0,0.0,0.0,high,high
+9,13,Speech recognition,Number Facility,0.0,0.25,0.125,high,medium
+9,14,Speech recognition,Memorization,0.0,0.25,0.125,high,medium
+9,15,Speech recognition,Speed of Closure,0.25,0.25,0.25,medium,medium
+9,16,Speech recognition,Flexibility of Closure,0.0,0.25,0.125,high,medium
+9,17,Speech recognition,Perceptual Speed,0.25,0.25,0.25,medium,medium
+9,18,Speech recognition,Spatial Orientation,0.0,0.0,0.0,high,high
+9,19,Speech recognition,Visualization,0.0,0.0,0.0,high,high
+9,20,Speech recognition,Selective Attention,0.25,0.25,0.25,medium,medium
+9,21,Speech recognition,Time Sharing,0.25,0.25,0.25,medium,medium
+9,22,Speech recognition,Arm-Hand Steadiness,0.0,0.0,0.0,high,high
+9,23,Speech recognition,Manual Dexterity,0.0,0.0,0.0,high,high
+9,24,Speech recognition,Finger Dexterity,0.0,0.0,0.0,high,high
+9,25,Speech recognition,Control Precision,0.0,0.0,0.0,high,high
+9,26,Speech recognition,Multilimb Coordination,0.0,0.0,0.0,high,high
+9,27,Speech recognition,Response Orientation,0.0,0.25,0.125,high,medium
+9,28,Speech recognition,Rate Control,0.0,0.0,0.0,high,high
+9,29,Speech recognition,Reaction Time,0.0,0.25,0.125,high,medium
+9,30,Speech recognition,Wrist-Finger Speed,0.0,0.0,0.0,high,high
+9,31,Speech recognition,Speed of Limb Movement,0.0,0.0,0.0,high,high
+9,32,Speech recognition,Static Strength,0.0,0.0,0.0,high,high
+9,33,Speech recognition,Dynamic Strength,0.0,0.0,0.0,high,high
+9,34,Speech recognition,Explosive Strength,0.0,0.0,0.0,high,high
+9,35,Speech recognition,Trunk Strength,0.0,0.0,0.0,high,high
+9,36,Speech recognition,Stamina,0.0,0.0,0.0,high,high
+9,37,Speech recognition,Extent Flexibility,0.0,0.0,0.0,high,high
+9,38,Speech recognition,Dynamic Flexibility,0.0,0.0,0.0,high,high
+9,39,Speech recognition,Gross Body Coordination,0.0,0.0,0.0,high,high
+9,40,Speech recognition,Gross Body Equilibrium,0.0,0.0,0.0,high,high
+9,41,Speech recognition,Near Vision,0.0,0.0,0.0,high,high
+9,42,Speech recognition,Far Vision,0.0,0.0,0.0,high,high
+9,43,Speech recognition,Peripheral Vision,0.0,0.0,0.0,high,high
+9,44,Speech recognition,Depth Perception,0.0,0.0,0.0,high,high
+9,45,Speech recognition,Visual Color Discrimination,0.0,0.0,0.0,high,high
+9,46,Speech recognition,Night Vision,0.0,0.0,0.0,high,high
+9,47,Speech recognition,Glare Sensitivity,0.0,0.0,0.0,high,high
+9,48,Speech recognition,Hearing Sensitivity,0.75,0.75,0.75,high,high
+9,49,Speech recognition,Auditory Attention,1.0,1.0,1.0,high,high
+9,50,Speech recognition,Sound Localization,0.0,0.25,0.125,high,medium
+9,51,Speech recognition,Speech Recognition,1.0,1.0,1.0,high,high
+9,52,Speech recognition,Speech Clarity,0.75,0.75,0.75,high,high
+9,53,Speech recognition,Social Perceptiveness,0.25,0.25,0.25,medium,medium
+9,54,Speech recognition,Coordination,0.0,0.25,0.125,high,medium
+9,55,Speech recognition,Persuasion,0.0,0.25,0.125,high,medium
+9,56,Speech recognition,Negotiation,0.0,0.25,0.125,high,medium
+9,57,Speech recognition,Instructing,0.0,0.25,0.125,high,medium
+9,58,Speech recognition,Service Orientation,0.0,0.25,0.125,high,medium

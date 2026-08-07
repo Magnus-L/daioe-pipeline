@@ -1,0 +1,103 @@
+ai_app_id,name,year,delta_p
+1,Abstract strategy games,2010,0.278
+3,Image recognition,2010,0.19706254
+9,Speech recognition,2010,0.065482378
+1,Abstract strategy games,2011,0.27660823
+3,Image recognition,2011,0.086042643
+9,Speech recognition,2011,0.065482378
+1,Abstract strategy games,2012,0.11157417
+3,Image recognition,2012,0.26951844
+7,Language modelling,2012,0.022527277
+9,Speech recognition,2012,0.11685926
+1,Abstract strategy games,2013,0.11157417
+2,Real‑time video games,2013,0.93944824
+3,Image recognition,2013,0.22293523
+6,Reading comprehension,2013,0.0
+7,Language modelling,2013,0.030180223
+9,Speech recognition,2013,0.11685926
+1,Abstract strategy games,2014,0.11157417
+2,Real‑time video games,2014,0.72475874
+3,Image recognition,2014,0.227687
+6,Reading comprehension,2014,0.071078122
+7,Language modelling,2014,0.10427919
+9,Speech recognition,2014,0.099486314
+1,Abstract strategy games,2015,0.11646712
+2,Real‑time video games,2015,0.72475874
+3,Image recognition,2015,0.24158432
+5,Image generation,2015,0.24260151
+6,Reading comprehension,2015,0.058629405
+7,Language modelling,2015,0.099832699
+8,Translation,2015,0.060667831
+9,Speech recognition,2015,0.44546708
+1,Abstract strategy games,2016,0.22234154
+2,Real‑time video games,2016,0.38625288
+3,Image recognition,2016,0.078396693
+4,Image comprehension,2016,0.21585193
+5,Image generation,2016,0.83870804
+6,Reading comprehension,2016,0.46240732
+7,Language modelling,2016,0.12140688
+8,Translation,2016,0.082146257
+9,Speech recognition,2016,0.17992498
+1,Abstract strategy games,2017,0.041113853
+2,Real‑time video games,2017,0.11604688
+3,Image recognition,2017,0.17989062
+4,Image comprehension,2017,0.13300593
+5,Image generation,2017,0.010397196
+6,Reading comprehension,2017,0.077943988
+7,Language modelling,2017,0.051041454
+8,Translation,2017,0.068050601
+9,Speech recognition,2017,0.10678561
+1,Abstract strategy games,2018,0.011902809
+2,Real‑time video games,2018,0.55248469
+3,Image recognition,2018,0.13710244
+4,Image comprehension,2018,0.0057487935
+5,Image generation,2018,0.37294337
+6,Reading comprehension,2018,0.10806343
+7,Language modelling,2018,0.233279
+8,Translation,2018,0.076098755
+9,Speech recognition,2018,0.1697578
+1,Abstract strategy games,2019,0.0086212158
+2,Real‑time video games,2019,0.78649896
+3,Image recognition,2019,0.32482073
+4,Image comprehension,2019,0.071337417
+5,Image generation,2019,0.32248825
+6,Reading comprehension,2019,0.28851733
+7,Language modelling,2019,0.20184885
+8,Translation,2019,0.13958101
+9,Speech recognition,2019,0.24658656
+1,Abstract strategy games,2020,0.0059900284
+2,Real‑time video games,2020,0.137758
+3,Image recognition,2020,0.3132095
+4,Image comprehension,2020,0.11420736
+5,Image generation,2020,0.45020574
+6,Reading comprehension,2020,0.066390008
+7,Language modelling,2020,0.44346213
+8,Translation,2020,0.06512478
+9,Speech recognition,2020,0.21802102
+1,Abstract strategy games,2021,0.009059906
+2,Real‑time video games,2021,0.053792752
+3,Image recognition,2021,0.31372219
+4,Image comprehension,2021,0.25197166
+5,Image generation,2021,0.5886144
+6,Reading comprehension,2021,0.13575885
+7,Language modelling,2021,0.25768834
+8,Translation,2021,0.043383896
+9,Speech recognition,2021,0.15372351
+1,Abstract strategy games,2022,0.00028181076
+2,Real‑time video games,2022,0.094283372
+3,Image recognition,2022,0.14570868
+4,Image comprehension,2022,0.14313386
+5,Image generation,2022,0.26621512
+6,Reading comprehension,2022,0.25363639
+7,Language modelling,2022,0.61795121
+8,Translation,2022,0.030193528
+9,Speech recognition,2022,0.18386245
+1,Abstract strategy games,2023,0.00028181076
+2,Real‑time video games,2023,0.04830265
+3,Image recognition,2023,0.064985894
+4,Image comprehension,2023,0.24578927
+5,Image generation,2023,0.084675431
+6,Reading comprehension,2023,0.51114124
+7,Language modelling,2023,0.48082042
+8,Translation,2023,0.0230304
+9,Speech recognition,2023,0.58778667

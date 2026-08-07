@@ -1,0 +1,19 @@
+ai_app_id,ability_id,label,note
+2.0,57,high,LLMs provide step-by-step tutoring and tailored explanations.
+2.0,55,high,LLMs can draft persuasive text and vary tone/arguments.
+,53,high,Limited: extracting social cues from text scenarios.
+,57,high,Text-based guidance and procedural explanations.
+,58,high,"Helpful, audience-appropriate phrasing for target readers."
+,53,high,Limited: turns spoken cues into text; social nuance mostly lost.
+1.0,51,low,Vision models do not process acoustic signals; unrelated core modality.
+1.0,1,low,Static image classification does not parse spoken words.
+1.0,53,low,Limited: no access to interpersonal dynamics from single images.
+,23,low,Board-game planning does not require fine hand movements.
+,58,low,No direct service delivery or human assistance component.
+,4,low,Motor/perceptual control tasks do not involve text generation.
+,13,low,Creating images does not require arithmetic per se.
+,41,low,"Text translation relates to language understanding, not eyesight acuity."
+,28,low,Reading and answering does not involve timing control of moving objects.
+2.0,22,low,Text generation does not require physical steadiness.
+,19,low,Transcription does not require mental rotation/visualization.
+,56,low,ASR converts audio to text; it does not conduct bargaining.

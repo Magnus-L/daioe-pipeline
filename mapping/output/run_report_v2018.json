@@ -1,0 +1,11 @@
+{
+  "vantage": "2018",
+  "pairs_evaluated": 522,
+  "apps": 9,
+  "abilities": 58,
+  "models": {
+    "primary": "gpt-4o",
+    "secondary": "gpt-4o-mini"
+  },
+  "sleep": 0.2
+}

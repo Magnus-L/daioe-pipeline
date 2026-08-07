@@ -1,0 +1,46 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\title{Replicating FRS (2018) and Extending to a 9$\times$58 Mapping: A Robustness Test of DAIOE without Ad-hoc Social-Skill Adjustment}
+\author{AI-Econ Lab}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Purpose}
+We design and implement a reproducible pipeline to (i) replicate the Felten--Raj--Seamans (FRS, 2018) application--ability mapping across nine AI applications and 52 O*NET abilities, and (ii) extend the matrix to include six O*NET social skills (yielding a $9\times 58$ mapping). We then compute occupation-level AI exposure and compare it to DAIOE. The goal is to \emph{robustness test} DAIOE against the critique that social skills were adjusted in an ad-hoc manner. Our exercise produces an exposure index that treats the six social skills symmetrically to other abilities, thereby allowing an apples-to-apples robustness check.
+
+\section{Approach}
+\paragraph{Inputs.} The pipeline uses three inputs: \texttt{applications.csv} (nine FRS applications with harmonized terminology), \texttt{abilities.csv} (52 abilities + 6 social skills with O*NET definitions and Element IDs), and \texttt{anchors.csv} (for each ability, a high and a low anchor tied to an AI application). The folder layout and script entry points follow the project README.\footnote{See the project README for exact file/column expectations and command-line usage.}
+
+\paragraph{Anchors.} For each ability $a$, we derive: (i) a \emph{high anchor} by selecting the FRS application with the highest relatedness to $a$ in the (expert-rated) FRS matrix; and (ii) a \emph{low anchor} using the lowest-related application. The anchor notes are written as \emph{task-like} examples suitable for human rating and LLM prompting, and are justified with the FRS score. This mirrors the ILO documentation style and makes the mapping exercise transparent and auditable.
+
+\paragraph{Scoring.} Given an application $i$ and an ability (or skill) $a$, we prompt two models with the same anchor-augmented instruction and average the resulting relatedness scores $r_{ia}\in[0,1]$. The script produces: pairwise scores, an aggregated $9\times 58$ matrix, and a run report.
+
+\paragraph{Occupation exposure.} Exposure for occupation $o$ is computed by weighting abilities using the occupation's O*NET ability profile, multiplying by the $9\times 58$ mapping, and aggregating across the nine applications. We compute two variants: \textbf{(A) No social downweighting} (social skills enter like any other ability), and \textbf{(B) DAIOE-style downweighting}. Comparing (A) to the published DAIOE shows whether substantive results hinge on the social-skills adjustment.
+
+\section{Why this is a robust test}
+First, the application set and ability definitions are externally grounded (EFF/FRS and O*NET). Second, the anchors are explicitly tied to the expert FRS matrix rather than hand-picked. Third, the social skills are treated symmetrically to abilities in variant (A); any remaining differences to DAIOE can thus be attributed to the downweighting choice rather than model noise. Finally, we report correlations of the occupation-level exposure ranks between variants and DAIOE.
+
+\section{Reproducibility and Outputs}
+The code expects the following layout:
+\begin{verbatim}
+code/estimate_mapping.py
+raw_data/applications.csv
+raw_data/abilities.csv
+raw_data/anchors.csv
+mod_data/
+output/
+\end{verbatim}
+Running \texttt{estimate\_mapping.py} writes pairwise scores, a $9\times 58$ matrix, and a JSON report. A validation utility compares our 9$\times$52 slice to FRS and prints overlap and correlation. The final deliverable is a list (and ranking) of occupations by AI exposure for variants (A) and (B), ready for robustness comparison against DAIOE.
+
+\section{Limitations}
+Our anchor generation borrows relatedness structure from the expert FRS matrix and cannot fully substitute for blinded human annotation. Nevertheless, it provides a principled starting point that (i) aligns with prior expert judgments, (ii) enables fully reproducible prompts, and (iii) avoids ad-hoc post-hoc tuning of social skills.
+
+\end{document}

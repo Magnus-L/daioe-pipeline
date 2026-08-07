@@ -1,0 +1,59 @@
+ability_id,ability_name,ability_definition,element_id
+1,Oral Comprehension,The ability to listen to and understand information and ideas presented through spoken words and sentences.,1.A.1.a.1
+2,Written Comprehension,The ability to read and understand information and ideas presented in writing.,1.A.1.a.2
+3,Oral Expression,The ability to communicate information and ideas in speaking so others will understand.,1.A.1.a.3
+4,Written Expression,The ability to communicate information and ideas in writing so others will understand.,1.A.1.a.4
+5,Fluency of Ideas,"The ability to come up with a number of ideas about a topic (the number of ideas matters, not their quality, correctness, or creativity).",1.A.1.b.1
+6,Originality,"The ability to come up with unusual or clever ideas about a given topic or situation, or to develop creative ways to solve a problem.",1.A.1.b.2
+7,Problem Sensitivity,The ability to tell when something is wrong or is likely to go wrong; recognizing a problem without necessarily solving it.,1.A.1.b.3
+8,Deductive Reasoning,The ability to apply general rules to specific problems to produce answers that make sense.,1.A.1.b.4
+9,Inductive Reasoning,The ability to combine pieces of information to form general rules or conclusions (including finding relationships among seemingly unrelated events).,1.A.1.b.5
+10,Information Ordering,"The ability to arrange things or actions in a certain order or pattern according to a specific rule or set of rules (e.g., numbers, letters, words, pictures).",1.A.1.b.6
+11,Category Flexibility,The ability to generate or use different sets of rules for combining or grouping things in different ways.,1.A.1.b.7
+12,Mathematical Reasoning,The ability to choose the right mathematical methods or formulas to solve a problem.,1.A.1.c.1
+13,Number Facility,"The ability to add, subtract, multiply, or divide quickly and correctly.",1.A.1.c.2
+14,Memorization,"The ability to remember information such as words, numbers, pictures, and procedures.",1.A.1.d.1
+15,Speed of Closure,"The ability to quickly make sense of, combine, and organize information into meaningful patterns.",1.A.1.e.1
+16,Flexibility of Closure,The ability to identify or detect a known pattern that is hidden in other distracting material.,1.A.1.e.2
+17,Perceptual Speed,"The ability to quickly and accurately compare similarities and differences among sets of letters, numbers, objects, pictures, or patterns.",1.A.1.e.3
+18,Spatial Orientation,The ability to know your location in relation to the environment or where other objects are in relation to you.,1.A.1.f.1
+19,Visualization,The ability to imagine how something will look after it is moved or when its parts are rearranged.,1.A.1.f.2
+20,Selective Attention,The ability to concentrate on a task over a period of time without being distracted.,1.A.1.g.1
+21,Time Sharing,The ability to shift back and forth between two or more activities or sources of information.,1.A.1.g.2
+22,Arm-Hand Steadiness,The ability to keep your hand and arm steady while moving your arm or while holding your arm and hand in one position.,1.A.2.a.1
+23,Manual Dexterity,"The ability to quickly move your hand, your hand together with your arm, or your two hands to grasp, manipulate, or assemble objects.",1.A.2.a.2
+24,Finger Dexterity,"The ability to make precisely coordinated movements of the fingers of one or both hands to grasp, manipulate, or assemble very small objects.",1.A.2.a.3
+25,Control Precision,The ability to quickly and repeatedly adjust the controls of a machine or a vehicle to exact positions.,1.A.2.b.1
+26,Multilimb Coordination,"The ability to coordinate two or more limbs while sitting, standing, or lying down (not while the whole body is in motion).",1.A.2.b.2
+27,Response Orientation,The ability to choose quickly between two or more movements in response to two or more different signals; includes the speed of starting the correct response.,1.A.2.b.3
+28,Rate Control,The ability to time your movements or the movement of equipment in anticipation of changes in speed and/or direction of a moving object or scene.,1.A.2.b.4
+29,Reaction Time,"The ability to quickly respond with the hand, finger, or foot to a signal (sound, light, picture) when it appears.",1.A.2.c.1
+30,Wrist-Finger Speed,"The ability to make fast, simple, repeated movements of the fingers, hands, and wrists.",1.A.2.c.2
+31,Speed of Limb Movement,The ability to quickly move the arms and legs.,1.A.2.c.3
+32,Static Strength,"The ability to exert maximum muscle force to lift, push, pull, or carry objects.",1.A.3.a.1
+33,Dynamic Strength,The ability to exert muscle force repeatedly or continuously over time; muscular endurance and resistance to fatigue.,1.A.3.a.3
+34,Explosive Strength,"The ability to use short bursts of muscle force to propel oneself (e.g., jumping or sprinting) or to throw an object.",1.A.3.a.2
+35,Trunk Strength,The ability to use abdominal and lower back muscles to support part of the body repeatedly or continuously without fatiguing.,1.A.3.a.4
+36,Stamina,The ability to exert yourself physically over long periods without getting winded or out of breath.,1.A.3.b.1
+37,Extent Flexibility,"The ability to bend, stretch, twist, or reach with your body, arms, and/or legs.",1.A.3.c.1
+38,Dynamic Flexibility,"The ability to quickly and repeatedly bend, stretch, twist, or reach with your body, arms, and/or legs.",1.A.3.c.2
+39,Gross Body Coordination,"The ability to coordinate the movement of your arms, legs, and torso together when the whole body is in motion.",1.A.3.c.3
+40,Gross Body Equilibrium,The ability to keep or regain your body balance or stay upright when in an unstable position.,1.A.3.c.4
+41,Near Vision,The ability to see details at close range (within a few feet of the observer).,1.A.4.a.1
+42,Far Vision,The ability to see details at a distance.,1.A.4.a.2
+43,Peripheral Vision,The ability to see objects or the movement of objects to one's side when the eyes are looking ahead.,1.A.4.a.5
+44,Depth Perception,"The ability to judge which of several objects is closer or farther away, or to judge distance.",1.A.4.a.6
+45,Visual Color Discrimination,"The ability to match or detect differences between colors, including shades and brightness.",1.A.4.a.3
+46,Night Vision,The ability to see under low‑light conditions.,1.A.4.a.4
+47,Glare Sensitivity,The ability to see objects in the presence of glare or bright lighting.,1.A.4.a.7
+48,Hearing Sensitivity,The ability to detect or tell the differences between sounds that vary in pitch and loudness.,1.A.4.b.1
+49,Auditory Attention,The ability to focus on a single source of sound in the presence of other distracting sounds.,1.A.4.b.2
+50,Sound Localization,The ability to tell the direction from which a sound originated.,1.A.4.b.3
+51,Speech Recognition,The ability to identify and understand the speech of another person.,1.A.4.b.4
+52,Speech Clarity,The ability to speak clearly so others can understand you.,1.A.4.b.5
+53,Social Perceptiveness,Being aware of others' reactions and understanding why they react as they do.,2.B.1.a
+54,Coordination,Adjusting actions in relation to others' actions.,2.B.1.b
+55,Persuasion,Persuading others to change their minds or behavior.,2.B.1.c
+56,Negotiation,Bringing others together and trying to reconcile differences.,2.B.1.d
+57,Instructing,Teaching others how to do something.,2.B.1.e
+58,Service Orientation,Actively looking for ways to help people.,2.B.1.f

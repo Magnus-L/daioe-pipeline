@@ -1,0 +1,4 @@
+ai_app_id,name,short_definition
+10,Agentic task execution,"An AI system that plans and carries out multi-step tasks autonomously in a digital environment: browsing, using tools and APIs, operating software, writing and running code, and recovering from its own errors over a long horizon. The measured object is the model together with its scaffolding, since that is what a firm deploys."
+11,Mathematical and scientific reasoning,"An AI system that solves problems requiring multi-step formal reasoning: competition and research mathematics, proof construction, and graduate-level scientific questions where the answer cannot be retrieved and must be derived."
+12,Software engineering,"An AI system that resolves real software-engineering tasks in an existing codebase: reading an issue, locating the relevant code, writing a patch that passes the project's own tests, and doing so without human intervention."

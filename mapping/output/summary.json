@@ -1,0 +1,905 @@
+{
+  "n_occupations": 966,
+  "correlations": {
+    "pctl_A_vs_DAIOE": 0.2156317869202021,
+    "pctl_B_vs_DAIOE": 0.19664967078260243,
+    "pctl_new_vs_DAIOE": 0.7909512460114306,
+    "pctl_level_vs_DAIOE": NaN
+  },
+  "top_by_pctl_new": [
+    {
+      "occ": "25-1123.00",
+      "occ_title_onetsoc2010": "English Language and Literature Teachers, Postsecondary",
+      "pctl_new_2023": 100.0
+    },
+    {
+      "occ": "25-1112.00",
+      "occ_title_onetsoc2010": "Law Teachers, Postsecondary",
+      "pctl_new_2023": 99.89637305699482
+    },
+    {
+      "occ": "25-1067.00",
+      "occ_title_onetsoc2010": "Sociology Teachers, Postsecondary",
+      "pctl_new_2023": 99.79274611398964
+    },
+    {
+      "occ": "43-4041.02",
+      "occ_title_onetsoc2010": "Credit Checkers",
+      "pctl_new_2023": 99.68911917098444
+    },
+    {
+      "occ": "19-3031.02",
+      "occ_title_onetsoc2010": "Clinical Psychologists",
+      "pctl_new_2023": 99.58549222797927
+    },
+    {
+      "occ": "19-3041.00",
+      "occ_title_onetsoc2010": "Sociologists",
+      "pctl_new_2023": 99.48186528497408
+    },
+    {
+      "occ": "25-1125.00",
+      "occ_title_onetsoc2010": "History Teachers, Postsecondary",
+      "pctl_new_2023": 99.37823834196892
+    },
+    {
+      "occ": "19-3094.00",
+      "occ_title_onetsoc2010": "Political Scientists",
+      "pctl_new_2023": 99.27461139896371
+    },
+    {
+      "occ": "25-1111.00",
+      "occ_title_onetsoc2010": "Criminal Justice and Law Enforcement Teachers, Postsecondary",
+      "pctl_new_2023": 99.17098445595856
+    },
+    {
+      "occ": "23-1022.00",
+      "occ_title_onetsoc2010": "Arbitrators, Mediators, and Conciliators",
+      "pctl_new_2023": 99.06735751295336
+    },
+    {
+      "occ": "23-1023.00",
+      "occ_title_onetsoc2010": "Judges, Magistrate Judges, and Magistrates",
+      "pctl_new_2023": 98.96373056994818
+    },
+    {
+      "occ": "19-3031.03",
+      "occ_title_onetsoc2010": "Counseling Psychologists",
+      "pctl_new_2023": 98.860103626943
+    },
+    {
+      "occ": "19-3093.00",
+      "occ_title_onetsoc2010": "Historians",
+      "pctl_new_2023": 98.75647668393782
+    },
+    {
+      "occ": "25-1065.00",
+      "occ_title_onetsoc2010": "Political Science Teachers, Postsecondary",
+      "pctl_new_2023": 98.65284974093264
+    },
+    {
+      "occ": "25-1113.00",
+      "occ_title_onetsoc2010": "Social Work Teachers, Postsecondary",
+      "pctl_new_2023": 98.54922279792746
+    },
+    {
+      "occ": "25-1062.00",
+      "occ_title_onetsoc2010": "Area, Ethnic, and Cultural Studies Teachers, Postsecondary",
+      "pctl_new_2023": 98.44559585492227
+    },
+    {
+      "occ": "41-9041.00",
+      "occ_title_onetsoc2010": "Telemarketers",
+      "pctl_new_2023": 98.34196891191708
+    },
+    {
+      "occ": "25-1124.00",
+      "occ_title_onetsoc2010": "Foreign Language and Literature Teachers, Postsecondary",
+      "pctl_new_2023": 98.23834196891193
+    },
+    {
+      "occ": "25-1082.00",
+      "occ_title_onetsoc2010": "Library Science Teachers, Postsecondary",
+      "pctl_new_2023": 98.13471502590671
+    },
+    {
+      "occ": "25-1122.00",
+      "occ_title_onetsoc2010": "Communications Teachers, Postsecondary",
+      "pctl_new_2023": 98.03108808290156
+    }
+  ],
+  "bottom_by_pctl_new": [
+    {
+      "occ": "53-7061.00",
+      "occ_title_onetsoc2010": "Cleaners of Vehicles and Equipment",
+      "pctl_new_2023": 0.0
+    },
+    {
+      "occ": "51-6021.00",
+      "occ_title_onetsoc2010": "Pressers, Textile, Garment, and Related Materials",
+      "pctl_new_2023": 0.1036269430051813
+    },
+    {
+      "occ": "51-3023.00",
+      "occ_title_onetsoc2010": "Slaughterers and Meat Packers",
+      "pctl_new_2023": 0.2072538860103626
+    },
+    {
+      "occ": "35-9021.00",
+      "occ_title_onetsoc2010": "Dishwashers",
+      "pctl_new_2023": 0.310880829015544
+    },
+    {
+      "occ": "47-3014.00",
+      "occ_title_onetsoc2010": "Helpers--Painters, Paperhangers, Plasterers, and Stucco Masons",
+      "pctl_new_2023": 0.4145077720207253
+    },
+    {
+      "occ": "35-9011.00",
+      "occ_title_onetsoc2010": "Dining Room and Cafeteria Attendants and Bartender Helpers",
+      "pctl_new_2023": 0.5181347150259067
+    },
+    {
+      "occ": "53-7111.00",
+      "occ_title_onetsoc2010": "Mine Shuttle Car Operators",
+      "pctl_new_2023": 0.6217616580310881
+    },
+    {
+      "occ": "37-3011.00",
+      "occ_title_onetsoc2010": "Landscaping and Groundskeeping Workers",
+      "pctl_new_2023": 0.7253886010362695
+    },
+    {
+      "occ": "47-3011.00",
+      "occ_title_onetsoc2010": "Helpers--Brickmasons, Blockmasons, Stonemasons, and Tile and Marble Setters",
+      "pctl_new_2023": 0.8290155440414507
+    },
+    {
+      "occ": "47-2043.00",
+      "occ_title_onetsoc2010": "Floor Sanders and Finishers",
+      "pctl_new_2023": 0.932642487046632
+    },
+    {
+      "occ": "47-2171.00",
+      "occ_title_onetsoc2010": "Reinforcing Iron and Rebar Workers",
+      "pctl_new_2023": 1.0362694300518134
+    },
+    {
+      "occ": "47-4031.00",
+      "occ_title_onetsoc2010": "Fence Erectors",
+      "pctl_new_2023": 1.1398963730569949
+    },
+    {
+      "occ": "47-2142.00",
+      "occ_title_onetsoc2010": "Paperhangers",
+      "pctl_new_2023": 1.243523316062176
+    },
+    {
+      "occ": "53-7064.00",
+      "occ_title_onetsoc2010": "Packers and Packagers, Hand",
+      "pctl_new_2023": 1.3471502590673574
+    },
+    {
+      "occ": "47-2082.00",
+      "occ_title_onetsoc2010": "Tapers",
+      "pctl_new_2023": 1.450777202072539
+    },
+    {
+      "occ": "45-2041.00",
+      "occ_title_onetsoc2010": "Graders and Sorters, Agricultural Products",
+      "pctl_new_2023": 1.5544041450777202
+    },
+    {
+      "occ": "27-2031.00",
+      "occ_title_onetsoc2010": "Dancers",
+      "pctl_new_2023": 1.6580310880829014
+    },
+    {
+      "occ": "47-3016.00",
+      "occ_title_onetsoc2010": "Helpers--Roofers",
+      "pctl_new_2023": 1.761658031088083
+    },
+    {
+      "occ": "47-2053.00",
+      "occ_title_onetsoc2010": "Terrazzo Workers and Finishers",
+      "pctl_new_2023": 1.865284974093264
+    },
+    {
+      "occ": "51-4071.00",
+      "occ_title_onetsoc2010": "Foundry Mold and Coremakers",
+      "pctl_new_2023": 1.9689119170984457
+    }
+  ],
+  "top_by_pctl_level": [
+    {
+      "occ": "43-9081.00",
+      "occ_title_onetsoc2010": "Proofreaders and Copy Markers",
+      "pctl_rank_allapps": 99.949997
+    },
+    {
+      "occ": "15-2021.00",
+      "occ_title_onetsoc2010": "Mathematicians",
+      "pctl_rank_allapps": 99.839996
+    },
+    {
+      "occ": "15-2091.00",
+      "occ_title_onetsoc2010": "Mathematical Technicians",
+      "pctl_rank_allapps": 99.739998
+    },
+    {
+      "occ": "15-2041.00",
+      "occ_title_onetsoc2010": "Statisticians",
+      "pctl_rank_allapps": 99.639999
+    },
+    {
+      "occ": "27-3042.00",
+      "occ_title_onetsoc2010": "Technical Writers",
+      "pctl_rank_allapps": 99.529999
+    },
+    {
+      "occ": "13-2051.00",
+      "occ_title_onetsoc2010": "Financial Analysts",
+      "pctl_rank_allapps": 99.43
+    },
+    {
+      "occ": "15-2031.00",
+      "occ_title_onetsoc2010": "Operations Research Analysts",
+      "pctl_rank_allapps": 99.330002
+    },
+    {
+      "occ": "15-1131.00",
+      "occ_title_onetsoc2010": "Computer Programmers",
+      "pctl_rank_allapps": 99.220001
+    },
+    {
+      "occ": "15-1199.01",
+      "occ_title_onetsoc2010": "Software Quality Assurance Engineers and Testers",
+      "pctl_rank_allapps": 99.120003
+    },
+    {
+      "occ": "13-1081.02",
+      "occ_title_onetsoc2010": "Logistics Analysts",
+      "pctl_rank_allapps": 99.019997
+    },
+    {
+      "occ": "43-9111.01",
+      "occ_title_onetsoc2010": "Bioinformatics Technicians",
+      "pctl_rank_allapps": 98.910004
+    },
+    {
+      "occ": "27-3043.05",
+      "occ_title_onetsoc2010": "Poets, Lyricists and Creative Writers",
+      "pctl_rank_allapps": 98.809998
+    },
+    {
+      "occ": "17-3012.02",
+      "occ_title_onetsoc2010": "Electrical Drafters",
+      "pctl_rank_allapps": 98.709999
+    },
+    {
+      "occ": "15-1133.00",
+      "occ_title_onetsoc2010": "Software Developers, Systems Software",
+      "pctl_rank_allapps": 98.599998
+    },
+    {
+      "occ": "31-9094.00",
+      "occ_title_onetsoc2010": "Medical Transcriptionists",
+      "pctl_rank_allapps": 98.5
+    },
+    {
+      "occ": "43-3021.01",
+      "occ_title_onetsoc2010": "Statement Clerks",
+      "pctl_rank_allapps": 98.400002
+    },
+    {
+      "occ": "33-3021.06",
+      "occ_title_onetsoc2010": "Intelligence Analysts",
+      "pctl_rank_allapps": 98.290001
+    },
+    {
+      "occ": "17-2061.00",
+      "occ_title_onetsoc2010": "Computer Hardware Engineers",
+      "pctl_rank_allapps": 98.190002
+    },
+    {
+      "occ": "43-3051.00",
+      "occ_title_onetsoc2010": "Payroll and Timekeeping Clerks",
+      "pctl_rank_allapps": 98.080002
+    },
+    {
+      "occ": "43-9111.00",
+      "occ_title_onetsoc2010": "Statistical Assistants",
+      "pctl_rank_allapps": 97.980003
+    }
+  ],
+  "bottom_by_pctl_level": [
+    {
+      "occ": "27-2031.00",
+      "occ_title_onetsoc2010": "Dancers",
+      "pctl_rank_allapps": 0.050000001
+    },
+    {
+      "occ": "39-9031.00",
+      "occ_title_onetsoc2010": "Fitness Trainers and Aerobics Instructors",
+      "pctl_rank_allapps": 0.16
+    },
+    {
+      "occ": "27-2021.00",
+      "occ_title_onetsoc2010": "Athletes and Sports Competitors",
+      "pctl_rank_allapps": 0.25999999
+    },
+    {
+      "occ": "27-2032.00",
+      "occ_title_onetsoc2010": "Choreographers",
+      "pctl_rank_allapps": 0.36000001
+    },
+    {
+      "occ": "33-2011.02",
+      "occ_title_onetsoc2010": "Forest Firefighters",
+      "pctl_rank_allapps": 0.47
+    },
+    {
+      "occ": "33-2011.01",
+      "occ_title_onetsoc2010": "Municipal Firefighters",
+      "pctl_rank_allapps": 0.56999999
+    },
+    {
+      "occ": "47-2221.00",
+      "occ_title_onetsoc2010": "Structural Iron and Steel Workers",
+      "pctl_rank_allapps": 0.67000002
+    },
+    {
+      "occ": "49-9095.00",
+      "occ_title_onetsoc2010": "Manufactured Building and Mobile Home Installers",
+      "pctl_rank_allapps": 0.77999997
+    },
+    {
+      "occ": "37-3013.00",
+      "occ_title_onetsoc2010": "Tree Trimmers and Pruners",
+      "pctl_rank_allapps": 0.88
+    },
+    {
+      "occ": "33-3051.01",
+      "occ_title_onetsoc2010": "Police Patrol Officers",
+      "pctl_rank_allapps": 0.98000002
+    },
+    {
+      "occ": "33-3051.03",
+      "occ_title_onetsoc2010": "Sheriffs and Deputy Sheriffs",
+      "pctl_rank_allapps": 1.09
+    },
+    {
+      "occ": "47-5061.00",
+      "occ_title_onetsoc2010": "Roof Bolters, Mining",
+      "pctl_rank_allapps": 1.1900001
+    },
+    {
+      "occ": "47-3014.00",
+      "occ_title_onetsoc2010": "Helpers--Painters, Paperhangers, Plasterers, and Stucco Masons",
+      "pctl_rank_allapps": 1.29
+    },
+    {
+      "occ": "47-2022.00",
+      "occ_title_onetsoc2010": "Stonemasons",
+      "pctl_rank_allapps": 1.4
+    },
+    {
+      "occ": "47-2181.00",
+      "occ_title_onetsoc2010": "Roofers",
+      "pctl_rank_allapps": 1.5
+    },
+    {
+      "occ": "47-4031.00",
+      "occ_title_onetsoc2010": "Fence Erectors",
+      "pctl_rank_allapps": 1.6
+    },
+    {
+      "occ": "47-3011.00",
+      "occ_title_onetsoc2010": "Helpers--Brickmasons, Blockmasons, Stonemasons, and Tile and Marble Setters",
+      "pctl_rank_allapps": 1.71
+    },
+    {
+      "occ": "47-3016.00",
+      "occ_title_onetsoc2010": "Helpers--Roofers",
+      "pctl_rank_allapps": 1.8099999
+    },
+    {
+      "occ": "31-1015.00",
+      "occ_title_onetsoc2010": "Orderlies",
+      "pctl_rank_allapps": 1.92
+    },
+    {
+      "occ": "33-3012.00",
+      "occ_title_onetsoc2010": "Correctional Officers and Jailers",
+      "pctl_rank_allapps": 2.02
+    }
+  ],
+  "largest_increases_new_minus_old": [
+    {
+      "occ": "21-2011.00",
+      "occ_title_onetsoc2010": "Clergy",
+      "pctl_rank_allapps": 18.370001,
+      "delta_new_minus_old": 72.7180819015544
+    },
+    {
+      "occ": "21-1013.00",
+      "occ_title_onetsoc2010": "Marriage and Family Therapists",
+      "pctl_rank_allapps": 40.419998,
+      "delta_new_minus_old": 56.36756676683938
+    },
+    {
+      "occ": "29-1066.00",
+      "occ_title_onetsoc2010": "Psychiatrists",
+      "pctl_rank_allapps": 41.25,
+      "delta_new_minus_old": 53.361398963730565
+    },
+    {
+      "occ": "19-3031.03",
+      "occ_title_onetsoc2010": "Counseling Psychologists",
+      "pctl_rank_allapps": 45.810001,
+      "delta_new_minus_old": 53.050102626943
+    },
+    {
+      "occ": "11-1011.00",
+      "occ_title_onetsoc2010": "Chief Executives",
+      "pctl_rank_allapps": 39.18,
+      "delta_new_minus_old": 51.597202072538856
+    },
+    {
+      "occ": "27-2022.00",
+      "occ_title_onetsoc2010": "Coaches and Scouts",
+      "pctl_rank_allapps": 3.99,
+      "delta_new_minus_old": 51.24316062176165
+    },
+    {
+      "occ": "21-1014.00",
+      "occ_title_onetsoc2010": "Mental Health Counselors",
+      "pctl_rank_allapps": 47.57,
+      "delta_new_minus_old": 50.2538341968912
+    },
+    {
+      "occ": "21-1023.00",
+      "occ_title_onetsoc2010": "Mental Health and Substance Abuse Social Workers",
+      "pctl_rank_allapps": 40.32,
+      "delta_new_minus_old": 48.902797927461144
+    },
+    {
+      "occ": "11-9081.00",
+      "occ_title_onetsoc2010": "Lodging Managers",
+      "pctl_rank_allapps": 12.47,
+      "delta_new_minus_old": 47.94450777202073
+    },
+    {
+      "occ": "21-1021.00",
+      "occ_title_onetsoc2010": "Child, Family, and School Social Workers",
+      "pctl_rank_allapps": 27.280001,
+      "delta_new_minus_old": 46.19150159067358
+    },
+    {
+      "occ": "29-1141.04",
+      "occ_title_onetsoc2010": "Clinical Nurse Specialists",
+      "pctl_rank_allapps": 6.9899998,
+      "delta_new_minus_old": 46.17062196165803
+    },
+    {
+      "occ": "11-9151.00",
+      "occ_title_onetsoc2010": "Social and Community Service Managers",
+      "pctl_rank_allapps": 30.49,
+      "delta_new_minus_old": 45.77943005181348
+    },
+    {
+      "occ": "29-1125.00",
+      "occ_title_onetsoc2010": "Recreational Therapists",
+      "pctl_rank_allapps": 6.0599999,
+      "delta_new_minus_old": 44.40632134352332
+    },
+    {
+      "occ": "29-1141.03",
+      "occ_title_onetsoc2010": "Critical Care Nurses",
+      "pctl_rank_allapps": 7.6100001,
+      "delta_new_minus_old": 42.9599480865285
+    },
+    {
+      "occ": "29-1141.00",
+      "occ_title_onetsoc2010": "Registered Nurses",
+      "pctl_rank_allapps": 8.3299999,
+      "delta_new_minus_old": 42.55082911554405
+    },
+    {
+      "occ": "11-2022.00",
+      "occ_title_onetsoc2010": "Sales Managers",
+      "pctl_rank_allapps": 48.189999,
+      "delta_new_minus_old": 42.276322243523325
+    },
+    {
+      "occ": "33-1012.00",
+      "occ_title_onetsoc2010": "First-Line Supervisors of Police and Detectives",
+      "pctl_rank_allapps": 3.1600001,
+      "delta_new_minus_old": 40.67419679119171
+    },
+    {
+      "occ": "21-1015.00",
+      "occ_title_onetsoc2010": "Rehabilitation Counselors",
+      "pctl_rank_allapps": 28.83,
+      "delta_new_minus_old": 40.60005181347151
+    },
+    {
+      "occ": "29-1171.00",
+      "occ_title_onetsoc2010": "Nurse Practitioners",
+      "pctl_rank_allapps": 18.790001,
+      "delta_new_minus_old": 40.588237341968906
+    },
+    {
+      "occ": "39-9032.00",
+      "occ_title_onetsoc2010": "Recreation Workers",
+      "pctl_rank_allapps": 8.0200005,
+      "delta_new_minus_old": 40.47740882642487
+    }
+  ],
+  "largest_decreases_new_minus_old": [
+    {
+      "occ": "49-9064.00",
+      "occ_title_onetsoc2010": "Watch Repairers",
+      "pctl_rank_allapps": 81.209999,
+      "delta_new_minus_old": -51.88357412953368
+    },
+    {
+      "occ": "15-2091.00",
+      "occ_title_onetsoc2010": "Mathematical Technicians",
+      "pctl_rank_allapps": 99.739998,
+      "delta_new_minus_old": -50.3099461865285
+    },
+    {
+      "occ": "49-9061.00",
+      "occ_title_onetsoc2010": "Camera and Photographic Equipment Repairers",
+      "pctl_rank_allapps": 86.699997,
+      "delta_new_minus_old": -49.29067057512953
+    },
+    {
+      "occ": "51-6051.00",
+      "occ_title_onetsoc2010": "Sewers, Hand",
+      "pctl_rank_allapps": 63.509998,
+      "delta_new_minus_old": -47.65507572020726
+    },
+    {
+      "occ": "51-2093.00",
+      "occ_title_onetsoc2010": "Timing Device Assemblers and Adjusters",
+      "pctl_rank_allapps": 70.860001,
+      "delta_new_minus_old": -45.88590773575129
+    },
+    {
+      "occ": "27-1013.00",
+      "occ_title_onetsoc2010": "Fine Artists, Including Painters, Sculptors, and Illustrators",
+      "pctl_rank_allapps": 78.110001,
+      "delta_new_minus_old": -43.80948286528497
+    },
+    {
+      "occ": "51-9071.07",
+      "occ_title_onetsoc2010": "Precious Metal Workers",
+      "pctl_rank_allapps": 76.449997,
+      "delta_new_minus_old": -43.600256067357506
+    },
+    {
+      "occ": "43-9022.00",
+      "occ_title_onetsoc2010": "Word Processors and Typists",
+      "pctl_rank_allapps": 90.529999,
+      "delta_new_minus_old": -42.13621661658031
+    },
+    {
+      "occ": "51-6031.00",
+      "occ_title_onetsoc2010": "Sewing Machine Operators",
+      "pctl_rank_allapps": 47.880001,
+      "delta_new_minus_old": -41.14424970466321
+    },
+    {
+      "occ": "51-9071.06",
+      "occ_title_onetsoc2010": "Gem and Diamond Workers",
+      "pctl_rank_allapps": 72.93,
+      "delta_new_minus_old": -41.01290155440415
+    },
+    {
+      "occ": "17-3031.02",
+      "occ_title_onetsoc2010": "Mapping Technicians",
+      "pctl_rank_allapps": 92.809998,
+      "delta_new_minus_old": -40.16751095336787
+    },
+    {
+      "occ": "51-9081.00",
+      "occ_title_onetsoc2010": "Dental Laboratory Technicians",
+      "pctl_rank_allapps": 74.790001,
+      "delta_new_minus_old": -39.97134815025907
+    },
+    {
+      "occ": "17-3013.00",
+      "occ_title_onetsoc2010": "Mechanical Drafters",
+      "pctl_rank_allapps": 95.699997,
+      "delta_new_minus_old": -39.84507472020725
+    },
+    {
+      "occ": "51-2023.00",
+      "occ_title_onetsoc2010": "Electromechanical Equipment Assemblers",
+      "pctl_rank_allapps": 67.650002,
+      "delta_new_minus_old": -38.427204072538856
+    },
+    {
+      "occ": "51-5111.00",
+      "occ_title_onetsoc2010": "Prepress Technicians and Workers",
+      "pctl_rank_allapps": 81.309998,
+      "delta_new_minus_old": -37.68305499481865
+    },
+    {
+      "occ": "29-2071.00",
+      "occ_title_onetsoc2010": "Medical Records and Health Information Technicians",
+      "pctl_rank_allapps": 94.57,
+      "delta_new_minus_old": -35.91715025906735
+    },
+    {
+      "occ": "39-5092.00",
+      "occ_title_onetsoc2010": "Manicurists and Pedicurists",
+      "pctl_rank_allapps": 68.370003,
+      "delta_new_minus_old": -35.83114289637305
+    },
+    {
+      "occ": "17-3011.01",
+      "occ_title_onetsoc2010": "Architectural Drafters",
+      "pctl_rank_allapps": 90.110001,
+      "delta_new_minus_old": -35.80948286528497
+    },
+    {
+      "occ": "51-4121.07",
+      "occ_title_onetsoc2010": "Solderers and Brazers",
+      "pctl_rank_allapps": 39.490002,
+      "delta_new_minus_old": -35.65580510880829
+    },
+    {
+      "occ": "29-2011.02",
+      "occ_title_onetsoc2010": "Cytotechnologists",
+      "pctl_rank_allapps": 80.07,
+      "delta_new_minus_old": -33.12699481865284
+    }
+  ],
+  "largest_increases_level_minus_old": [
+    {
+      "occ": "53-2011.00",
+      "occ_title_onetsoc2010": "Airline Pilots, Copilots, and Flight Engineers",
+      "pctl_rank_allapps": 15.06,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "39-5091.00",
+      "occ_title_onetsoc2010": "Makeup Artists, Theatrical and Performance",
+      "pctl_rank_allapps": 51.919998,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "29-2021.00",
+      "occ_title_onetsoc2010": "Dental Hygienists",
+      "pctl_rank_allapps": 31.83,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-9041.00",
+      "occ_title_onetsoc2010": "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+      "pctl_rank_allapps": 25.620001,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "29-2051.00",
+      "occ_title_onetsoc2010": "Dietetic Technicians",
+      "pctl_rank_allapps": 47.259998,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "13-1071.00",
+      "occ_title_onetsoc2010": "Human Resources Specialists",
+      "pctl_rank_allapps": 87.839996,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "47-4051.00",
+      "occ_title_onetsoc2010": "Highway Maintenance Workers",
+      "pctl_rank_allapps": 5.75,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "45-4022.00",
+      "occ_title_onetsoc2010": "Logging Equipment Operators",
+      "pctl_rank_allapps": 15.89,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-6064.00",
+      "occ_title_onetsoc2010": "Textile Winding, Twisting, and Drawing Out Machine Setters, Operators, and Tenders",
+      "pctl_rank_allapps": 8.8500004,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "25-4011.00",
+      "occ_title_onetsoc2010": "Archivists",
+      "pctl_rank_allapps": 85.25,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-4081.00",
+      "occ_title_onetsoc2010": "Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+      "pctl_rank_allapps": 32.25,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-4061.00",
+      "occ_title_onetsoc2010": "Model Makers, Metal and Plastic",
+      "pctl_rank_allapps": 43.529999,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "49-9012.00",
+      "occ_title_onetsoc2010": "Control and Valve Installers and Repairers, Except Mechanical Door",
+      "pctl_rank_allapps": 45.290001,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "49-9011.00",
+      "occ_title_onetsoc2010": "Mechanical Door Repairers",
+      "pctl_rank_allapps": 5.6399999,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "39-5012.00",
+      "occ_title_onetsoc2010": "Hairdressers, Hairstylists, and Cosmetologists",
+      "pctl_rank_allapps": 41.560001,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-5112.00",
+      "occ_title_onetsoc2010": "Printing Press Operators",
+      "pctl_rank_allapps": 33.389999,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-4051.00",
+      "occ_title_onetsoc2010": "Metal-Refining Furnace Operators and Tenders",
+      "pctl_rank_allapps": 20.24,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-4194.00",
+      "occ_title_onetsoc2010": "Tool Grinders, Filers, and Sharpeners",
+      "pctl_rank_allapps": 38.66,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "39-9041.00",
+      "occ_title_onetsoc2010": "Residential Advisors",
+      "pctl_rank_allapps": 50.669998,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "29-2052.00",
+      "occ_title_onetsoc2010": "Pharmacy Technicians",
+      "pctl_rank_allapps": 58.130001,
+      "delta_cum_minus_old": 0.0
+    }
+  ],
+  "largest_decreases_level_minus_old": [
+    {
+      "occ": "53-2011.00",
+      "occ_title_onetsoc2010": "Airline Pilots, Copilots, and Flight Engineers",
+      "pctl_rank_allapps": 15.06,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "29-2021.00",
+      "occ_title_onetsoc2010": "Dental Hygienists",
+      "pctl_rank_allapps": 31.83,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-9041.00",
+      "occ_title_onetsoc2010": "Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",
+      "pctl_rank_allapps": 25.620001,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "29-2051.00",
+      "occ_title_onetsoc2010": "Dietetic Technicians",
+      "pctl_rank_allapps": 47.259998,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "13-1071.00",
+      "occ_title_onetsoc2010": "Human Resources Specialists",
+      "pctl_rank_allapps": 87.839996,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "47-4051.00",
+      "occ_title_onetsoc2010": "Highway Maintenance Workers",
+      "pctl_rank_allapps": 5.75,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "45-4022.00",
+      "occ_title_onetsoc2010": "Logging Equipment Operators",
+      "pctl_rank_allapps": 15.89,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-6064.00",
+      "occ_title_onetsoc2010": "Textile Winding, Twisting, and Drawing Out Machine Setters, Operators, and Tenders",
+      "pctl_rank_allapps": 8.8500004,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "25-4011.00",
+      "occ_title_onetsoc2010": "Archivists",
+      "pctl_rank_allapps": 85.25,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-4081.00",
+      "occ_title_onetsoc2010": "Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plastic",
+      "pctl_rank_allapps": 32.25,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-4061.00",
+      "occ_title_onetsoc2010": "Model Makers, Metal and Plastic",
+      "pctl_rank_allapps": 43.529999,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "49-9012.00",
+      "occ_title_onetsoc2010": "Control and Valve Installers and Repairers, Except Mechanical Door",
+      "pctl_rank_allapps": 45.290001,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "49-9011.00",
+      "occ_title_onetsoc2010": "Mechanical Door Repairers",
+      "pctl_rank_allapps": 5.6399999,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "27-3043.04",
+      "occ_title_onetsoc2010": "Copy Writers",
+      "pctl_rank_allapps": 96.839996,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "39-5012.00",
+      "occ_title_onetsoc2010": "Hairdressers, Hairstylists, and Cosmetologists",
+      "pctl_rank_allapps": 41.560001,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-4051.00",
+      "occ_title_onetsoc2010": "Metal-Refining Furnace Operators and Tenders",
+      "pctl_rank_allapps": 20.24,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "51-4194.00",
+      "occ_title_onetsoc2010": "Tool Grinders, Filers, and Sharpeners",
+      "pctl_rank_allapps": 38.66,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "39-9041.00",
+      "occ_title_onetsoc2010": "Residential Advisors",
+      "pctl_rank_allapps": 50.669998,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "29-2052.00",
+      "occ_title_onetsoc2010": "Pharmacy Technicians",
+      "pctl_rank_allapps": 58.130001,
+      "delta_cum_minus_old": 0.0
+    },
+    {
+      "occ": "49-2021.01",
+      "occ_title_onetsoc2010": "Radio Mechanics",
+      "pctl_rank_allapps": 66.199997,
+      "delta_cum_minus_old": 0.0
+    }
+  ]
+}

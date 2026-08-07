@@ -1,0 +1,30 @@
+\section*{Appendix: DAIOE Robustness Using an FRS-Style Mapping}
+\addcontentsline{toc}{section}{Appendix: DAIOE Robustness Using an FRS-Style Mapping}
+
+\subsection*{Clarifying the Index Construction}
+In the DAIOE framework, the **annual change** in AI capability is the primitive. Equation (2) uses the **change** in progress score $\Delta p_{i,t}$, not a cumulative score. For each ability $j$, the annual change is
+\begin{equation}
+\Delta e_{j,t} = \sum_{i=1}^9 \Delta p_{i,t} x_{i,j}.
+\end{equation}
+Occupation weights are normalized shares over the 52 O*NET abilities,
+\begin{equation}
+r_{o,j} = \frac{i_{o,j} l_{o,j}}{\sum_{j=1}^{52} i_{o,j} l_{o,j}},
+\end{equation}
+so the occupation-level annual change is
+\begin{equation}
+\Delta e_{o,t} = \sum_{j=1}^{52} \Delta e_{j,t} r_{o,j}.
+\end{equation}
+Our robustness variant defines the annual index without social-skill discounting:
+\begin{equation}
+\Delta \mathrm{DAIOE}_{o,t} = \big(\Delta e_{o,t}\big)^2.
+\end{equation}
+The **level** index is then the **sum of annual changes** (Equation (6)):
+\begin{equation}
+\mathrm{DAIOE}_{o,t} = \sum_{\tau \le t} \Delta \mathrm{DAIOE}_{o,\tau}.
+\end{equation}
+No cumulative-progress input is required; we construct the level index directly from the annual series.
+
+\subsection*{Implementation Details}
+The master script computes $E_{oi}=\sum_{j=1}^{52}r_{o,j}x_{i,j}$ and then forms $\Delta e_{o,t}=\sum_i \Delta p_{i,t}E_{oi}$. It writes a panel with $\Delta e$, $\Delta \mathrm{DAIOE}$, and the cumulative level $\mathrm{DAIOE}$ by year, as well as a snapshot for a user-selected (or latest) year.
+
+All other steps (terminology harmonization, anchors from FRS, LLM-based mapping, validation vs. FRS, O*NET weights) are unchanged relative to the main text and are included in the repository.
