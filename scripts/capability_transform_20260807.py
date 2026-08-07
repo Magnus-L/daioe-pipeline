@@ -64,6 +64,16 @@ from daioe import config as cfgmod, stage2_ai_progress as s2, stage4_index as s4
 LOWER_IS_BETTER = {"Percentage error", "FID", "Perplexity", "Model Entropy"}
 # The one anchor whose units disagree with its values (see docstring, defect 2).
 ANCHOR_FIX = {"Imagenet Image Recognition": 5.1}
+# Anchors sourced for metrics the frozen sheet leaves unanchored. Every row carries its
+# source and the supporting quote; see data/derived/human_anchors_v1.csv.
+ANCHOR_TABLE = ROOT / "data/derived/human_anchors_v1.csv"
+
+
+def load_sourced_anchors() -> dict[str, float]:
+    if not ANCHOR_TABLE.exists():
+        return {}
+    a = pd.read_csv(ANCHOR_TABLE)
+    return dict(zip(a["metrics_name"], a["anchor"].astype(float)))
 
 
 def _signed_log(x: np.ndarray) -> np.ndarray:
@@ -96,10 +106,13 @@ def _theta(scale: str, v: np.ndarray, h: float) -> np.ndarray:
 def build_capability(cfg) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Return (per-benchmark-year capability, per-application-year capability + s.e.)."""
     fd = pd.read_parquet(ROOT / "data/out/formated_data.parquet")
-    fd = fd[fd["value"].notna() & fd["target"].notna()].copy()
+    sourced = load_sourced_anchors()
+    # fill in the anchors the frozen sheet lacks, then apply the units erratum
+    fd["target"] = fd["target"].fillna(fd["metrics_name"].map(sourced))
     fd["target"] = fd.apply(
         lambda r: ANCHOR_FIX.get(r["metrics_name"], r["target"]), axis=1
     )
+    fd = fd[fd["value"].notna() & fd["target"].notna()].copy()
 
     out = []
     for (m, sc, app), g in fd.groupby(["metrics_name", "scale", "parent_name"]):
