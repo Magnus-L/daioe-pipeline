@@ -135,6 +135,47 @@ def build_requests(apps, acts, anchors, replicates, effort, max_tokens):
     return reqs
 
 
+def collect_levels(emc, batch_id: str) -> pd.DataFrame:
+    """Parse the level schema.
+
+    The generic collector in `estimate_mapping_claude` reads a key called `r` and clips it to
+    [0, 1], which is right for a relatedness score and silently wrong here: this schema returns
+    `attained_level` on O*NET's 1-7 scale, so every response parsed to NaN while reporting zero
+    errors. Batch results are retained, so the fix costs nothing but it is worth the separate
+    function rather than overloading the other one.
+    """
+    import json
+    import time
+
+    import numpy as np
+
+    client = emc._client()
+    while True:
+        b = client.messages.batches.retrieve(batch_id)
+        if b.processing_status == "ended":
+            break
+        time.sleep(30)
+
+    rows = []
+    for res in client.messages.batches.results(batch_id):
+        app_id, element_id, rep = (int(p[1:]) for p in res.custom_id.split("_"))
+        row = {"ai_app_id": app_id, "ability_id": element_id, "replicate": rep,
+               "attained_level": np.nan, "ceiling_reason": "", "confidence": "", "error": ""}
+        if res.result.type == "succeeded":
+            text = next((x.text for x in res.result.message.content if x.type == "text"), "")
+            try:
+                p = json.loads(text)
+                row["attained_level"] = float(np.clip(float(p["attained_level"]), 1.0, 7.0))
+                row["ceiling_reason"] = str(p.get("ceiling_reason", ""))
+                row["confidence"] = str(p.get("confidence", ""))
+            except (json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+                row["error"] = f"parse: {exc}"
+        else:
+            row["error"] = str(getattr(res.result, "error", res.result.type))
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--replicates", type=int, default=3)
@@ -159,8 +200,7 @@ def main() -> None:
     anchors.columns = [c.strip() for c in anchors.columns]
 
     if args.collect:
-        scores = emc.collect_batch(args.collect)
-        scores = scores.rename(columns={"r": "attained_level"})
+        scores = collect_levels(emc, args.collect)
         scores.to_csv(MOD / "activity_levels_raw.csv", index=False)
         cell = scores[scores.attained_level.notna()].groupby(["ai_app_id", "ability_id"]).agg(
             level=("attained_level", "median"), lo=("attained_level", "min"),
