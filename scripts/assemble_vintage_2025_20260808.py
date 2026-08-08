@@ -233,6 +233,40 @@ def gate_publication_seam(vintage_pub_dir: Path) -> list[str]:
     return lines
 
 
+def gate_internal_seam(vintage_out: Path) -> list[str]:
+    """G2b: every INTERNAL taxonomy panel's 2010-2023 rows equal the frozen pipeline's
+    own internal panel on all shared numeric columns, exact at float32.
+
+    This exists chiefly for SOC2018, which has NO publication panel (and no Stata
+    reference; its own verification is the BLS round-trip check), so the publication
+    seam gate never touches it. The other five internals are covered here too because
+    the gate is cheap and strictly stronger than gating publication alone.
+    """
+    lines = []
+    taxmap = {
+        "daioe_panel_onet.dta": ["occ_code_onet", "year"],
+        "daioe_panel_soc.dta": ["occ_code_soc", "year"],
+        "daioe_panel_isco08.dta": ["ISCO08code_str", "year"],
+        "daioe_panel_ssyk2012.dta": ["ssyk2012_4", "year"],
+        "daioe_panel_ssyk96.dta": ["ssyk96_4", "year"],
+        "daioe_panel_soc2018.dta": ["SOC2018code", "year"],
+    }
+    for fname, keys in taxmap.items():
+        got = dio.read_dta(vintage_out / fname)
+        ref = dio.read_dta(FROZEN_OUT / fname)
+        cols = [c for c in ref.columns
+                if c not in keys and ref[c].dtype.kind in "fc" and c in got.columns]
+        g = got[got["year"] <= 2023].set_index(keys)[cols].sort_index()
+        r = ref[ref["year"] <= 2023].set_index(keys)[cols].sort_index()
+        assert g.index.equals(r.index), f"{fname}: 2010-2023 row sets differ"
+        diff = (g.astype("float32").fillna(-9e9).values
+                != r.astype("float32").fillna(-9e9).values).sum()
+        lines.append(f"{fname}: {len(g)} published rows, {len(cols)} columns, "
+                     f"{int(diff)} cells differ")
+        assert diff == 0, f"{fname}: G2b FAILED, {int(diff)} published cells changed"
+    return lines
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--gpqa-parent", choices=["maths", "qa"], default="maths")
@@ -296,10 +330,13 @@ def main() -> None:
     print("[4/6] stage 5 taxonomy fan-out + publication exports ...")
     s5.run(cfg, validate=False)
 
-    print("[5/6] G2 publication seam gate ...")
+    print("[5/6] G2 publication + G2b internal seam gates ...")
     g2 = gate_publication_seam(out_dir / "Publication")
     for line in g2:
         print("      " + line)
+    g2b = gate_internal_seam(out_dir)
+    for line in g2b:
+        print("      internal " + line)
 
     print("[6/6] release report ...")
     ext_sl = pd.read_parquet(out_dir / "metrics_frontiers.parquet")  # provenance only
@@ -338,6 +375,8 @@ def main() -> None:
         fh.write("## Gates\n- G1 splice integrity: PASSED (0 frozen cells changed)\n")
         for line in g2:
             fh.write(f"- G2 {line}\n")
+        for line in g2b:
+            fh.write(f"- G2b internal {line}\n")
         fh.write("- G3 entry discipline: PASSED (new-domain columns silent before 2024)\n\n")
         fh.write(f"## Panel\nONET publication panel rows: 2024: {n24}, 2025: {n25}.\n\n")
         fh.write("## Coverage (appended years)\n\n")
