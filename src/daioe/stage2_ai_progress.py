@@ -861,7 +861,13 @@ def build_slimmed(cfg, slopes: pd.DataFrame, category: str) -> pd.DataFrame:
     df["application"] = df["parent_name"].map(_APP_NAME)
     df["application_id"] = df["application"].map(_APP_ID)
 
-    keep_ids = _CATEGORY_IDS[category]
+    # Membership is config-driven where the config declares it, with the hardcoded
+    # frozen defaults as fallback (8 Aug 2026, for the genai broadening at the 2025
+    # chain point). The shipped configs declare memberships identical to the frozen
+    # defaults (verified), so this changes no frozen output; a vintage config may
+    # broaden a category from its chain point, and reverting is a config edit.
+    declared = (cfg.raw.get("app_id_membership") or {}).get(category)
+    keep_ids = declared if declared is not None else _CATEGORY_IDS[category]
     df = df[df["application_id"].isin(keep_ids)].copy()
     df = df.drop(columns=["application_id"])
 

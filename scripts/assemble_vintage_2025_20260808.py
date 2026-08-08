@@ -147,6 +147,18 @@ def make_vintage_config(args, out_dir: Path) -> cfgmod.Config:
     raw["app_categories_publication"] = (
         PUBLICATION_11 + (NEW_CATEGORIES if args.membership == "plus-new" else [])
     )
+    # genai keeps its NAME and broadens its MEMBERSHIP at the chain point (Magnus,
+    # 8 Aug): the 2023-era definition {image generation, language modeling} no longer
+    # spans generative AI, whose 2024-25 frontier is conversation, software and
+    # reasoning. Broad = {5, 7, 3, 4}: the new members with EXACT FRS18 matrix rows,
+    # so the progress and exposure sides of the column carry the same membership.
+    # Maths/science (14) and agentic (13) join via the matrix decision and the METR
+    # licence respectively. The splice keeps published genai 2010-2023 bit-frozen
+    # either way; reverting is --genai legacy. redux stays the complement of the
+    # LEGACY genai until the matrix decision revisits both.
+    if args.genai == "broad":
+        raw["app_id_membership"] = dict(raw.get("app_id_membership") or {})
+        raw["app_id_membership"]["genai"] = [5, 7, 3, 4]
     raw["paths"] = dict(raw["paths"])
     raw["paths"]["out"] = str(out_dir.relative_to(ROOT))
     return cfgmod.Config(raw=raw, root=ROOT)
@@ -272,6 +284,7 @@ def main() -> None:
     ap.add_argument("--gpqa-parent", choices=["maths", "qa"], default="maths")
     ap.add_argument("--allapps-rule", choices=["survivors", "mean"], default="survivors")
     ap.add_argument("--membership", choices=["published", "plus-new"], default="published")
+    ap.add_argument("--genai", choices=["broad", "legacy"], default="broad")
     ap.add_argument("--tag", default=TAG)
     args = ap.parse_args()
 
@@ -367,7 +380,7 @@ def main() -> None:
     with open(report, "w") as fh:
         fh.write(f"# DAIOE 2025 vintage — release assembly ({args.tag})\n\n")
         fh.write(f"Flags: gpqa-parent={args.gpqa_parent}, allapps-rule={args.allapps_rule}, "
-                 f"membership={args.membership}\n\n")
+                 f"membership={args.membership}, genai={args.genai}\n\n")
         fh.write("## Seam policy\nFrozen 2010-2023 published values immutable; 2024-2025 "
                  "increments computed on the fuller archive and chained at 2023 "
                  "(checkpoint2 decision, 2026-07-07). Entry-timing doctrine: "
@@ -392,6 +405,10 @@ def main() -> None:
                  "3. GPQA placement: --gpqa-parent qa restores the door-demo placement.\n"
                  "4. Composite membership: --membership plus-new adds conversat+software "
                  "to publication columns.\n"
+                 "4b. genai membership: KEEPS ITS NAME, broadens at the chain point to "
+                 "{imggen, lngmod, conversation, software} (default; Magnus 8 Aug); "
+                 "maths joins with the matrix decision, agentic with METR; revert "
+                 "with --genai legacy. redux remains the legacy complement for now.\n"
                  "5. Anchor convention: SWE-bench ceiling anchor 95.0 is PROVISIONAL "
                  "(notes/EXTENSION-software-swebench_2026-08-08.md).\n\n")
         fh.write("## Input manifest (sha256)\n\n")
