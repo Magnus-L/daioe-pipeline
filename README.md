@@ -119,4 +119,10 @@ seven guards in `stage2_ai_progress._load_extensions`; see
   chained 2024; built by `scripts/build_tombench_extension_20260808.py`, which also
   runs the freeze-history check (must print 0.00e+00). Design and caveats in
   `notes/EXTENSION-conversation-tombench_2026-08-08.md`.
-Neither is wired into a committed config; that is a vintage-assembly decision.
+- `data/updates/extension_swebench_2026-08-08.xlsx` — Software issue resolution on
+  SWE-bench Verified (Epoch-run harness, CC BY 4.0; the leaderboard's CC BY-NC does
+  not apply), FIRST series for application id 4 and the measure's first system_level
+  protocol; ceiling anchor 95.0 PROVISIONAL pending the anchor convention. Built by
+  `scripts/build_swebench_extension_20260808.py`; note
+  `notes/EXTENSION-software-swebench_2026-08-08.md`.
+None is wired into a committed config; that is a vintage-assembly decision.
