@@ -108,6 +108,12 @@ The 2024 refresh procedure (established 2026-07-07; see `notes/track-a-*.md`):
 4. Release gate: no 2024+ value circulates without `notes/track-a-coverage-audit.md`
    attached; seam policy per `notes/checkpoint2-seam-policy.md`.
 
+## Documentation
+`DOCUMENTATION.md` is the PUBLIC technical reference (measure, vintage policy, admission
+rules, current vintage, changelog) — public-safe by construction, updated per vintage,
+publishable to the ai-econlab.com DAIOE page. `notes/ISSUES-and-ideas.md` is the PRIVATE
+counterpart: curated open issues and improvement ideas, feeding the co-author meetings.
+
 ## Extensions: new series through the second door (Track B)
 New metrics and subdomains enter via `benchmark_extensions` workbooks (two sheets,
 seven guards in `stage2_ai_progress._load_extensions`; see
