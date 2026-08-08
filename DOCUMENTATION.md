@@ -27,7 +27,14 @@ ISCO-08, SSYK 2012 and SSYK 96, with per-year percentile ranks.
 
 - **The frozen window, 2010–2023,** is the series estimated in the paper. It is immutable:
   no later data, source revision or membership change ever alters a published 2010–2023
-  value. Standardisation moments are fixed on 2010–2020 in every vintage.
+  value; the assembly gates enforce bit-identity of every published cell across vintages.
+  The released panels are unstandardised. Standardisation to frozen 2010–2020 moments
+  happens at estimation, where the moments are computed once and reused, so appending a
+  vintage never rescales an estimated year. Users who standardise a later vintage
+  themselves must compute moments on 2010–2020 only, never on the full window.
+  <!-- Restated 2026-08-08 (code review): the earlier wording implied the shipped panels
+  were standardised with a mean-zero/sd-one 2010–2020 test; they are raw, and the enforced
+  invariant is cell bit-identity (gates G1/G2/G2b). -->
 - **Vintages are labelled by coverage window** (e.g. *DAIOE v2025* covers 2010–2025) and
   are separate, citable objects. Values beyond 2023 are revisable in later vintages, as
   evaluation harnesses score earlier models retrospectively; the frozen window is not.

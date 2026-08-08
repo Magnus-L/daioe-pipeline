@@ -132,9 +132,14 @@ def industry_exposure(weights: pd.DataFrame, cols: list[str], year: int = 2023) 
 # SCB's 16 coarse SNI groups -> Eurostat isoc_eb_ain2 NACE codes (survey frame = business
 # economy, 10+ employed). Groups outside the survey frame (A, O, P, Q public-dominated)
 # have no adoption measurement and drop out; that restriction is stated in the exhibit.
+# M+N: the SCB register aggregates carry the combined group "M+N"; Eurostat
+# publishes sections M and N separately. The previous mapping keyed "M" and "N",
+# which never match the register side, so the combined group silently dropped
+# out of every country's gradient (found in the 8 Aug 2026 code review). The
+# adoption value for M+N is the unweighted mean of the sections available.
 SNI_TO_NACE = {
     "B+C": "C", "D+E": "D_E", "F": "F", "G": "G", "H": "H", "I": "I",
-    "J": "J", "K": None, "L": "L", "M": "M", "N": "N", "A": None,
+    "J": "J", "K": None, "L": "L", "M+N": ("M", "N"), "A": None,
 }
 
 
@@ -171,10 +176,12 @@ def exhibit2(expo: pd.DataFrame) -> dict:
         for sni, nace in SNI_TO_NACE.items():
             if nace is None:
                 continue
-            v = any_ai[any_ai["nace_r2"] == nace]["value"]
+            codes = nace if isinstance(nace, tuple) else (nace,)
+            vals = [float(any_ai[any_ai["nace_r2"] == c]["value"].iloc[0])
+                    for c in codes if len(any_ai[any_ai["nace_r2"] == c])]
             e = expo[expo["SNI2007"] == sni]["daioe_allapps"]
-            if len(v) and len(e):
-                rows.append({"sni": sni, "adoption": float(v.iloc[0]),
+            if vals and len(e):
+                rows.append({"sni": sni, "adoption": float(np.mean(vals)),
                              "exposure": float(e.iloc[0]), "geo": geo, "year": yr})
         p = pd.DataFrame(rows)
         rho, pval = stats.spearmanr(p["exposure"], p["adoption"])
@@ -222,10 +229,13 @@ def exhibit3(expo_sub: pd.DataFrame) -> dict:
             for sni, nace in SNI_TO_NACE.items():
                 if nace is None:
                     continue
-                v = ad[(ad["indic_is"] == icol) & (ad["nace_r2"] == nace)]["value"]
+                codes = nace if isinstance(nace, tuple) else (nace,)
+                sel = ad[ad["indic_is"] == icol]
+                vals = [float(sel[sel["nace_r2"] == c]["value"].iloc[0])
+                        for c in codes if len(sel[sel["nace_r2"] == c])]
                 e = expo_sub[expo_sub["SNI2007"] == sni][dcol]
-                if len(v) and len(e):
-                    rows.append((float(e.iloc[0]), float(v.iloc[0])))
+                if vals and len(e):
+                    rows.append((float(e.iloc[0]), float(np.mean(vals))))
             if len(rows) >= 6:
                 a = np.array(rows)
                 mat[i, j] = stats.spearmanr(a[:, 0], a[:, 1])[0]
