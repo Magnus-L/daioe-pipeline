@@ -31,7 +31,13 @@ NAVY, VERMILION, GRAY = "#232b65", "#D55E00", "#8a8a8a"
 frozen_all = pd.read_parquet(ROOT / "data/out/slopes_slimmed_allapps.parquet")
 vintage_parts = [pd.read_parquet(VINTAGE / f"slopes_slimmed_{c}.parquet")
                  for c in ("allapps", "conversat", "software", "mathsci")]
-vintage = pd.concat(vintage_parts, ignore_index=True)
+vintage = pd.concat(vintage_parts, ignore_index=True).drop_duplicates(
+    subset=["parent_name", "year"]
+)
+
+GENAI_LEGACY = ["Drawing pictures", "Accurate modelling of human language."]
+GENAI_BROAD = GENAI_LEGACY + ["Turing test for casual conversation",
+                              "Write computer programs from specifications"]
 
 NEW_PARENTS = {
     "Turing test for casual conversation": "conversation  (ToMBench)",
@@ -123,7 +129,37 @@ ax.xaxis.set_major_locator(plt.MaxNLocator(5, integer=True))
 ax.spines[["top", "right"]].set_visible(False)
 ax.grid(axis="y", lw=0.4, alpha=0.3)
 
-for a in axes[len(order) + 2:]:
+# genai composite: name kept, membership broadened at the 2024 chain point.
+# Frozen line = legacy {imggen, lngmod}; from 2024 the solid dashed line is the
+# broadened membership (mean over surviving members) and the thin dotted line is
+# the legacy continuation, the --genai legacy flip. The two coincide in 2024
+# because entrants contribute nothing in their entry year.
+ax = axes[len(order) + 2]
+gz = frozen_all[frozen_all["parent_name"].isin(GENAI_LEGACY) & (frozen_all["year"] >= 2010)]
+gann = gz.groupby("year")["mean"].mean()
+gcomp = gann.cumsum()
+ax.plot(gcomp.index, gcomp.values, color=NAVY, lw=2.2)
+gbase = float(gcomp.loc[2023])
+
+def genai_post(parents):
+    d = vintage[vintage["parent_name"].isin(parents) & (vintage["year"] >= 2024)]
+    annual = d.groupby("year")["mean"].mean()
+    return pd.concat([pd.Series([gbase], index=[2023]), gbase + annual.cumsum()])
+
+gb = genai_post(GENAI_BROAD)
+ax.plot(gb.index, gb.values, color=VERMILION, lw=2.2, ls=(0, (4, 2)))
+gl = genai_post(GENAI_LEGACY)
+ax.plot(gl.index, gl.values, color=VERMILION, lw=1.2, ls=(0, (1, 2)))
+ax.text(gb.index[-1] + 0.1, gb.values[-1], "broad", fontsize=7, color=VERMILION, va="center")
+ax.text(gl.index[-1] + 0.1, gl.values[-1], "legacy", fontsize=7, color=VERMILION, va="center")
+ax.axvline(2023, color=GRAY, lw=0.8, alpha=0.5)
+ax.set_title("genai composite (broadened at 2024)", fontsize=9.5)
+ax.tick_params(labelsize=8)
+ax.xaxis.set_major_locator(plt.MaxNLocator(5, integer=True))
+ax.spines[["top", "right"]].set_visible(False)
+ax.grid(axis="y", lw=0.4, alpha=0.3)
+
+for a in axes[len(order) + 3:]:
     a.set_visible(False)
 
 fig.suptitle("DAIOE, all capability domains — the assembled 2025 vintage: frozen 2010-2023 (navy), "
