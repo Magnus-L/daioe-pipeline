@@ -107,3 +107,16 @@ The 2024 refresh procedure (established 2026-07-07; see `notes/track-a-*.md`):
    the seam quantification instead.
 4. Release gate: no 2024+ value circulates without `notes/track-a-coverage-audit.md`
    attached; seam policy per `notes/checkpoint2-seam-policy.md`.
+
+## Extensions: new series through the second door (Track B)
+New metrics and subdomains enter via `benchmark_extensions` workbooks (two sheets,
+seven guards in `stage2_ai_progress._load_extensions`; see
+`notes/EXTENSION-door_2026-08-07.md`). Extension workbooks built so far:
+- `data/updates/extension_gpqa_2026-08-07.xlsx` — GPQA Diamond (Epoch, CC BY 4.0),
+  new metric under Language comprehension and QA, chained 2024.
+- `data/updates/extension_tombench_2026-08-08.xlsx` — Theory of Mind on ToMBench
+  (MIT; scores arXiv:2602.10625), FIRST series for the conversation application,
+  chained 2024; built by `scripts/build_tombench_extension_20260808.py`, which also
+  runs the freeze-history check (must print 0.00e+00). Design and caveats in
+  `notes/EXTENSION-conversation-tombench_2026-08-08.md`.
+Neither is wired into a committed config; that is a vintage-assembly decision.
