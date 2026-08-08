@@ -125,4 +125,16 @@ seven guards in `stage2_ai_progress._load_extensions`; see
   protocol; ceiling anchor 95.0 PROVISIONAL pending the anchor convention. Built by
   `scripts/build_swebench_extension_20260808.py`; note
   `notes/EXTENSION-software-swebench_2026-08-08.md`.
-None is wired into a committed config; that is a vintage-assembly decision.
+None is wired into a committed config; the vintage assembly builds its config in
+memory.
+
+## The 2025 vintage (Track B B5)
+`python scripts/assemble_vintage_2025_20260808.py` assembles the release under the
+settled seam policy (frozen 2010-2023 immutable, 2024-2025 chained at 2023) with
+three fatal gates: G1 splice integrity (0 frozen preliminary cells changed), G2
+publication seam (every taxonomy panel bit-identical to the frozen pipeline's own
+publication output over 2010-2023), G3 entry discipline (new-domain columns silent
+before 2024). Every Erik decision is a flag: `--gpqa-parent qa`, `--allapps-rule
+mean`, `--membership plus-new`; matrix/discount variants come from
+`mapping/code/build_2024_variants.py` and land with the matrix decision. Output:
+`data/vintage/<tag>/` + `reports/<tag>/RELEASE.md` (input sha256 manifest included).
