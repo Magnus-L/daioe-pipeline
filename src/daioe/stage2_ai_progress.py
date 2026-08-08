@@ -57,9 +57,10 @@ _APP_NAME = {
     "Turing test for casual conversation": "conversation",
     "Write computer programs from specifications": "generating computer programs from specifications",
     "robotics": "robotics",
-    # Vintage 2025 addition (8 Aug 2026): a genuinely new application, entering via the
-    # extension door. Mapping-pipeline app 11 -> DAIOE id 14 (applications_v2.csv).
+    # Vintage 2025 additions (8 Aug 2026): genuinely new applications, entering via the
+    # extension door. Mapping-pipeline apps 11/10 -> DAIOE ids 14/13 (applications_v2.csv).
     "Mathematical and scientific reasoning": "mathematical and scientific reasoning",
+    "Agentic task execution": "agentic task execution",
 }
 
 # clean application name -> application_id (do-file 526-538).
@@ -78,6 +79,7 @@ _APP_ID = {
     "visual question answering": 12,
     "robotics": 18,
     "mathematical and scientific reasoning": 14,   # vintage 2025 addition
+    "agentic task execution": 13,                  # vintage 2025 addition
 }
 
 # app-category -> set of application_ids kept (do-file 541-579).
@@ -101,6 +103,7 @@ _CATEGORY_IDS = {
     "conversat": [3],
     "software": [4],
     "mathsci": [14],
+    "agentic": [13],
 }
 
 # The nine EFF parent names kept (do-file 90-98): only these survive the

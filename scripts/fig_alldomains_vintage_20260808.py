@@ -30,7 +30,7 @@ NAVY, VERMILION, GRAY = "#232b65", "#D55E00", "#8a8a8a"
 # --- application-level slopes: frozen (navy) and vintage (vermilion) -------------
 frozen_all = pd.read_parquet(ROOT / "data/out/slopes_slimmed_allapps.parquet")
 vintage_parts = [pd.read_parquet(VINTAGE / f"slopes_slimmed_{c}.parquet")
-                 for c in ("allapps", "conversat", "software", "mathsci")]
+                 for c in ("allapps", "conversat", "software", "mathsci", "agentic")]
 vintage = pd.concat(vintage_parts, ignore_index=True).drop_duplicates(
     subset=["parent_name", "year"]
 )
@@ -43,6 +43,7 @@ NEW_PARENTS = {
     "Turing test for casual conversation": "conversation  (ToMBench)",
     "Write computer programs from specifications": "software engineering  (SWE-bench Verified)",
     "Mathematical and scientific reasoning": "maths & science  (GPQA Diamond)",
+    "Agentic task execution": "agentic  (TheAgentCompany, interim)",
 }
 titles = {p: s2._APP_NAME[p] for p in s2._APP_NAME}
 titles.update(NEW_PARENTS)
@@ -92,18 +93,8 @@ for ax, parent in zip(axes, order):
     ax.spines[["top", "right"]].set_visible(False)
     ax.grid(axis="y", lw=0.4, alpha=0.3)
 
-# agentic placeholder
-ax = axes[len(order)]
-ax.set_title("agentic task execution  (METR)", fontsize=9.5)
-ax.text(0.5, 0.5, "awaiting METR licence", transform=ax.transAxes, ha="center",
-        va="center", fontsize=9, color=GRAY, style="italic")
-ax.axvline(2023, color=GRAY, lw=0.8, alpha=0.5)
-ax.set_yticks([])
-ax.xaxis.set_major_locator(plt.MaxNLocator(5, integer=True))
-ax.spines[["top", "right"]].set_visible(False)
-
 # composite: frozen allapps sum construction at application level, spliced
-ax = axes[len(order) + 1]
+ax = axes[len(order)]
 fz = frozen_all[(frozen_all["year"] >= 2010) & (frozen_all["parent_name"] != "robotics")]
 ann_f = fz.groupby("year")["mean"].mean()
 comp_f = ann_f.cumsum()
@@ -120,7 +111,7 @@ seam = post_comp(nine)
 ax.plot(seam.index, seam.values, color=VERMILION, lw=2.2, ls=(0, (4, 2)))
 seam_all = post_comp(nine + list(NEW_PARENTS))
 ax.plot(seam_all.index, seam_all.values, color=VERMILION, lw=1.2, ls=(0, (1, 2)))
-ax.text(seam_all.index[-1] + 0.1, seam_all.values[-1], "+3 new\ndomains",
+ax.text(seam_all.index[-1] + 0.1, seam_all.values[-1], "+4 new\ndomains",
         fontsize=7, color=VERMILION, va="center")
 ax.axvline(2023, color=GRAY, lw=0.8, alpha=0.5)
 ax.set_title("composite (mean over survivors)", fontsize=9.5)
@@ -134,7 +125,7 @@ ax.grid(axis="y", lw=0.4, alpha=0.3)
 # broadened membership (mean over surviving members) and the thin dotted line is
 # the legacy continuation, the --genai legacy flip. The two coincide in 2024
 # because entrants contribute nothing in their entry year.
-ax = axes[len(order) + 2]
+ax = axes[len(order) + 1]
 gz = frozen_all[frozen_all["parent_name"].isin(GENAI_LEGACY) & (frozen_all["year"] >= 2010)]
 gann = gz.groupby("year")["mean"].mean()
 gcomp = gann.cumsum()
@@ -159,11 +150,11 @@ ax.xaxis.set_major_locator(plt.MaxNLocator(5, integer=True))
 ax.spines[["top", "right"]].set_visible(False)
 ax.grid(axis="y", lw=0.4, alpha=0.3)
 
-for a in axes[len(order) + 3:]:
+for a in axes[len(order) + 2:]:
     a.set_visible(False)
 
 fig.suptitle("DAIOE, all capability domains — the assembled 2025 vintage: frozen 2010-2023 (navy), "
-             "spliced 2024-2025 (vermilion); agentic pending METR", fontsize=11)
+             "spliced 2024-2025 (vermilion)", fontsize=11)
 fig.supylabel("cumulative application progress", fontsize=9)
 handles = [plt.Line2D([], [], color=NAVY, lw=2, label="frozen 2010-2023"),
            plt.Line2D([], [], color=VERMILION, lw=2, ls=(0, (4, 2)),

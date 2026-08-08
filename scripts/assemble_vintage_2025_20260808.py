@@ -82,6 +82,7 @@ EXT_TOMBENCH = "data/updates/extension_tombench_2026-08-08.xlsx"
 EXT_SWEBENCH = "data/updates/extension_swebench_2026-08-08.xlsx"
 EXT_GPQA_QA = "data/updates/extension_gpqa_2026-08-07.xlsx"
 EXT_GPQA_MATHS = "data/updates/extension_gpqa_maths_2026-08-08.xlsx"
+EXT_AGENTCO = "data/updates/extension_agentcompany_2026-08-08.xlsx"
 
 MATHS_PARENT = "Mathematical and scientific reasoning"
 NEW_CATEGORIES = ["conversat", "software"]          # exposure-capable today (exact FRS18 rows)
@@ -142,7 +143,7 @@ def make_vintage_config(args, out_dir: Path) -> cfgmod.Config:
     raw["year_final"] = 2025
     raw["benchmark_updates"] = UPDATES
     gpqa = EXT_GPQA_MATHS if args.gpqa_parent == "maths" else EXT_GPQA_QA
-    raw["benchmark_extensions"] = [gpqa, EXT_TOMBENCH, EXT_SWEBENCH]
+    raw["benchmark_extensions"] = [gpqa, EXT_TOMBENCH, EXT_SWEBENCH, EXT_AGENTCO]
     raw["app_categories"] = PUBLISHED_13 + NEW_CATEGORIES
     raw["app_categories_publication"] = (
         PUBLICATION_11 + (NEW_CATEGORIES if args.membership == "plus-new" else [])
@@ -372,7 +373,7 @@ def main() -> None:
 
     inputs = UPDATES + list(map(str, [
         EXT_GPQA_MATHS if args.gpqa_parent == "maths" else EXT_GPQA_QA,
-        EXT_TOMBENCH, EXT_SWEBENCH,
+        EXT_TOMBENCH, EXT_SWEBENCH, EXT_AGENTCO,
     ]))
     manifest = {p: sha256(ROOT / p) for p in inputs}
 
@@ -410,7 +411,8 @@ def main() -> None:
                  "vintage may revise it (vintages are labelled objects; frozen window "
                  "unaffected).\n\n")
         for label, wb in [("GPQA Diamond", inputs[2]), ("ToMBench", EXT_TOMBENCH),
-                          ("SWE-bench Verified", EXT_SWEBENCH)]:
+                          ("SWE-bench Verified", EXT_SWEBENCH),
+                          ("TheAgentCompany (INTERIM, pending METR)", EXT_AGENTCO)]:
             m = pd.read_excel(ROOT / wb, sheet_name="measures")
             yr = pd.to_datetime(m["date"]).dt.year
             b = m[yr == 2024]
