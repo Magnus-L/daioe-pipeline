@@ -397,6 +397,32 @@ def main() -> None:
         fh.write("Coverage caveat: the release gate requires track-a-coverage-audit.md "
                  "attached to any circulated 2024+ value; five of nine frozen applications "
                  "have no 2025 source (archive death, not capability plateau).\n\n")
+
+        # First-measured-year caveat: a new series' first progress year is measured
+        # against its entry-year frontier, and a THIN entry-year baseline shifts
+        # late-entry-year capability into the first measured year. Disclose the
+        # baseline count and frontier per admitted series so the reader can judge.
+        fh.write("## First-measured-year caveat (new series)\n\n")
+        fh.write("A series chained at 2024 contributes nothing in 2024 and its 2025 "
+                 "progress is measured against the 2024 frontier. Where the 2024 "
+                 "baseline rests on few observations, capability released late in 2024 "
+                 "but not yet in the harness inflates the first measured year; a later "
+                 "vintage may revise it (vintages are labelled objects; frozen window "
+                 "unaffected).\n\n")
+        for label, wb in [("GPQA Diamond", inputs[2]), ("ToMBench", EXT_TOMBENCH),
+                          ("SWE-bench Verified", EXT_SWEBENCH)]:
+            m = pd.read_excel(ROOT / wb, sheet_name="measures")
+            yr = pd.to_datetime(m["date"]).dt.year
+            b = m[yr == 2024]
+            if len(b):
+                top = b.loc[b["value"].idxmax()]
+                fh.write(f"- {label}: 2024 baseline n={len(b)}, frontier {top['value']:.1f} "
+                         f"({top['name']})\n")
+            else:
+                fh.write(f"- {label}: no 2024 observations\n")
+        fh.write("\nSWE-bench is the thin case (n=1; no o1-class late-2024 model in the "
+                 "Epoch harness), and it drives the broadened genai composite's 2025 "
+                 "step; treat that step as an upper bound pending Epoch backfill.\n\n")
         fh.write("## Erik flips (15 Aug)\n"
                  "1. Matrix adoption + discount: exposure-side variants via "
                  "mapping/code/build_2024_variants.py (R0/matrix/social panels); land "
