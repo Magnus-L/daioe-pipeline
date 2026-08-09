@@ -133,6 +133,21 @@ print(f"IDENTITY DRAW vs released exp_cumul: corr {fid:.8f}, max abs diff {mad:.
 
 dest = root/"data/out/perm_daioe_ssyk2012_year.csv"
 out.to_csv(dest, index=False)
+
+# MONA upload rules (reference_mona_upload, re-learned the hard way 2026-08-09):
+# max 10 MB per file AND csv is not an allowed upload format. Every MONA-bound
+# artefact therefore ALSO ships as .dta parts under ~8 MB; B41z reassembles
+# and row-count-asserts them. The csv above stays as the local/analysis copy.
+o2 = out.copy()
+for c in ("draw","ssyk2012_4","year"):
+    o2[c] = o2[c].astype("int16")
+bounds = [(0,66),(67,133),(134,200)]
+for i,(a_,b_) in enumerate(bounds,1):
+    f = root/f"data/out/perm_daioe_ssyk2012_year_p{i}of3.dta"
+    o2[(o2["draw"]>=a_)&(o2["draw"]<=b_)].to_stata(f, write_index=False, version=118)
+    sz = f.stat().st_size/1e6
+    assert sz < 9.5, f"{f} is {sz:.1f} MB: over the MONA headroom, re-split"
+    print(f"WROTE {f} ({sz:.1f} MB)")
 readme = root/"data/out/perm_daioe_README.txt"
 readme.write_text(
  "perm_daioe_ssyk2012_year.csv - F2 randomisation-inference input for B41z\n"
