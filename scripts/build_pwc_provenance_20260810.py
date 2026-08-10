@@ -35,7 +35,9 @@ _CANDIDATES = [
     ROOT / "data" / "raw" / "measures_metrics_newdata2023.xlsx",
 ]
 SRC = next((c for c in _CANDIDATES if c.exists()), _CANDIDATES[0])
-OUT = ROOT / "data" / "reference" / "pwc_provenance.csv"
+# derived/, not reference/: config.yaml reserves reference/ for Erik's delivery
+# (it symlinks into data_source/.../3_data_jewelry) and derived/ for "files WE build".
+OUT = ROOT / "data" / "derived" / "pwc_provenance.csv"
 RESOLVED = Path(sys.argv[1]) if len(sys.argv) > 1 else None
 
 

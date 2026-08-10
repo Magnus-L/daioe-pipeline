@@ -32,7 +32,7 @@ permits redistribution of derived work under CC BY with attribution.
 | Occupational ability profiles and work context | O*NET, US Department of Labor | CC BY 4.0 |
 | Application-to-ability mapping | Felten, Raj and Seamans (2018, 2021), extended here | CC BY 4.0 (as published) |
 | Benchmark series, original nine applications (the frozen 2010-2023 index) | EFF AI Progress Measurement | data declared uncopyrightable by the source; prose and code CC BY-SA 4.0 / GPLv2+ |
-| Benchmark series, 2024 refresh only | Papers with Code archived dumps | CC BY-SA 4.0 |
+| Benchmark series, 190 rows of the frozen index plus the 2024 refresh | Papers with Code archived dumps | CC BY-SA 4.0; every row re-attributed to its publishing paper, see below |
 | Benchmark series, 2024 chain point onward | Epoch AI | CC BY 4.0 |
 | Theory-of-mind series (ToMBench) | ToMBench authors | MIT |
 | Occupational crosswalks | Statistics Sweden, BLS, ILO | public, attribution requested |
@@ -69,7 +69,7 @@ they are the reason the sign-off below is a real step rather than a formality.
 
 **What we did about it, 10 August 2026.** Papers with Code was a finding aid, not a
 source, and the re-citation makes that checkable rather than merely arguable. Every one
-of the 190 rows is listed in `data/reference/pwc_provenance.csv` with the paper in which
+of the 190 rows is listed in `data/derived/pwc_provenance.csv` with the paper in which
 its measurement was first published: 188 of the 190 name that paper, including all 109
 dated 2020 or later, and 162 now carry a resolved DOI or arXiv identifier. The remaining
 28 carry the paper title, which is what the attribution rests on; the link is a
