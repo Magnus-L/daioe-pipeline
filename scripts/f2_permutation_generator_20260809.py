@@ -59,9 +59,20 @@ err = (recon - panel["exp_change"]).abs()
 rel = err / panel["exp_change"].where(panel["exp_change"]>0)
 print(f"T1 additive-sqrt (9 named subdomains): max abs err {err.max():.3e}, "
       f"median rel err {rel.median():.3e}, p99 rel {rel.quantile(0.99):.3e}")
-# The nine named series close the identity up to a sub-1-per-cent wedge from
-# the aggregate-level conseq-error and admission handling (documented pipeline
-# divergences). The wedge W_ot = exp_change - recon is held FIXED across draws:
+# The nine named series close the identity up to a sub-1-per-cent wedge.
+# CAUSE ESTABLISHED 10 Aug 2026 (this comment previously blamed conseq-error and
+# admission handling; both are wrong -- the conseq-error discount is commented
+# out in 1_2_merge_and_construct_index.do line 199 for EVERY category, so it
+# cannot open a gap between the aggregate and its parts, and allapps keeps
+# exactly application_id 2,5,6,7,8,9,10,11,12, the union of the nine).
+# The identity is EXACT on daioe_panel_onet: max relative error 5.6e-7 over
+# 13,524 occupation-years, 100 per cent of rows within 1e-6, i.e. float32 noise.
+# The wedge appears only after the crosswalk, because the index is a SQUARE and
+# averaging O*NET occupations into an SSYK/ISCO cell does not commute with
+# squaring. Cells fed by one source SOC have median wedge 1.0e-7; cells fed by
+# two or more have median 9.4e-4 and up to 1.3 per cent, Spearman 0.62 in the
+# number of source occupations. It is a Jensen gap from aggregation, nothing else.
+# The wedge W_ot = exp_change - recon is held FIXED across draws:
 # it is not a function of arrival timing, so carrying it unchanged is the
 # timing-neutral treatment, and it makes the identity draw exact by construction.
 T1_OK = rel.median() < 1e-3 and rel.quantile(0.99) < 2e-2
