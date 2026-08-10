@@ -126,11 +126,12 @@ index behind the published estimates, the 2024 refresh, the SOC2018 build and th
 2025-onward vintage are separate objects and mixing them silently changes published
 numbers.
 
-The pre-2024 redistribution question was resolved on 10 August 2026: the frozen
-2010-2023 index is built from EFF data, whose own licence file declares the
-measurements uncopyrightable, while the CC BY-SA Papers with Code archive enters only
-the 2024 refresh path and its source values are not redistributed. Reasoning and the
-verbatim EFF wording: `LICENSE-DATA`.
+Provenance of the frozen source was measured on 10 August 2026: 190 of its 2,108
+measurements cite Papers with Code (CC BY-SA 4.0), concentrated in 2018-2023, where
+they are about half of all rows. EFF supplies the rest and declares its measurements
+uncopyrightable. The two are kept apart in the release, the CC BY-SA rows carried
+unrelicensed in `third_party/`. Numbers, reasoning and the one required sign-off:
+`LICENSE-DATA`.
 
 ## Extensions: new series through the second door (Track B)
 New metrics and subdomains enter via `benchmark_extensions` workbooks (two sheets,

@@ -37,16 +37,47 @@ permits redistribution of derived work under CC BY with attribution.
 | Theory-of-mind series (ToMBench) | ToMBench authors | MIT |
 | Occupational crosswalks | Statistics Sweden, BLS, ILO | public, attribution requested |
 
-## The pre-2024 series: resolved 10 August 2026
+## The pre-2024 series: measured 10 August 2026
 
-The frozen 2010--2023 index, the vintage behind the published estimates, is built from
-the EFF AI Progress Measurement data (`measures.csv` and `metrics.csv`, read by
-`src/daioe/stage2_ai_progress.py`). It does **not** draw on the Papers with Code
-archive, which enters only through `build_crosswalk.py` and `build_update_workbook.py`,
-that is, the 2024 refresh path.
+The frozen 2010--2023 index is built from `measures_metrics_newdata2023.xlsx`, which is
+the EFF AI Progress Measurement data extended through 2023. An earlier draft of this
+file claimed the frozen index drew only on EFF, on the strength of the `EFF/FRS18`
+label in `stage2_ai_progress.py`. That label describes lineage, not contents, and the
+claim was wrong: `measures.csv` itself ends in 2019, so it cannot be the source for the
+last four years of the panel.
 
-That distinction matters, because the two sources answer the redistribution question
-differently.
+Measured provenance of the frozen source, by the URL each measurement cites:
+
+| era | rows | citing paperswithcode.com |
+|---|---|---|
+| through 2017 | 1,747 | 21 (1.2%) |
+| 2018--2019 | 147 | 60 (40.8%) |
+| 2020--2023 | 214 | 109 (50.9%) |
+| **total** | **2,108** | **190 (9.0%)** |
+
+So Papers with Code, which is CC BY-SA 4.0, supplies about half the measurements in the
+last four years of the published vintage. The dependency is real, it is inside the
+paper's own index, and it is concentrated in the generative-AI period.
+
+Two mitigations apply, and neither is a reason to be casual about it. Each row records
+a factual measurement first reported in a primary paper, and most carry that paper's
+own citation alongside the Papers with Code URL, so what was taken is a lookup of 190
+published facts rather than a copy of a database's structure or selection. And 190 rows
+is not a substantial part of the Papers with Code database in the sense the EU database
+right uses. Both arguments are ours to make, however, not statements by the source, and
+they are the reason the sign-off below is a real step rather than a formality.
+
+**What we do about it.** The 190 rows travel in `third_party/pwc/` under CC BY-SA 4.0
+with attribution, unrelicensed and unmodified, rather than being folded silently into a
+CC BY 4.0 release. Creative Commons permits exactly this: ShareAlike binds the licensed
+material and adaptations of it, not the other material it is aggregated with. Our
+derived scores remain CC BY 4.0. This keeps the replication package complete, which the
+Online Appendix already promises, and it draws the boundary where a reader can see it.
+
+Background cleanup, not blocking: where a Papers with Code row also identifies the
+primary paper, the citation can be re-pointed at that paper and the dependency retired
+row by row. The EFF and Papers with Code sources answer the redistribution question
+differently, and the rest of this section sets out how.
 
 **EFF.** The project's own `LICENSE.md` dual-licenses under CC BY-SA 4.0 and GPLv2+,
 and then draws the line we need, verbatim:
@@ -60,22 +91,22 @@ the ShareAlike condition attaches to material we neither use nor redistribute. W
 attribute EFF and Felten, Raj and Seamans regardless, as scholarly practice rather than
 as a licence condition.
 
-**Papers with Code.** The archived dumps are CC BY-SA 4.0 with no equivalent
-uncopyrightable-data statement. The same factual-measurement argument applies in
-principle, but it is ours rather than the source's. We therefore do not rely on it: the
-2024-refresh vintages ship our derived scores plus a manifest of benchmark identities,
-retrieval instructions and file hashes, not the collected PwC source values. Anyone
-rebuilding those vintages fetches the archive under its own terms.
+**Papers with Code.** CC BY-SA 4.0, with no equivalent uncopyrightable-data statement.
+It supplies 190 rows of the frozen source, concentrated in 2018--2023, and the 2024
+refresh path on top of that. Those rows ship under their own licence in `third_party/`
+as described above; they are not relicensed.
 
-**Direction of travel.** Epoch AI (CC BY 4.0) already supplies the series admitted at
-the 2024 chain point, and the admission rule in DOCUMENTATION.md section 3 requires a
-redistribution-clean licence of everything added since. The BY-SA dependency is
-confined to one refresh path and shrinks with each vintage.
+**Direction of travel.** Epoch AI (CC BY 4.0) supplies everything admitted at the 2024
+chain point, and the admission rule in DOCUMENTATION.md section 3 requires a
+redistribution-clean licence of every series added since. The BY-SA dependency does not
+grow; the re-citation cleanup can shrink it.
 
-**Still worth doing before the DOI is minted**, not because the analysis above is thin
-but because a DOI is permanent: one confirmation from ORU research support that the
-split above is sound. Fifteen minutes of someone else's signature on a decision that
-cannot be withdrawn later.
+**Required before the DOI is minted.** Confirmation from ORU research support that the
+arrangement above is sound: CC BY 4.0 on our derived scores, CC BY-SA 4.0 preserved on
+the 190 Papers with Code rows carried in `third_party/`, and the two treated as a
+collection rather than as an adaptation. This was a formality while the frozen index
+looked EFF-only. It is not one now, because the ShareAlike material sits inside the
+published vintage, and a Zenodo DOI cannot be quietly withdrawn.
 
 ## What is not covered
 
