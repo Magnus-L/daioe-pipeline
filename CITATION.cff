@@ -2,6 +2,18 @@ cff-version: 1.2.0
 title: "DAIOE: Dynamic AI Occupational Exposure"
 message: "If you use DAIOE, please cite both this release and the paper below."
 type: dataset
+# --- AUTHORSHIP IS NOT SETTLED. DO NOT PUBLISH ON THIS LIST. -----------------
+# A release is a distinct work from the paper and carries its own author list, so
+# differing from the eleven-author paper is normal. Choosing that list by default
+# is not. The two below are placeholders reflecting who built the pipeline as
+# currently understood; Aili Tang's folder holds the 2023 originals, and Mark
+# Hellsten and Martin Längkvist may have claims on the construction. Erik knows.
+#
+# Settle at the co-author meeting, then: list the builders as `authors`, and credit
+# the remaining paper co-authors as Zenodo `contributors` with DataCite roles
+# (DataCurator, Researcher, ProjectLeader) so nobody is dropped and the credit is
+# accurate. Collect an ORCID from every person named; do not look them up.
+# -----------------------------------------------------------------------------
 authors:
   - family-names: Lodefalk
     given-names: Magnus
@@ -10,6 +22,7 @@ authors:
   - family-names: Engberg
     given-names: Erik
     affiliation: "Örebro University"
+    # orcid: ask Erik
 abstract: >-
   DAIOE translates measured performance gains on public AI benchmarks into
   occupation-year exposure scores, separately for nine capability subdomains and a
