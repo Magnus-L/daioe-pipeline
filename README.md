@@ -126,10 +126,11 @@ index behind the published estimates, the 2024 refresh, the SOC2018 build and th
 2025-onward vintage are separate objects and mixing them silently changes published
 numbers.
 
-One item is open before the release DOI is minted: the pre-2024 benchmark series have
-not been audited against the redistribution-clean requirement that `DOCUMENTATION.md`
-section 3 imposes on everything admitted from the 2024 chain point onward. See
-`LICENSE-DATA`, "Open item".
+The pre-2024 redistribution question was resolved on 10 August 2026: the frozen
+2010-2023 index is built from EFF data, whose own licence file declares the
+measurements uncopyrightable, while the CC BY-SA Papers with Code archive enters only
+the 2024 refresh path and its source values are not redistributed. Reasoning and the
+verbatim EFF wording: `LICENSE-DATA`.
 
 ## Extensions: new series through the second door (Track B)
 New metrics and subdomains enter via `benchmark_extensions` workbooks (two sheets,

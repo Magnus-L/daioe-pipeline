@@ -31,19 +31,51 @@ permits redistribution of derived work under CC BY with attribution.
 |---|---|---|
 | Occupational ability profiles and work context | O*NET, US Department of Labor | CC BY 4.0 |
 | Application-to-ability mapping | Felten, Raj and Seamans (2018, 2021), extended here | CC BY 4.0 (as published) |
-| Benchmark series, original nine applications | AI progress measurement archive (Papers with Code lineage) | **see PROVENANCE.md; confirm before release** |
+| Benchmark series, original nine applications (the frozen 2010-2023 index) | EFF AI Progress Measurement | data declared uncopyrightable by the source; prose and code CC BY-SA 4.0 / GPLv2+ |
+| Benchmark series, 2024 refresh only | Papers with Code archived dumps | CC BY-SA 4.0 |
 | Benchmark series, 2024 chain point onward | Epoch AI | CC BY 4.0 |
 | Theory-of-mind series (ToMBench) | ToMBench authors | MIT |
 | Occupational crosswalks | Statistics Sweden, BLS, ILO | public, attribution requested |
 
-**Open item before the DOI is minted.** The benchmark series behind the original nine
-applications reach us through an archive whose own redistribution terms must be
-confirmed in writing rather than assumed. Our admission rules already require "a
-redistribution-clean licence" of every series added from the 2024 chain point onward
-(DOCUMENTATION.md, section 3); the pre-2024 series predate that rule and have not been
-audited against it. If any of them turns out to be non-redistributable, the fallback is
-to ship the derived scores, which are ours, together with the benchmark identities and
-retrieval instructions, but not the collected source values.
+## The pre-2024 series: resolved 10 August 2026
+
+The frozen 2010--2023 index, the vintage behind the published estimates, is built from
+the EFF AI Progress Measurement data (`measures.csv` and `metrics.csv`, read by
+`src/daioe/stage2_ai_progress.py`). It does **not** draw on the Papers with Code
+archive, which enters only through `build_crosswalk.py` and `build_update_workbook.py`,
+that is, the 2024 refresh path.
+
+That distinction matters, because the two sources answer the redistribution question
+differently.
+
+**EFF.** The project's own `LICENSE.md` dual-licenses under CC BY-SA 4.0 and GPLv2+,
+and then draws the line we need, verbatim:
+
+> "Much of this Notebook is uncopyrightable data."
+
+The licence covers EFF's written content and source code; the benchmark measurements
+are declared uncopyrightable by the source itself, an organisation whose subject is
+copyright law. We take the measurements, not the prose and not the notebook code, so
+the ShareAlike condition attaches to material we neither use nor redistribute. We
+attribute EFF and Felten, Raj and Seamans regardless, as scholarly practice rather than
+as a licence condition.
+
+**Papers with Code.** The archived dumps are CC BY-SA 4.0 with no equivalent
+uncopyrightable-data statement. The same factual-measurement argument applies in
+principle, but it is ours rather than the source's. We therefore do not rely on it: the
+2024-refresh vintages ship our derived scores plus a manifest of benchmark identities,
+retrieval instructions and file hashes, not the collected PwC source values. Anyone
+rebuilding those vintages fetches the archive under its own terms.
+
+**Direction of travel.** Epoch AI (CC BY 4.0) already supplies the series admitted at
+the 2024 chain point, and the admission rule in DOCUMENTATION.md section 3 requires a
+redistribution-clean licence of everything added since. The BY-SA dependency is
+confined to one refresh path and shrinks with each vintage.
+
+**Still worth doing before the DOI is minted**, not because the analysis above is thin
+but because a DOI is permanent: one confirmation from ORU research support that the
+split above is sound. Fifteen minutes of someone else's signature on a decision that
+cannot be withdrawn later.
 
 ## What is not covered
 
