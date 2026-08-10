@@ -17,3 +17,7 @@ notes/
 
 # Release bundles are built artefacts; they belong on Zenodo, not in git.
 dist/
+
+# Claude Code agent definitions: internal tooling, and they reference notes/ paths
+# that are not public. Kept on disk.
+.claude/
