@@ -5,8 +5,8 @@ type: dataset
 authors:
   - family-names: Lodefalk
     given-names: Magnus
-    affiliation: "Örebro University and Ratio Institute"
-    orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+    affiliation: "Örebro University; Ratio Institute; Global Labor Organization"
+    orcid: "https://orcid.org/0000-0003-0149-9598"
   - family-names: Engberg
     given-names: Erik
     affiliation: "Örebro University"
@@ -22,23 +22,30 @@ keywords:
   - occupational exposure
   - labour economics
   - task-based framework
+  - technological change
   - O*NET
 license: CC-BY-4.0
 license-url: "https://creativecommons.org/licenses/by/4.0/"
 repository-code: "https://github.com/Magnus-L/daioe-pipeline"
-version: "TBD at release"
-doi: "TBD at release"
-date-released: "TBD at release"
+# --- COMPLETE THESE THREE AT RELEASE -----------------------------------------
+# Zenodo can reserve a DOI before publishing: create the deposition, click
+# "Reserve DOI", paste it here, then tag and publish so the record and the file
+# agree. Use the CONCEPT DOI (the one that always resolves to the latest
+# version), not the version DOI.
+version: "1.0.0"
+doi: "RESERVE-ON-ZENODO-BEFORE-PUBLISHING"
+date-released: "YYYY-MM-DD"
+# -----------------------------------------------------------------------------
 references:
   - type: article
     title: "AI Unboxed: Capability Arrival and the Clerical Decline"
     authors:
       - family-names: Lodefalk
         given-names: Magnus
-    notes: "Working paper; update to the published reference at acceptance."
+    notes: "Working paper; replace with the published reference at acceptance."
 notes: >-
   VINTAGES ARE SEPARATE OBJECTS. The frozen 2010-2023 index underlies the published
   estimates; the 2024 refresh, the SOC2018 build and the 2025-onward vintage are
   distinct and are not interchangeable with it. Cite the vintage you used, not the
-  repository as a whole. Code is MIT (see LICENSE); data are CC BY 4.0 (see
+  repository as a whole. Code is MIT (see LICENSE); the scores are CC BY 4.0 (see
   LICENSE-DATA).

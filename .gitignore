@@ -10,3 +10,7 @@ __pycache__/
 
 # regenerable batch payloads (rebuild with --dry-run)
 mapping/mod_data/batch_requests_*.jsonl
+
+# Internal working notes: decision records, design memos and draft correspondence.
+# Kept on disk, out of the public repo. See DOCUMENTATION.md for the public reference.
+notes/
