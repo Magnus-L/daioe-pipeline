@@ -35,8 +35,14 @@ you used.
 
 ## Citing
 
-Cite the release (see `CITATION.cff`) *and* the paper. Both matter: the release fixes
-which version of the measure you used, the paper documents what it is.
+Cite the release *and* the paper. Both matter: the release fixes which version of the
+measure you used, the paper documents what it is.
+
+- **This version (v1.0.0):** https://doi.org/10.5281/zenodo.21873968
+- **Always the newest version:** the concept DOI on the Zenodo record
+
+`CITATION.cff` carries the machine-readable form; GitHub's "Cite this repository" button
+reads it.
 
 ## Licence
 

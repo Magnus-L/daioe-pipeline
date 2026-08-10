@@ -57,14 +57,13 @@ keywords:
 license: CC-BY-4.0
 license-url: "https://creativecommons.org/licenses/by/4.0/"
 repository-code: "https://github.com/Magnus-L/daioe-pipeline"
-# --- COMPLETE THESE THREE AT RELEASE -----------------------------------------
-# Zenodo can reserve a DOI before publishing: create the deposition, click
-# "Reserve DOI", paste it here, then tag and publish so the record and the file
-# agree. Use the CONCEPT DOI (the one that always resolves to the latest
-# version), not the version DOI.
+# This is the VERSION DOI, reserved on Zenodo before publishing, and it is the
+# right one here: CITATION.cff describes v1.0.0 specifically. The CONCEPT DOI,
+# which always resolves to the newest version, appears after the first publication
+# and belongs in the manuscript and on the landing page instead.
 version: "1.0.0"
-doi: "RESERVE-ON-ZENODO-BEFORE-PUBLISHING"
-date-released: "YYYY-MM-DD"
+doi: "10.5281/zenodo.21873968"
+date-released: "2026-08-10"
 # -----------------------------------------------------------------------------
 references:
   - type: article
