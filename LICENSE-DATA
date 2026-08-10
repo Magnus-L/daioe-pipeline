@@ -67,17 +67,29 @@ is not a substantial part of the Papers with Code database in the sense the EU d
 right uses. Both arguments are ours to make, however, not statements by the source, and
 they are the reason the sign-off below is a real step rather than a formality.
 
-**What we do about it.** The 190 rows travel in `third_party/pwc/` under CC BY-SA 4.0
-with attribution, unrelicensed and unmodified, rather than being folded silently into a
-CC BY 4.0 release. Creative Commons permits exactly this: ShareAlike binds the licensed
-material and adaptations of it, not the other material it is aggregated with. Our
-derived scores remain CC BY 4.0. This keeps the replication package complete, which the
-Online Appendix already promises, and it draws the boundary where a reader can see it.
+**What we did about it, 10 August 2026.** Papers with Code was a finding aid, not a
+source, and the re-citation makes that checkable rather than merely arguable. Every one
+of the 190 rows is listed in `data/reference/pwc_provenance.csv` with the paper in which
+its measurement was first published: 188 of the 190 name that paper, including all 109
+dated 2020 or later, and 162 now carry a resolved DOI or arXiv identifier. The remaining
+28 carry the paper title, which is what the attribution rests on; the link is a
+convenience.
 
-Background cleanup, not blocking: where a Papers with Code row also identifies the
-primary paper, the citation can be re-pointed at that paper and the dependency retired
-row by row. The EFF and Papers with Code sources answer the redistribution question
-differently, and the rest of this section sets out how.
+What we take is therefore a set of published facts, each attributed to its publication,
+not the structure or the selection of a database. `retrieved_from` is kept in that file
+as an honest record of where a value was looked up, and Papers with Code is credited in
+the release for that service.
+
+The frozen workbook is unchanged. The sidecar is generated from it by
+`scripts/build_pwc_provenance_20260810.py`, which touches no value used by any index,
+because editing the frozen input to win a licensing argument would be a poor trade.
+
+Two caveats worth stating. Matching titles to DOIs is automated and was gated on the
+publication year, after an ungated first pass returned a 2026 book chapter for a 2021
+paper at a similarity of 1.00; the `match_confidence` column refers to that match and
+never to the measurement. And the argument that facts attributed to their publications
+carry no ShareAlike obligation is ours, not a statement by Papers with Code, which is
+why the sign-off below is still worth having.
 
 **EFF.** The project's own `LICENSE.md` dual-licenses under CC BY-SA 4.0 and GPLv2+,
 and then draws the line we need, verbatim:
@@ -92,9 +104,10 @@ attribute EFF and Felten, Raj and Seamans regardless, as scholarly practice rath
 as a licence condition.
 
 **Papers with Code.** CC BY-SA 4.0, with no equivalent uncopyrightable-data statement.
-It supplies 190 rows of the frozen source, concentrated in 2018--2023, and the 2024
-refresh path on top of that. Those rows ship under their own licence in `third_party/`
-as described above; they are not relicensed.
+It is the recorded retrieval point for 190 rows of the frozen source, concentrated in
+2018--2023, and it also feeds the 2024 refresh path. Each of those rows is now
+attributed to the paper that published the measurement (see above), so the release
+carries published facts with their citations rather than the Papers with Code database.
 
 **Direction of travel.** Epoch AI (CC BY 4.0) supplies everything admitted at the 2024
 chain point, and the admission rule in DOCUMENTATION.md section 3 requires a
@@ -102,11 +115,11 @@ redistribution-clean licence of every series added since. The BY-SA dependency d
 grow; the re-citation cleanup can shrink it.
 
 **Required before the DOI is minted.** Confirmation from ORU research support that the
-arrangement above is sound: CC BY 4.0 on our derived scores, CC BY-SA 4.0 preserved on
-the 190 Papers with Code rows carried in `third_party/`, and the two treated as a
-collection rather than as an adaptation. This was a formality while the frozen index
-looked EFF-only. It is not one now, because the ShareAlike material sits inside the
-published vintage, and a Zenodo DOI cannot be quietly withdrawn.
+position above is sound: CC BY 4.0 on the derived scores, on the basis that the 190
+Papers with Code rows are published measurements attributed to their publications rather
+than an extract of that database. The re-citation makes this a much easier question than
+it was this morning, but it is still ours to have checked rather than to assert, and a
+Zenodo DOI cannot be quietly withdrawn.
 
 ## What is not covered
 
