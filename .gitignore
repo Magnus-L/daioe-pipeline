@@ -14,3 +14,6 @@ mapping/mod_data/batch_requests_*.jsonl
 # Internal working notes: decision records, design memos and draft correspondence.
 # Kept on disk, out of the public repo. See DOCUMENTATION.md for the public reference.
 notes/
+
+# Release bundles are built artefacts; they belong on Zenodo, not in git.
+dist/

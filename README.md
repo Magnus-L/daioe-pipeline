@@ -15,7 +15,7 @@ relevant capabilities did, which is a testable claim rather than a correlation.
 |---|---|
 | Coverage | Every occupation, annually, 2010–2023 in the frozen index |
 | Breakdown | An aggregate index plus nine capability subdomains and a generative-AI composite |
-| Classifications | O\*NET-SOC, SOC 2010, SOC 2018, ISCO-08, SSYK 96, SSYK 2012 |
+| Classifications | O\*NET-SOC, SOC 2010, ISCO-08, SSYK 96, SSYK 2012; a SOC 2018 build ships alongside |
 | Formats | CSV, Stata `.dta`, Excel |
 | Built from | Public AI benchmark results and O\*NET occupational ability profiles |
 
