@@ -2,27 +2,44 @@ cff-version: 1.2.0
 title: "DAIOE: Dynamic AI Occupational Exposure"
 message: "If you use DAIOE, please cite both this release and the paper below."
 type: dataset
-# --- AUTHORSHIP IS NOT SETTLED. DO NOT PUBLISH ON THIS LIST. -----------------
-# A release is a distinct work from the paper and carries its own author list, so
-# differing from the eleven-author paper is normal. Choosing that list by default
-# is not. The two below are placeholders reflecting who built the pipeline as
-# currently understood; Aili Tang's folder holds the 2023 originals, and Mark
-# Hellsten and Martin Längkvist may have claims on the construction. Erik knows.
+# Authors are the paper's eleven, in the paper's order (alphabetical by surname).
 #
-# Settle at the co-author meeting, then: list the builders as `authors`, and credit
-# the remaining paper co-authors as Zenodo `contributors` with DataCite roles
-# (DataCurator, Researcher, ProjectLeader) so nobody is dropped and the credit is
-# accurate. Collect an ORCID from every person named; do not look them up.
-# -----------------------------------------------------------------------------
+# OWED BEFORE PUBLISHING, and it cannot be filled in from here:
+#   1. An ORCID for every person. Collect them; do not look them up. A wrong ORCID
+#      credits a stranger in a permanent record.
+#   2. Affiliations for the eight left blank. Only Görg, Javed and Lodefalk carry a
+#      verified affiliation in the manuscript; the others are anonymised placeholders
+#      there, so they are omitted here rather than guessed.
+# Zenodo also supports `contributors` with DataCite roles (DataCurator, Researcher,
+# ProjectLeader) if the group later wants to distinguish who built the measure from
+# who contributed to the work around it.
 authors:
+  - family-names: Engberg
+    given-names: Erik
+  - family-names: Görg
+    given-names: Holger
+    affiliation: "Kiel Institute for the World Economy"
+  - family-names: Hellsten
+    given-names: Mark
+  - family-names: Javed
+    given-names: Farrukh
+    affiliation: "Department of Statistics, Lund University"
   - family-names: Lodefalk
     given-names: Magnus
     affiliation: "Örebro University; Ratio Institute; Global Labor Organization"
     orcid: "https://orcid.org/0000-0003-0149-9598"
-  - family-names: Engberg
-    given-names: Erik
-    affiliation: "Örebro University"
-    # orcid: ask Erik
+  - family-names: Längkvist
+    given-names: Martin
+  - family-names: Monteiro
+    given-names: Natália
+  - family-names: Kyvik Nordås
+    given-names: Hildegunn
+  - family-names: Pulito
+    given-names: Giuseppe
+  - family-names: Schroeder
+    given-names: Sarah
+  - family-names: Tang
+    given-names: Aili
 abstract: >-
   DAIOE translates measured performance gains on public AI benchmarks into
   occupation-year exposure scores, separately for nine capability subdomains and a
