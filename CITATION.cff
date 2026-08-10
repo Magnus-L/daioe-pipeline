@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+title: "DAIOE: Dynamic AI Occupational Exposure"
+message: "If you use DAIOE, please cite both this release and the paper below."
+type: dataset
+authors:
+  - family-names: Lodefalk
+    given-names: Magnus
+    affiliation: "Örebro University and Ratio Institute"
+    orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+  - family-names: Engberg
+    given-names: Erik
+    affiliation: "Örebro University"
+abstract: >-
+  DAIOE translates measured performance gains on public AI benchmarks into
+  occupation-year exposure scores, separately for nine capability subdomains and a
+  generative-AI composite. Unlike static exposure indices it varies over time as well
+  as across occupations, so the timing of capability arrival is observable and
+  testable. Released with the full construction pipeline, its tests, and the vintage
+  gates that keep the frozen publication index separate from later updates.
+keywords:
+  - artificial intelligence
+  - occupational exposure
+  - labour economics
+  - task-based framework
+  - O*NET
+license: CC-BY-4.0
+license-url: "https://creativecommons.org/licenses/by/4.0/"
+repository-code: "https://github.com/Magnus-L/daioe-pipeline"
+version: "TBD at release"
+doi: "TBD at release"
+date-released: "TBD at release"
+references:
+  - type: article
+    title: "AI Unboxed: Capability Arrival and the Clerical Decline"
+    authors:
+      - family-names: Lodefalk
+        given-names: Magnus
+    notes: "Working paper; update to the published reference at acceptance."
+notes: >-
+  VINTAGES ARE SEPARATE OBJECTS. The frozen 2010-2023 index underlies the published
+  estimates; the 2024 refresh, the SOC2018 build and the 2025-onward vintage are
+  distinct and are not interchangeable with it. Cite the vintage you used, not the
+  repository as a whole. Code is MIT (see LICENSE); data are CC BY 4.0 (see
+  LICENSE-DATA).

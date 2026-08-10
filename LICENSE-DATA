@@ -1,0 +1,51 @@
+# Data licence
+
+The DAIOE occupation-year scores and the derived data files in this repository are
+licensed under **Creative Commons Attribution 4.0 International (CC BY 4.0)**.
+
+Full text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+You are free to share and adapt the material, including commercially, provided you
+give appropriate credit, link to the licence, and indicate whether changes were made.
+
+## How to attribute
+
+> Lodefalk, M. and Engberg, E. (2026). *DAIOE: Dynamic AI Occupational Exposure*
+> [data set]. Version and DOI as recorded in CITATION.cff.
+
+## Why CC BY and not something more restrictive
+
+CC BY imposes nothing that the inputs do not already impose, and nothing that would
+obstruct the uses the measure exists for. A NonCommercial term would exclude
+consultancies, several statistical agencies, and some replication archives that
+cannot accept NC material. A ShareAlike term would force this licence onto anyone
+combining DAIOE with their own data, which is precisely the use the release is meant
+to enable.
+
+## Upstream licences this data inherits from
+
+The scores are derived, and the derivation carries obligations. Every source below
+permits redistribution of derived work under CC BY with attribution.
+
+| Input | Source | Licence |
+|---|---|---|
+| Occupational ability profiles and work context | O*NET, US Department of Labor | CC BY 4.0 |
+| Application-to-ability mapping | Felten, Raj and Seamans (2018, 2021), extended here | CC BY 4.0 (as published) |
+| Benchmark series, original nine applications | AI progress measurement archive (Papers with Code lineage) | **see PROVENANCE.md; confirm before release** |
+| Benchmark series, 2024 chain point onward | Epoch AI | CC BY 4.0 |
+| Theory-of-mind series (ToMBench) | ToMBench authors | MIT |
+| Occupational crosswalks | Statistics Sweden, BLS, ILO | public, attribution requested |
+
+**Open item before the DOI is minted.** The benchmark series behind the original nine
+applications reach us through an archive whose own redistribution terms must be
+confirmed in writing rather than assumed. Our admission rules already require "a
+redistribution-clean licence" of every series added from the 2024 chain point onward
+(DOCUMENTATION.md, section 3); the pre-2024 series predate that rule and have not been
+audited against it. If any of them turns out to be non-redistributable, the fallback is
+to ship the derived scores, which are ours, together with the benchmark identities and
+retrieval instructions, but not the collected source values.
+
+## What is not covered
+
+Swedish, Danish and Portuguese register microdata are confidential and are not in this
+repository under any licence. Nothing here grants access to them.

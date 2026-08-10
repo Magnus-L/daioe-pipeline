@@ -114,6 +114,23 @@ rules, current vintage, changelog) — public-safe by construction, updated per 
 publishable to the ai-econlab.com DAIOE page. `notes/ISSUES-and-ideas.md` is the PRIVATE
 counterpart: curated open issues and improvement ideas, feeding the co-author meetings.
 
+## Licence and citation
+Two licences, because this repository ships two different things.
+
+- **Code** (`src/`, `scripts/`, `tests/`, `run_all.py`): MIT, see `LICENSE`.
+- **Data** (the DAIOE occupation-year scores and derived files): CC BY 4.0, see
+  `LICENSE-DATA`, which also lists the upstream licences the scores inherit from.
+
+Cite via `CITATION.cff`. **Cite the vintage, not the repository**: the frozen 2010-2023
+index behind the published estimates, the 2024 refresh, the SOC2018 build and the
+2025-onward vintage are separate objects and mixing them silently changes published
+numbers.
+
+One item is open before the release DOI is minted: the pre-2024 benchmark series have
+not been audited against the redistribution-clean requirement that `DOCUMENTATION.md`
+section 3 imposes on everything admitted from the 2024 chain point onward. See
+`LICENSE-DATA`, "Open item".
+
 ## Extensions: new series through the second door (Track B)
 New metrics and subdomains enter via `benchmark_extensions` workbooks (two sheets,
 seven guards in `stage2_ai_progress._load_extensions`; see
