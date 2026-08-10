@@ -20,7 +20,7 @@ It does not touch `measures_metrics_newdata2023.xlsx`. That workbook is the froz
 input to the published index, and editing it would risk moving published numbers for
 a cosmetic gain. The sidecar sits alongside it.
 
-Output: data/reference/pwc_provenance.csv and a short README beside it.
+Output: data/derived/pwc_provenance.csv and a short README beside it.
 """
 from pathlib import Path
 import sys
@@ -28,8 +28,9 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# The 10 Aug 2026 migration removed data/raw/, which duplicated Erik's delivery under
-# data_source/. Resolve either, delivery first, so this runs whichever is present.
+# data/raw is a symlink into the delivery. It broke in the 10 Aug 2026 move because it
+# was absolute where its siblings are relative; repaired, but resolve either path so a
+# future move cannot silently take this script down with it.
 _CANDIDATES = [
     ROOT / "data_source" / "DAIOE_20260527" / "Data" / "1_data_ore" / "measures_metrics_newdata2023.xlsx",
     ROOT / "data" / "raw" / "measures_metrics_newdata2023.xlsx",
