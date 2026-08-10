@@ -6,8 +6,11 @@ builds the archive that carries them, with everything a user needs to know which
 they are holding.
 
 Each vintage goes in its own top-level folder. That is the whole point: the frozen
-2010-2023 index behind the published estimates, the 2024 refresh and the 2025-onward
-vintage are different objects, and mixing them silently changes published numbers.
+2010-2023 index behind the published estimates and the 2024 refresh are different
+objects, and mixing them silently changes published numbers.
+
+v1.0.0 ships the frozen index and the 2024 refresh only. The 2025-onward vintage is
+held back for v1.1.0; see the note on VINTAGES below.
 
 Usage:  python scripts/build_release_bundle.py 1.0.0
 Output: dist/daioe-v<version>-scores.zip
@@ -31,16 +34,25 @@ VINTAGES = [
     ("refresh-2024",
      ROOT / "data" / "out_refresh2024_snapshot" / "Publication",
      "The 2024 annual refresh of surviving series."),
-    ("vintage-2025",
-     ROOT / "data" / "vintage" / "vintage_2025_20260808" / "out" / "Publication",
-     "The 2025-onward vintage, with the subdomains admitted at the 2024 chain point."),
+    # HELD BACK FROM v1.0.0 (decision, 10 Aug 2026). The 2025-onward vintage ships as
+    # v1.1.0 once the co-authors have signed off on it. Its three documented caveats
+    # (SWE-bench Verified's 2025 increment is an upper bound on a single 2024
+    # evaluation; five of nine original applications have no living 2025 source;
+    # ceiling-type anchors await a uniform convention) make it the object most likely
+    # to change, and a published Zenodo record cannot be withdrawn. Zenodo versioning
+    # exists for exactly this: the concept DOI will resolve to v1.1.0 when it lands.
+    # ("vintage-2025",
+    #  ROOT / "data" / "vintage" / "vintage_2025_20260808" / "out" / "Publication",
+    #  "The 2025-onward vintage."),
 ]
 
 # Built on request and not in Publication format; shipped so it is not lost.
 EXTRAS = [
+    # data/out's copy spans 2010-2023, the frozen window, so it belongs in v1.0.0.
+    # The copy inside the 2025 vintage folder runs to 2025 and is held back with it.
     ("soc2018/daioe_panel_soc2018.dta",
      ROOT / "data" / "out" / "daioe_panel_soc2018.dta",
-     "SOC 2018 build, panel export rather than Publication format."),
+     "SOC 2018 build on the frozen 2010-2023 window; panel export, not Publication format."),
 ]
 
 DOCS = [
@@ -128,8 +140,12 @@ https://github.com/Magnus-L/daioe-pipeline
 {rows}
 
 **They are not interchangeable.** The frozen index underlies the published estimates;
-the later vintages extend the series and will not reproduce published numbers. Cite the
+the 2024 refresh extends the series and will not reproduce published numbers. Cite the
 vintage you used.
+
+The 2025-onward vintage is not in this release. It exists, but three of its properties
+are still provisional, so it ships separately as v1.1.0 rather than being frozen into a
+permanent record before it settles.
 
 ## Files
 
