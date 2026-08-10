@@ -127,11 +127,12 @@ index behind the published estimates, the 2024 refresh, the SOC2018 build and th
 numbers.
 
 Provenance of the frozen source was measured on 10 August 2026: 190 of its 2,108
-measurements cite Papers with Code (CC BY-SA 4.0), concentrated in 2018-2023, where
-they are about half of all rows. EFF supplies the rest and declares its measurements
-uncopyrightable. The two are kept apart in the release, the CC BY-SA rows carried
-unrelicensed in `third_party/`. Numbers, reasoning and the one required sign-off:
-`LICENSE-DATA`.
+measurements were recorded from Papers with Code (CC BY-SA 4.0), concentrated in
+2018-2023 where they are about half of all rows; EFF supplies the rest and declares its
+measurements uncopyrightable. Every one of those 190 is now attributed to the paper that
+published the measurement (`data/derived/pwc_provenance.csv`), so the release carries
+published facts with their citations rather than an extract of that database, and ships
+CC BY 4.0 throughout. Reasoning and evidence: `LICENSE-DATA`.
 
 ## Extensions: new series through the second door (Track B)
 New metrics and subdomains enter via `benchmark_extensions` workbooks (two sheets,

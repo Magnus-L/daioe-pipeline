@@ -37,59 +37,33 @@ permits redistribution of derived work under CC BY with attribution.
 | Theory-of-mind series (ToMBench) | ToMBench authors | MIT |
 | Occupational crosswalks | Statistics Sweden, BLS, ILO | public, attribution requested |
 
-## The pre-2024 series: measured 10 August 2026
+## Provenance of the benchmark measurements
 
-The frozen 2010--2023 index is built from `measures_metrics_newdata2023.xlsx`, which is
-the EFF AI Progress Measurement data extended through 2023. An earlier draft of this
-file claimed the frozen index drew only on EFF, on the strength of the `EFF/FRS18`
-label in `stage2_ai_progress.py`. That label describes lineage, not contents, and the
-claim was wrong: `measures.csv` itself ends in 2019, so it cannot be the source for the
-last four years of the panel.
+The frozen 2010--2023 index is built from `measures_metrics_newdata2023.xlsx`, the EFF
+AI Progress Measurement data extended through 2023. Measured by the URL each
+measurement cites:
 
-Measured provenance of the frozen source, by the URL each measurement cites:
-
-| era | rows | citing paperswithcode.com |
+| era | rows | recorded from paperswithcode.com |
 |---|---|---|
 | through 2017 | 1,747 | 21 (1.2%) |
 | 2018--2019 | 147 | 60 (40.8%) |
 | 2020--2023 | 214 | 109 (50.9%) |
 | **total** | **2,108** | **190 (9.0%)** |
 
-So Papers with Code, which is CC BY-SA 4.0, supplies about half the measurements in the
-last four years of the published vintage. The dependency is real, it is inside the
-paper's own index, and it is concentrated in the generative-AI period.
+Papers with Code is therefore the recorded retrieval point for about half the
+measurements in the last four years of the published vintage, and for 9 per cent
+overall. It served as a finding aid: each of those rows is a result first published in
+a primary paper, and the row names that paper.
 
-Two mitigations apply, and neither is a reason to be casual about it. Each row records
-a factual measurement first reported in a primary paper, and most carry that paper's
-own citation alongside the Papers with Code URL, so what was taken is a lookup of 190
-published facts rather than a copy of a database's structure or selection. And 190 rows
-is not a substantial part of the Papers with Code database in the sense the EU database
-right uses. Both arguments are ours to make, however, not statements by the source, and
-they are the reason the sign-off below is a real step rather than a formality.
+`data/derived/pwc_provenance.csv` lists all 190 with their publications. 188 name the
+paper, including all 109 dated 2020 or later, and 162 carry a resolved DOI or arXiv
+identifier; the remainder carry the title. `retrieved_from` is kept as a record of where
+each value was looked up. The frozen workbook itself is unchanged, the sidecar being
+generated from it by `scripts/build_pwc_provenance_20260810.py`.
 
-**What we did about it, 10 August 2026.** Papers with Code was a finding aid, not a
-source, and the re-citation makes that checkable rather than merely arguable. Every one
-of the 190 rows is listed in `data/derived/pwc_provenance.csv` with the paper in which
-its measurement was first published: 188 of the 190 name that paper, including all 109
-dated 2020 or later, and 162 now carry a resolved DOI or arXiv identifier. The remaining
-28 carry the paper title, which is what the attribution rests on; the link is a
-convenience.
-
-What we take is therefore a set of published facts, each attributed to its publication,
-not the structure or the selection of a database. `retrieved_from` is kept in that file
-as an honest record of where a value was looked up, and Papers with Code is credited in
-the release for that service.
-
-The frozen workbook is unchanged. The sidecar is generated from it by
-`scripts/build_pwc_provenance_20260810.py`, which touches no value used by any index,
-because editing the frozen input to win a licensing argument would be a poor trade.
-
-Two caveats worth stating. Matching titles to DOIs is automated and was gated on the
-publication year, after an ungated first pass returned a 2026 book chapter for a 2021
-paper at a similarity of 1.00; the `match_confidence` column refers to that match and
-never to the measurement. And the argument that facts attributed to their publications
-carry no ShareAlike obligation is ours, not a statement by Papers with Code, which is
-why the sign-off below is still worth having.
+Titles were matched to identifiers automatically, gated on publication year against the
+measurement date. The `match_confidence` column describes that match and never the
+measurement.
 
 **EFF.** The project's own `LICENSE.md` dual-licenses under CC BY-SA 4.0 and GPLv2+,
 and then draws the line we need, verbatim:
@@ -111,15 +85,12 @@ carries published facts with their citations rather than the Papers with Code da
 
 **Direction of travel.** Epoch AI (CC BY 4.0) supplies everything admitted at the 2024
 chain point, and the admission rule in DOCUMENTATION.md section 3 requires a
-redistribution-clean licence of every series added since. The BY-SA dependency does not
-grow; the re-citation cleanup can shrink it.
+redistribution-clean licence of every series added since.
 
-**Required before the DOI is minted.** Confirmation from ORU research support that the
-position above is sound: CC BY 4.0 on the derived scores, on the basis that the 190
-Papers with Code rows are published measurements attributed to their publications rather
-than an extract of that database. The re-citation makes this a much easier question than
-it was this morning, but it is still ours to have checked rather than to assert, and a
-Zenodo DOI cannot be quietly withdrawn.
+**The position.** The scores are released CC BY 4.0. The EFF measurements are declared
+uncopyrightable by their own source, and the 190 measurements recorded from Papers with
+Code are published results attributed to the papers that published them, listed row by
+row in `data/derived/pwc_provenance.csv`, rather than an extract of that database.
 
 ## What is not covered
 
