@@ -85,8 +85,45 @@ source (repository sunset, not capability plateau), so composite values ship wit
 coverage audit; (iii) ceiling-type anchors (tasks human-resolved by construction) are
 provisional pending a uniform anchor convention.
 
-## 5. Changelog
+## 5. Reading and rescaling the scores
 
+The released panels are raw index values. The index has no natural units: a level or a
+change is meaningful only relative to other occupation-years, and every estimate in the
+paper standardises before use. Two presentation conventions cover most needs.
+
+**Cross-sectional standing: percentile ranks.** Shipped in every panel
+(`pctl_rank_allapps`), the occupation's within-year percentile. Ordinal: read "more
+exposed than X per cent of occupations that year". Distances and growth are not
+preserved; the top occupation sits near 100 every year even as its raw exposure grows.
+
+**Level and growth: rescale to the frozen-window peak.** For a cardinal reading, divide
+by the panel's frozen-window maximum and multiply by 100:
+
+```
+score_rel_max = 100 * value / max(value)   # max over all occupation-years, 2010–2023,
+                                           # in the taxonomy panel you use
+```
+
+The result reads "per cent of the most exposed occupation-year in the frozen window".
+The transformation is linear, so ratios and time paths survive: an occupation at 31 in
+2015 and 62 in 2023 doubled its exposure. Compute the denominator once, on the frozen
+2010–2023 years of your panel (one number per taxonomy), and reuse it unchanged for
+later vintages; values above 100 then read as exposure beyond the frozen-window peak.
+Never take each vintage's own maximum, which would rescale history with every release
+and make numbers incomparable across versions. The same convention applies per
+sub-index, each with its own frozen-window maximum; do not compare rescaled values
+across sub-indices, whose maxima differ.
+
+We deliberately ship raw values rather than a rescaled column: the raw cells are the
+citable, bit-identical stratum the release gates protect and published work builds on,
+and one canonical scale avoids version ambiguity. The rescaling is a one-line
+transformation under the user's control; the same guidance, with worked examples, is on
+the measure's page at ai-econlab.com.
+
+## 6. Changelog
+
+- **§5 added** (11 Aug 2026): reading and rescaling guidance — the relative-to-peak
+  transformation is documented for users rather than shipped as a column.
 - **v2025** (Aug 2026): first vintage beyond the frozen window; four subdomain series
   admitted; generative-AI membership broadened; gates and coverage audit introduced.
 - **Frozen 2010–2023** (2023–2024): the paper's series; Stata construction ported to
