@@ -16,6 +16,7 @@ type: dataset
 authors:
   - family-names: Engberg
     given-names: Erik
+    orcid: "https://orcid.org/0000-0003-4622-6526"
   - family-names: Görg
     given-names: Holger
     affiliation: "Kiel Institute for the World Economy"
