@@ -119,9 +119,15 @@ def build_t15() -> pd.DataFrame:
 
     comparators = [
         ("frs21_aioe", "Felten et al.\\ (2021), AIOE"),
-        ("open24_gpt_automation", "Eloundou et al.\\ (2024), GPT"),
-        ("open24_human_E1", "Eloundou et al.\\ (2024), human E1"),
-        ("webb19_ai_score", "Webb (2020), AI"),
+        # E1+E2 is the declared primary Open24 variant (Erik's confirmation by email,
+        # 11 Aug 2026; the paper's footnote and the OA ISCO table already say E1+E2).
+        # The GPT and human-E1 rows are retained for diagnostics; re-enable to print.
+        ("open24_human_E1_E2", "Eloundou et al.\\ (2024), human E1+E2"),
+        # ("open24_gpt_automation", "Eloundou et al.\\ (2024), GPT"),
+        # ("open24_human_E1", "Eloundou et al.\\ (2024), human E1"),
+        # Webb year follows the bibitem (Webb 2019, SSRN 3482150), not the circulating
+        # 2020 vintage label; harmonised 11 Aug 2026 with the paper and OA.
+        ("webb19_ai_score", "Webb (2019), AI"),
         ("frs18_index_original", "Felten et al.\\ (2018), original"),
         ("frs18_index_new_weights", "Felten et al.\\ (2018), reweighted"),
         ("fo17_p_computerisation", "Frey and Osborne (2017)"),
