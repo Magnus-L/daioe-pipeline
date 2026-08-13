@@ -69,7 +69,7 @@ series.
 | Conversation | Theory of Mind on ToMBench | pure_model | 86.1 (organiser human baseline) | MIT; scores arXiv:2602.10625 |
 | Software engineering | SWE-bench Verified (Epoch-run harness) | system_level | 95.0 ceiling, provisional | CC BY 4.0 |
 | Mathematical & scientific reasoning | GPQA Diamond (Epoch-run harness) | pure_model | 81.3 (expert accuracy) | CC BY 4.0 |
-| Agentic task execution | TheAgentCompany (interim, pending METR licensing) | system_level | ceiling, provisional | CC BY 4.0 (Epoch collection) |
+| Agentic task execution | TheAgentCompany (interim; METR task-horizon becomes the declared primary at the next chain point) | system_level | ceiling, provisional | CC BY 4.0 (Epoch collection) |
 
 **Membership change:** the generative-AI composite keeps its name and broadens at the
 chain point from {image generation, language modelling} to also include conversation and

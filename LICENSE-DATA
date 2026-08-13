@@ -39,6 +39,23 @@ permits redistribution of derived work under CC BY with attribution.
 | Theory-of-mind series (ToMBench) | ToMBench authors | MIT |
 | Occupational crosswalks | Statistics Sweden, BLS, ILO | public, attribution requested |
 
+## Cleared but not yet ingested
+
+METR's task-horizon evaluations are the declared primary anchor for the agentic subdomain
+from the next chain point. They are not in any released vintage yet, so they carry no row
+above. Their basis differs from every row that does: METR's `eval-analysis-public`
+repository carries no licence file, and our use rests on **written permission granted to
+the AI-Econ Lab on 13 Aug 2026** to derive occupation-year values and redistribute them as
+part of this index. A permission granted to us is not a licence that travels with the
+data, so when the row is added it must state that basis rather than claim a CC BY
+inheritance; DAIOE's own CC BY 4.0 is unaffected, since the released values are our
+construction several derivations downstream.
+
+Attribution required wherever that series is redistributed:
+
+> Agentic task-horizon series derived from METR's public evaluation data (metr.org), used
+> with permission. METR is not affiliated with this work and does not endorse it.
+
 ## Provenance of the benchmark measurements
 
 The frozen 2010--2023 index is built from `measures_metrics_newdata2023.xlsx`, the EFF
