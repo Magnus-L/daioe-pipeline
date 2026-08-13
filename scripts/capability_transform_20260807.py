@@ -61,120 +61,20 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from daioe import config as cfgmod, stage2_ai_progress as s2, stage4_index as s4  # noqa: E402
 
+# The arithmetic now lives in the package (src/daioe/stage2b_capability.py) so the pipeline
+# can run it behind a validation gate; this script stays as the exhibit that produced the
+# tables in DESIGN-capability-transform_2026-08-07.md, and imports rather than duplicating.
+# Moved 13 Aug 2026 when the transform became a prerequisite for the METR agentic switch.
+from daioe.stage2b_capability import (  # noqa: E402
+    ANCHOR_FIX,
+    _signed_log,
+    _theta,
+    build_capability,
+    load_sourced_anchors,
+)
+
 LOWER_IS_BETTER = {"Percentage error", "FID", "Perplexity", "Model Entropy"}
-# The one anchor whose units disagree with its values (see docstring, defect 2).
-ANCHOR_FIX = {"Imagenet Image Recognition": 5.1}
-# Anchors sourced for metrics the frozen sheet leaves unanchored. Every row carries its
-# source and the supporting quote; see data/derived/human_anchors_v1.csv.
 ANCHOR_TABLE = ROOT / "data/derived/human_anchors_v1.csv"
-
-
-def load_sourced_anchors() -> dict[str, float]:
-    if not ANCHOR_TABLE.exists():
-        return {}
-    a = pd.read_csv(ANCHOR_TABLE)
-    return dict(zip(a["metrics_name"], a["anchor"].astype(float)))
-
-
-def _signed_log(x: np.ndarray) -> np.ndarray:
-    """ln(x) for x>0, -ln(-x) for x<0, 0 at zero.
-
-    This is the frozen construction's own convention for the Score family (online appendix
-    Table, "Score<0", "Score=0", "Score>0"), and it must be kept because Atari scores go
-    negative: Pong runs from -21 to +21.
-    """
-    x = np.asarray(x, dtype=float)
-    return np.where(x > 0, np.log(np.abs(np.where(x > 0, x, 1.0))),
-           np.where(x < 0, -np.log(np.abs(np.where(x < 0, x, 1.0))), 0.0))
-
-
-def _theta(scale: str, v: np.ndarray, h: float) -> np.ndarray:
-    """Human-referenced log-distance. Zero at parity, positive above, negative below."""
-    if scale == "Percentage correct":                     # log-odds of accuracy vs human
-        p = np.clip(v / 100.0, 1e-6, 1 - 1e-6)
-        ph = np.clip(h / 100.0, 1e-6, 1 - 1e-6)
-        return np.log(p / (1 - p)) - np.log(ph / (1 - ph))
-    if scale in ("Percentage error", "FID", "Perplexity"):  # log error ratio, human / machine
-        return np.log(max(h, 1e-9)) - np.log(np.clip(v, 1e-9, None))
-    if scale == "Model Entropy":                           # bits -> log perplexity ratio
-        return (h - v) * np.log(2.0)
-    if scale in ("Score", "ELO rating", "BLEU score"):      # signed log ratio, machine / human
-        return _signed_log(v) - _signed_log(np.array(h))
-    raise ValueError(f"_theta: unhandled scale {scale!r}")
-
-
-def build_capability(cfg, alpha: float = 1.0) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Return (per-benchmark-year capability, per-application-year capability + s.e.).
-
-    ``alpha`` is the discrimination slope, the second calibrated parameter of the design and
-    the analogue of delta in the social discount. It sets how sharply the information weight
-    concentrates around the human anchor: alpha -> 0 weights every benchmark nearly equally
-    and approaches the published unweighted treatment, while large alpha counts only
-    benchmarks close to parity. Grid it and report it the way delta is gridded.
-    """
-    fd = pd.read_parquet(ROOT / "data/out/formated_data.parquet")
-    sourced = load_sourced_anchors()
-    # fill in the anchors the frozen sheet lacks, then apply the units erratum
-    fd["target"] = fd["target"].fillna(fd["metrics_name"].map(sourced))
-    fd["target"] = fd.apply(
-        lambda r: ANCHOR_FIX.get(r["metrics_name"], r["target"]), axis=1
-    )
-    fd = fd[fd["value"].notna() & fd["target"].notna()].copy()
-
-    out = []
-    for (m, sc, app), g in fd.groupby(["metrics_name", "scale", "parent_name"]):
-        g = g.sort_values("date")
-        th = _theta(sc, g["value"].to_numpy(float), float(g["target"].iloc[0]))
-        # the frontier in capability terms is the running max of theta, which is
-        # direction-correct for every scale family by construction
-        g = g.assign(theta=np.maximum.accumulate(th))
-        yr = g.groupby("year")["theta"].max().reset_index()
-        yr["metrics_name"], yr["parent_name"], yr["scale"] = m, app, sc
-        out.append(yr)
-    bench = pd.concat(out, ignore_index=True)
-
-    # carry each benchmark's frontier forward across its observed span, so a year with no
-    # new result contributes its standing capability rather than dropping out
-    spans = []
-    for (m, app), g in bench.groupby(["metrics_name", "parent_name"]):
-        full = pd.DataFrame({"year": np.arange(int(g["year"].min()), int(g["year"].max()) + 1)})
-        full = full.merge(g, on="year", how="left")
-        full[["metrics_name", "parent_name"]] = m, app
-        full["theta"] = full["theta"].ffill()
-        spans.append(full)
-    bench = pd.concat(spans, ignore_index=True)
-
-    bench["pi"] = 1.0 / (1.0 + np.exp(-alpha * bench["theta"]))
-    bench["w"] = bench["pi"] * (1.0 - bench["pi"])
-
-    # --- progress: information-weighted mean of WITHIN-benchmark changes -----------------
-    # Differencing an application-level weighted mean would make progress move whenever a
-    # benchmark enters or leaves, because setting every difficulty at its own human anchor
-    # assumes parity on VQA and parity on ImageNet are the same capability level, which they
-    # are not. Weighting the changes instead never compares two different baskets, so it is
-    # composition-neutral by construction. It is also the smaller change to the published
-    # architecture: the mean over benchmarks stays, the weight and the units change.
-    bench = bench.sort_values(["metrics_name", "year"])
-    bench["d_theta"] = bench.groupby("metrics_name")["theta"].diff()
-    bench["w_lag"] = bench.groupby("metrics_name")["w"].shift(1)
-    bench["w_bar"] = 0.5 * (bench["w"] + bench["w_lag"])   # information over the interval
-
-    def agg(g):
-        gg = g.dropna(subset=["d_theta"])
-        wsum = gg["w_bar"].sum()
-        info = g["w"].sum()
-        return pd.Series(
-            {
-                "delta_p": np.average(gg["d_theta"], weights=gg["w_bar"]) if wsum > 0 else np.nan,
-                "capability": np.average(g["theta"], weights=g["w"]) if info > 0 else np.nan,
-                "info": info,
-                "se": 1.0 / np.sqrt(info) if info > 0 else np.inf,
-                "n_anchored": len(g),
-            }
-        )
-
-    app = bench.groupby(["parent_name", "year"]).apply(agg).reset_index()
-    return bench, app.sort_values(["parent_name", "year"])
 
 
 def main() -> None:

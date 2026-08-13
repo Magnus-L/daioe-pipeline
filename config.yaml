@@ -105,6 +105,20 @@ taxonomies:
   soc2018:   {key: SOC2018code, crosswalk: soc2010_to_soc2018_BLS.dta, soc_key: SOC2010code, level_rule: substr}
   # ssyk2025:  {key: ssyk2025_4,  crosswalk: ssyk2025_soc10_crosswalk.dta, soc_key: SOC2010code, level_rule: intdiv}
 
+# --- capability transform (stage 2b) ---
+# The human-anchored transform of DESIGN-capability-transform_2026-08-07. DIAGNOSTIC by
+# default: the panels are written and the gate is reported every run, but stage 4 keeps
+# consuming the published Delta p. Setting enabled: true makes stage 4 consume the
+# transform instead, and a failing gate then stops the run rather than shipping quietly.
+# Landing this is the prerequisite for making METR the primary agentic series
+# (notes/EXTENSION-agentic-metr_2026-08-13.md), so the flag flips with Erik's anchor
+# convention, not before.
+capability_transform:
+  enabled: false
+  alpha: 1.0                 # discrimination slope; gridded like delta, 1.0 is neutral
+  min_anchor_coverage: 0.65  # share of observed metrics carrying an anchor
+  min_alpha_rho: 0.95        # progress-rank stability across the alpha grid
+
 # --- output ---
 export_formats: [dta, csv, xlsx]   # csv is TAB-delimited (Stata delimiter(tab)); xlsx sheet "DAIOE"
 

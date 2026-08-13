@@ -25,7 +25,8 @@ from daioe import validate as V  # noqa: E402
 def main() -> int:
     ap = argparse.ArgumentParser(description="Run the DAIOE pipeline.")
     ap.add_argument("--config", default=None, help="path to config.yaml")
-    ap.add_argument("--stages", default="1,2,3,4,5", help="comma list of stages to run")
+    ap.add_argument("--stages", default="1,2,3,4,5",
+                    help="comma list of stages to run; 2b is the capability transform")
     ap.add_argument("--no-validate", action="store_true", help="skip validation")
     args = ap.parse_args()
 
@@ -41,6 +42,18 @@ def main() -> int:
     if "2" in stages:
         from daioe import stage2_ai_progress
         results += stage2_ai_progress.run(cfg, validate=not args.no_validate)
+    # Stage 2b is the capability transform. It reads stage 2's checkpoints, so it runs after
+    # 2 and before 3, and it is diagnostic unless capability_transform.enabled is true. Its
+    # gate reports on its own line rather than joining the value-column tally, because it
+    # checks declared properties of a construction, not agreement with a Stata target.
+    if "2b" in stages:
+        from daioe import stage2b_capability
+        cap = stage2b_capability.run(cfg, validate=not args.no_validate)
+        if cap.gates:
+            n_ok = sum(g.passed for g in cap.gates)
+            state = "CONSUMED by stage 4" if cap.enabled else "diagnostic only"
+            print(f"{n_ok}/{len(cap.gates)} capability-transform gates passed ({state}).")
+
     if "3" in stages:
         from daioe import stage3_mapping
         results += stage3_mapping.run(cfg, validate=not args.no_validate)
