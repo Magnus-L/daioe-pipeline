@@ -51,6 +51,12 @@ data, so when the row is added it must state that basis rather than claim a CC B
 inheritance; DAIOE's own CC BY 4.0 is unaffected, since the released values are our
 construction several derivations downstream.
 
+**Upgrade in progress.** METR committed on 18 Aug 2026 to adding a CC BY 4.0 licence to
+the repository, in reply to our asking. When it lands, METR stops being an exception and
+joins the inheritance table above on the same footing as Epoch AI, and the paragraph above
+is replaced rather than amended. It was not in place as of 18 Aug; the state is checked by
+`scripts/check_metr_licence.py`.
+
 Attribution required wherever that series is redistributed:
 
 > Agentic task-horizon series derived from METR's public evaluation data (metr.org), used
