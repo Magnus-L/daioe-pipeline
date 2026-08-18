@@ -83,6 +83,7 @@ EXT_SWEBENCH = "data/updates/extension_swebench_2026-08-08.xlsx"
 EXT_GPQA_QA = "data/updates/extension_gpqa_2026-08-07.xlsx"
 EXT_GPQA_MATHS = "data/updates/extension_gpqa_maths_2026-08-08.xlsx"
 EXT_AGENTCO = "data/updates/extension_agentcompany_2026-08-08.xlsx"
+EXT_METR = "data/updates/extension_metr_2026-08-13.xlsx"
 
 MATHS_PARENT = "Mathematical and scientific reasoning"
 NEW_CATEGORIES = ["conversat", "software"]          # exposure-capable today (exact FRS18 rows)
@@ -143,7 +144,13 @@ def make_vintage_config(args, out_dir: Path) -> cfgmod.Config:
     raw["year_final"] = 2025
     raw["benchmark_updates"] = UPDATES
     gpqa = EXT_GPQA_MATHS if args.gpqa_parent == "maths" else EXT_GPQA_QA
-    raw["benchmark_extensions"] = [gpqa, EXT_TOMBENCH, EXT_SWEBENCH, EXT_AGENTCO]
+    # The agentic series. METR is the pre-declared PRIMARY (B3) and became available
+    # when its permission arrived on 13 Aug; TheAgentCompany was the interim that
+    # shipped in the default v2025 build. Magnus took the switch on 18 Aug without
+    # waiting for the anchor convention, so the DEFAULT is metr and the reversal is
+    # one flag, exactly as --genai legacy reverses the composite decision.
+    agentic = EXT_METR if args.agentic == "metr" else EXT_AGENTCO
+    raw["benchmark_extensions"] = [gpqa, EXT_TOMBENCH, EXT_SWEBENCH, agentic]
     raw["app_categories"] = PUBLISHED_13 + NEW_CATEGORIES
     raw["app_categories_publication"] = (
         PUBLICATION_11 + (NEW_CATEGORIES if args.membership == "plus-new" else [])
@@ -286,6 +293,9 @@ def main() -> None:
     ap.add_argument("--allapps-rule", choices=["survivors", "mean"], default="survivors")
     ap.add_argument("--membership", choices=["published", "plus-new"], default="published")
     ap.add_argument("--genai", choices=["broad", "legacy"], default="broad")
+    ap.add_argument("--agentic", choices=["metr", "agentcompany"], default="metr",
+                    help="agentic series: METR task horizons (default, primary) or "
+                         "TheAgentCompany (the interim that shipped in v2025)")
     ap.add_argument("--tag", default=TAG)
     args = ap.parse_args()
 
@@ -381,7 +391,8 @@ def main() -> None:
     with open(report, "w") as fh:
         fh.write(f"# DAIOE 2025 vintage — release assembly ({args.tag})\n\n")
         fh.write(f"Flags: gpqa-parent={args.gpqa_parent}, allapps-rule={args.allapps_rule}, "
-                 f"membership={args.membership}, genai={args.genai}\n\n")
+                 f"membership={args.membership}, genai={args.genai}, "
+                 f"agentic={args.agentic}\n\n")
         fh.write("## Seam policy\nFrozen 2010-2023 published values immutable; 2024-2025 "
                  "increments computed on the fuller archive and chained at 2023 "
                  "(checkpoint2 decision, 2026-07-07). Entry-timing doctrine: "
@@ -438,7 +449,23 @@ def main() -> None:
                  "maths joins with the matrix decision, agentic with METR; revert "
                  "with --genai legacy. redux remains the legacy complement for now.\n"
                  "5. Anchor convention: SWE-bench ceiling anchor 95.0 is PROVISIONAL "
-                 "(notes/EXTENSION-software-swebench_2026-08-08.md).\n\n")
+                 "(notes/EXTENSION-software-swebench_2026-08-08.md). It now covers "
+                 "THREE ceiling cases and two kinds, since METR's 960-minute anchor "
+                 "is an instrument ceiling and not a human score at all.\n"
+                 "6. TAKEN 18 Aug, not waiting on the convention: the agentic series "
+                 "is METR (--agentic metr, the default here); TheAgentCompany, the "
+                 "interim that shipped in the 8 Aug build, is demoted. Reversal is "
+                 "--agentic agentcompany, and this vintage is tagged separately from "
+                 "the shipped one so the reversal costs nothing. What was NOT taken: "
+                 "agentic stays OUT of the genai composite (4b), because that is a "
+                 "headline column and the reversible half of the decision is the "
+                 "series, not the composite. NOTE the consequence, disclosed rather "
+                 "than discovered: agentic 2025 moves 2.2051 against 0.2194 for the "
+                 "next-largest application, and the capability transform does NOT "
+                 "damp it (stage 2b is within-basket). Part of that gap is the other "
+                 "baskets being dead rather than agentic being hot: five of nine "
+                 "original applications have no living 2025 source. See "
+                 "notes/EXTENSION-agentic-metr_2026-08-13.md.\n\n")
         fh.write("## Input manifest (sha256)\n\n")
         for p, h in manifest.items():
             fh.write(f"- `{p}`  {h[:16]}…\n")
