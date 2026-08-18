@@ -905,6 +905,15 @@ def run(cfg, validate: bool = True):  # noqa: A002 (mirror the prompt's signatur
     if not validate:
         return []
 
+    # Scale-family diagnostic: the eight transforms are not commensurable with each other,
+    # and a new series should be read against its own type rather than against the basket.
+    # Reported, not enforced: the property is longstanding and correct, and what would be
+    # worth catching is a series that does not behave like its family. See
+    # daioe.scale_family_check.
+    from . import scale_family_check as _sfc
+    print("\nincrement distribution by scale family (metric-years, non-zero):")
+    print(_sfc.report(frontiers, formated).to_string(float_format=lambda x: f"{x:9.4f}"))
+
     results = []
     # 1) formated_data: validates the ~10 transforms (value_scaled) + frontier
     results.append(

@@ -281,6 +281,17 @@ def freeze_history_check() -> None:
     if dmean != 0.0 or dcount != 0.0:
         raise SystemExit("FREEZE-HISTORY VIOLATION: the extension changed published values")
 
+    # Does the new series behave like its own scale family? A Score-family series produces
+    # systematically larger increments than a Percentage-correct one (median 0.372 against
+    # 0.141), so the basket is the wrong comparison and the family is the right one.
+    from daioe import scale_family_check as sfc
+    cfg_b = cfgmod.Config(raw={**raw, "benchmark_extensions": [ext]}, root=ROOT)
+    meas_b = s2._build_measures(cfg_b)
+    fd_b = s2.build_formated_data(cfg_b)
+    fr_b = s2.build_metrics_frontiers(cfg_b, fd_b, meas_b)
+    print()
+    print(sfc.check_series(fr_b, fd_b, METRIC).summary())
+
     print(f"\nagentic application panel, METR ({VERSION}) as the series:")
     print(b[b["parent_name"] == PARENT][["year", "count", "mean"]].to_string(index=False))
 
