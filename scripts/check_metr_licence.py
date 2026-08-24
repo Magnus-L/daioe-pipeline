@@ -41,7 +41,37 @@ def _get(url: str) -> tuple[int, bytes]:
         return e.code, b""
 
 
+def headroom() -> None:
+    """Frontier-to-ceiling distance on both reliability bars, so suite exhaustion is
+    watched, not discovered (added 24 Aug 2026, the day the 50% bar's 2026 readings
+    crossed the 960-minute bound and the series moved to the 80% bar). Reads METR's
+    current published file; falls back to the pinned local copy if unreachable."""
+    import io
+    from pathlib import Path
+
+    import yaml
+
+    ceiling = 960.0
+    status, body = _get("https://metr.org/assets/benchmark_results_1_1.yaml")
+    src = "metr.org (live)"
+    if status != 200:
+        body = (Path(__file__).resolve().parents[1]
+                / "data/updates/metr_20260813/benchmark_results_1_1.yaml").read_bytes()
+        src = "pinned local copy (metr.org unreachable)"
+    doc = yaml.safe_load(io.BytesIO(body))
+    for bar, field in (("50%", "p50_horizon_length"), ("80% (ACTIVE)", "p80_horizon_length")):
+        top = max(float(m["metrics"][field]["estimate"]) for m in doc["results"].values())
+        note = ""
+        if top > ceiling:
+            note = "  ** SUITE EXHAUSTED on this bar **"
+        elif top > ceiling / 2:
+            note = "  ** WARNING: past half the ceiling; plan the successor now **"
+        print(f"headroom     {bar:>12} bar: frontier {top:8.1f} of {ceiling:.0f} min{note}")
+    print(f"             (source: {src})")
+
+
 def main() -> int:
+    headroom()
     status, body = _get(f"https://api.github.com/repos/{REPO}")
     if status != 200:
         print(f"github api returned {status}; cannot tell")
