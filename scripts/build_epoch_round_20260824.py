@@ -139,6 +139,45 @@ SERIES = [
     },
 ]
 
+SERIES.append(
+    {
+        # Added the same afternoon: Magnus approved simple-bench.com for fetching
+        # and the human baseline verified immediately (sign-off box 3 of the
+        # hand-out). Thickens Language comprehension and question-answering.
+        "tag": "simplebench",
+        "csv": "simplebench_external.csv",
+        "parent": "Language comprehension and question-answering",
+        "metric": "Adversarial everyday reasoning on SimpleBench",
+        "papername": "Epoch AI, benchmark data, CC BY 4.0 (SimpleBench organisers' own runs, AVG@5)",
+        "score_col": "Score (AVG@5)",
+        "multiplier": 100.0,        # stored as 0-1 proportion
+        "protocol": "pure_model",
+        "target": 83.7,
+        "target_label": "Non-specialized human baseline, SimpleBench site",
+        "target_source": "simple-bench.com (retrieved 2026-08-24)",
+        "protocol_note": (
+            "Externally collected by Epoch from the SimpleBench site, but the test set "
+            "is private and all scores come from the organisers' own AVG@5 runs, so one "
+            "evaluation protocol in practice. Multiple-choice, no tools: pure_model."
+        ),
+        "evaluation": "external",
+        "anchor_row": {
+            "scale": "Percentage correct",
+            "anchor": 83.7,
+            "anchor_kind": "human",
+            "category": "B",
+            "source": "simple-bench.com (retrieved and verified 2026-08-24)",
+            "evidence": (
+                '"a non-specialized human baseline is 83.7%, based on our small sample of '
+                'nine participants, outperforming every tested LLM". CAVEAT: n = 9 '
+                "non-specialists; a small-sample baseline, stated as such by the "
+                "organisers."
+            ),
+            "status": "verified-conservative",
+        },
+    }
+)
+
 GPQA_ANCHOR_ROW = {
     "metrics_name": "Graduate-level QA on GPQA Diamond",
     "parent_name": "Mathematical and scientific reasoning",
@@ -273,4 +312,4 @@ if __name__ == "__main__":
                    if k not in ("metrics_name", "parent_name")})
     for wb, s in zip(built, SERIES):
         freeze_history_check([wb], s["tag"])
-    freeze_history_check(built, "both jointly")
+    freeze_history_check(built, "all staged jointly")
