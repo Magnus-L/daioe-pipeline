@@ -106,7 +106,7 @@ Stages 1–3 are independent; 4 needs 1–3; 5 needs 4.
 ```bash
 python3.10 -m venv .venv
 .venv/bin/pip install -r requirements.txt
-.venv/bin/python -m pytest -q          # expect 12 passed
+.venv/bin/python -m pytest -q          # expect 57 passed (24 Aug 2026)
 ```
 Pinned and verified 4 Aug 2026 on Python 3.10.9. `numpy` and `pandas` are pinned hard
 because the bit-exactness claim depends on float32 storage semantics and on groupby
@@ -124,13 +124,18 @@ pytest -q                          # shim unit tests
 ```
 A full build takes about 75 seconds.
 
-**Validation currently cannot run on a fresh checkout.** `data/reference` and
-`data/enriched_ref` point into `~/Downloads/DAIOE 20260527/`, which no longer exists;
-the July restore brought back `1_data_ore` only, so `data/raw` resolves and the other
-two do not. Every stage builds, and `--no-validate` completes, but `compare_to_dta`
-dies on the first missing target. Restoring `2_data_enriched` and `3_data_jewelry` from
-the same Drive share, into `data_source/DAIOE_20260527/Data/`, and repointing the two
-symlinks is what makes `run_all.py` green again.
+**Validation runs green on this checkout** (verified 24 Aug 2026: 17/21 value targets
+exact with only the 11 documented `conseq_error` half-rounding cells, 60/60 pctl
+columns pass tie-aware; see VALIDATION.md for both residual classes). The August
+restore brought `2_data_enriched` and `3_data_jewelry` back from the Drive share into
+`data_source/DAIOE_20260527/Data/`, `data/reference` holds the frozen targets, and
+`data/raw` and `data/enriched_ref` resolve inside the repository. Two behaviours to
+know: re-running rewrites the `.dta` outputs' embedded timestamps, so their file
+hashes change on every run even when the values reproduce bit-for-bit (the parquet
+and csv outputs are hash-stable); and the release bundle's frozen Publication folder
+is sourced from `data/reference/Publication`, the original frozen files, not from the
+pipeline's own export, whose pctl ranks are tie-aware-equivalent rather than
+bit-identical.
 
 ## Annual update (Phase 2)
 Append the new year's benchmark rows to `measures_metrics_newdata2023.xlsx`, bump
