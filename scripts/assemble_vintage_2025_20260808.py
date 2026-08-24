@@ -84,6 +84,7 @@ EXT_GPQA_QA = "data/updates/extension_gpqa_2026-08-07.xlsx"
 EXT_GPQA_MATHS = "data/updates/extension_gpqa_maths_2026-08-08.xlsx"
 EXT_AGENTCO = "data/updates/extension_agentcompany_2026-08-08.xlsx"
 EXT_METR = "data/updates/extension_metr_2026-08-13.xlsx"
+EXT_METR80 = "data/updates/extension_metr80_2026-08-24.xlsx"
 
 MATHS_PARENT = "Mathematical and scientific reasoning"
 NEW_CATEGORIES = ["conversat", "software"]          # exposure-capable today (exact FRS18 rows)
@@ -149,7 +150,11 @@ def make_vintage_config(args, out_dir: Path) -> cfgmod.Config:
     # shipped in the default v2025 build. Magnus took the switch on 18 Aug without
     # waiting for the anchor convention, so the DEFAULT is metr and the reversal is
     # one flag, exactly as --genai legacy reverses the composite decision.
-    agentic = EXT_METR if args.agentic == "metr" else EXT_AGENTCO
+    # metr80: the successor bar, decided by Magnus 24 Aug 2026 after the 50%
+    # frontier crossed the 960-minute suite bound in 2026 data. Same pinned
+    # suite, stricter reliability; p50 and p80 are never in the basket together.
+    agentic = {"metr": EXT_METR, "metr80": EXT_METR80,
+               "agentcompany": EXT_AGENTCO}[args.agentic]
     raw["benchmark_extensions"] = [gpqa, EXT_TOMBENCH, EXT_SWEBENCH, agentic]
     raw["app_categories"] = PUBLISHED_13 + NEW_CATEGORIES
     raw["app_categories_publication"] = (
@@ -293,7 +298,7 @@ def main() -> None:
     ap.add_argument("--allapps-rule", choices=["survivors", "mean"], default="survivors")
     ap.add_argument("--membership", choices=["published", "plus-new"], default="published")
     ap.add_argument("--genai", choices=["broad", "legacy"], default="broad")
-    ap.add_argument("--agentic", choices=["metr", "agentcompany"], default="metr",
+    ap.add_argument("--agentic", choices=["metr", "metr80", "agentcompany"], default="metr80",
                     help="agentic series: METR task horizons (default, primary) or "
                          "TheAgentCompany (the interim that shipped in v2025)")
     ap.add_argument("--tag", default=TAG)
