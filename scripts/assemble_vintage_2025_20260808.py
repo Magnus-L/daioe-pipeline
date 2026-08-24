@@ -255,6 +255,11 @@ def gate_publication_seam(vintage_pub_dir: Path) -> list[str]:
     for fname, keys in taxmap.items():
         got = dio.read_dta(vintage_pub_dir / fname)
         ref = dio.read_dta(FROZEN_PUB / fname)
+        # PL-M2 (closed 24 Aug 2026): a column that silently disappeared from the
+        # vintage would previously be skipped by the intersection below; now it fails.
+        missing = [c for c in ref.columns
+                   if c.startswith(("daioe_", "pctl_rank_")) and c not in got.columns]
+        assert not missing, f"{fname}: G2 FAILED, columns missing from the vintage: {missing}"
         cols = [c for c in ref.columns
                 if c.startswith(("daioe_", "pctl_rank_")) and c in got.columns]
         g = got[got["year"] <= 2023].set_index(keys)[cols].sort_index()
@@ -289,6 +294,10 @@ def gate_internal_seam(vintage_out: Path) -> list[str]:
     for fname, keys in taxmap.items():
         got = dio.read_dta(vintage_out / fname)
         ref = dio.read_dta(FROZEN_OUT / fname)
+        # PL-M2 (closed 24 Aug 2026): same completeness assert as G2.
+        missing = [c for c in ref.columns
+                   if c not in keys and ref[c].dtype.kind in "fc" and c not in got.columns]
+        assert not missing, f"{fname}: G2b FAILED, columns missing from the vintage: {missing}"
         cols = [c for c in ref.columns
                 if c not in keys and ref[c].dtype.kind in "fc" and c in got.columns]
         g = got[got["year"] <= 2023].set_index(keys)[cols].sort_index()
