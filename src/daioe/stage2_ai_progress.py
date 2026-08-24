@@ -574,12 +574,28 @@ def build_formated_data(cfg) -> pd.DataFrame:
     df["value"] = pd.to_numeric(df["value"], errors="coerce")
     df["target"] = pd.to_numeric(df["target"], errors="coerce")
 
-    # --- threshold dummy (do-file 276-282) ---
-    # by metrics_name (date): dummy=1 if value>=target ; sumdummy=running sum;
-    # threshold=1 on the FIRST surpassing observation; threshold_exists=1 if target!=.
+    # --- scale formatting overrides (do-file 292-295) ---
+    # Top-5 error rate -> Percentage error, value*100. CORRECTED 24 Aug 2026
+    # (pre-release, decided Lodefalk & Engberg): the target is rescaled WITH the
+    # value, repairing the ImageNet units mismatch (0.051 vs a percent series).
+    m = df["axis_label"] == "Top-5 error rate"
+    df.loc[m, "value"] = df.loc[m, "value"] * 100.0
+    df.loc[m, "target"] = df.loc[m, "target"] * 100.0
+    df.loc[m, "scale"] = "Percentage error"
+    df.loc[df["axis_label"] == "Percentage correct", "scale"] = "Percentage correct"
+    df.loc[df["metrics_name"] == "The Loebner Prize scored selection answers", "scale"] = "Percentage correct"
+
+    # --- threshold dummy (do-file 276-282), CORRECTED 24 Aug 2026 (pre-release) ---
+    # The original computed value>=target for every scale, so on lower-is-better
+    # metrics (error rates, perplexity) it fired on the WORST observation. The
+    # comparison is now direction-aware and runs AFTER the scale overrides, so the
+    # rescaled ImageNet target is the one compared. Same fix applied to the Stata
+    # do-file (1_1_2_AI_progress_data.do); the column never enters the index, so
+    # no published value is affected. threshold=1 on the FIRST crossing.
     df = df.sort_values(["metrics_name", "date"], kind="mergesort").reset_index(drop=True)
-    dummy = np.where(df["value"] >= df["target"], 1.0, np.nan)
-    df["_dummy"] = dummy
+    lower_better = df["scale"].isin(["Percentage error", "FID", "Perplexity", "Model Entropy"])
+    crossed = np.where(lower_better, df["value"] <= df["target"], df["value"] >= df["target"])
+    df["_dummy"] = np.where(crossed & df["target"].notna(), 1.0, np.nan)
     # running sum of dummy within metric (Stata sum() treats missing as 0)
     df["_sumdummy"] = (
         df.assign(_d=df["_dummy"].fillna(0.0))
@@ -589,14 +605,6 @@ def build_formated_data(cfg) -> pd.DataFrame:
     df["threshold"] = np.where((df["_dummy"] == 1.0) & (df["_sumdummy"] == 1.0), 1.0, np.nan)
     df["threshold_exists"] = np.where(df["target"].notna(), 1.0, np.nan)
     df = df.drop(columns=["_dummy", "_sumdummy"])
-
-    # --- scale formatting overrides (do-file 292-295) ---
-    # Top-5 error rate -> Percentage error, value*100
-    m = df["axis_label"] == "Top-5 error rate"
-    df.loc[m, "value"] = df.loc[m, "value"] * 100.0
-    df.loc[m, "scale"] = "Percentage error"
-    df.loc[df["axis_label"] == "Percentage correct", "scale"] = "Percentage correct"
-    df.loc[df["metrics_name"] == "The Loebner Prize scored selection answers", "scale"] = "Percentage correct"
 
     # --- rescale (do-file 297-329) ---
     # Stata evaluates each ln() expression in double from the double `value`, then
