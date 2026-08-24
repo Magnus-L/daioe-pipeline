@@ -5,8 +5,8 @@ type: dataset
 # Authors are the paper's eleven, in the paper's order (alphabetical by surname).
 #
 # OWED BEFORE PUBLISHING, and it cannot be filled in from here:
-#   1. An ORCID for every person. Collect them; do not look them up. A wrong ORCID
-#      credits a stranger in a permanent record.
+#   1. DONE 19 Aug 2026: all eleven ORCIDs are in, each taken from that person's
+#      own email and never looked up. A wrong ORCID credits a stranger permanently.
 #   2. Affiliations for the eight left blank. Only Görg, Javed and Lodefalk carry a
 #      verified affiliation in the manuscript; the others are anonymised placeholders
 #      there, so they are omitted here rather than guessed.
@@ -27,6 +27,7 @@ authors:
   - family-names: Javed
     given-names: Farrukh
     affiliation: "Department of Statistics, Lund University"
+    orcid: "https://orcid.org/0000-0002-1488-4703"
   - family-names: Lodefalk
     given-names: Magnus
     affiliation: "Örebro University; Ratio Institute; Global Labor Organization"
@@ -36,6 +37,7 @@ authors:
     orcid: "https://orcid.org/0000-0002-0579-7181"
   - family-names: Monteiro
     given-names: Natália
+    orcid: "https://orcid.org/0000-0002-4821-7685"
   - family-names: Kyvik Nordås
     given-names: Hildegunn
     orcid: "https://orcid.org/0000-0002-5944-3768"
