@@ -72,7 +72,11 @@ class SeriesSpec:
         if not (self.anchor == self.anchor) or self.anchor is None:   # NaN check
             raise ValueError(f"{self.metrics_name}: an anchor is required, see the admission rule")
         if self.anchor_kind not in {
-            "human", "human-expert", "human-ceiling", "reference-floor", "reference-floor-imputed"
+            "human", "human-expert", "human-ceiling", "reference-floor", "reference-floor-imputed",
+            # instrument-ceiling: the axis is already human time, so the bound is where the
+            # test suite runs out, not a human score (METR-Horizon, 960 min). In use in
+            # human_anchors_v1.csv since 13 Aug 2026; the validator lagged the anchors file.
+            "instrument-ceiling",
         }:
             raise ValueError(f"{self.metrics_name}: anchor_kind {self.anchor_kind!r} not recognised")
         if not self.source_note:
