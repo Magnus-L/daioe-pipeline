@@ -128,3 +128,5 @@ the measure's page at ai-econlab.com.
   admitted; generative-AI membership broadened; gates and coverage audit introduced.
 - **Frozen 2010–2023** (2023–2024): the paper's series; Stata construction ported to
   Python and validated bit-exact across all published panels.
+
+What each released vintage contains, and why, is documented in [VINTAGES.md](VINTAGES.md).
