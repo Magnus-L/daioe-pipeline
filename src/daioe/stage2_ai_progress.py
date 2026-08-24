@@ -291,9 +291,23 @@ def _load_extensions(cfg) -> tuple[pd.DataFrame, pd.DataFrame] | None:
                 raise ValueError(f"{p.name}: {nm}: scale {r['scale']!r} is not one of the eight "
                                  f"families; add the transform explicitly rather than let it "
                                  f"contribute NaN")
-            if pd.isna(r["target"]) or not np.isfinite(float(r["target"])):
-                raise ValueError(f"{p.name}: {nm}: a numeric anchor (target) is required; a "
-                                 f"series without one can never be retired on evidence")
+            # Two-tier admission (decided Lodefalk & Engberg, 24 Aug 2026): tier
+            # "anchored" (the default) requires a numeric target as before; tier
+            # "progress" admits without one, which is the frozen basket's own
+            # standard (65 of its 149 benchmarks carry no target -- the progress
+            # computation never uses it). A progress-tier series cannot join the
+            # capability transform or any parity reading until it is anchored.
+            tier = "anchored"
+            if "tier" in meta.columns and not pd.isna(r.get("tier")):
+                tier = str(r["tier"]).strip().lower()
+            if tier not in ("anchored", "progress"):
+                raise ValueError(f"{p.name}: {nm}: tier must be 'anchored' or 'progress'")
+            if tier == "anchored":
+                if pd.isna(r["target"]) or not np.isfinite(float(r["target"])):
+                    raise ValueError(
+                        f"{p.name}: {nm}: a numeric anchor (target) is required for an "
+                        f"anchored-tier series; declare tier 'progress' to admit without "
+                        f"one (progress-only, no parity readings)")
             if r["protocol"] not in PROTOCOLS:
                 raise ValueError(f"{p.name}: {nm}: protocol must be one of {sorted(PROTOCOLS)}")
             if pd.isna(r["source"]) or pd.isna(r["retrieved"]):

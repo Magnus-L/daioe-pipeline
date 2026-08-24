@@ -77,6 +77,10 @@ class SeriesSpec:
             # test suite runs out, not a human score (METR-Horizon, 960 min). In use in
             # human_anchors_v1.csv since 13 Aug 2026; the validator lagged the anchors file.
             "instrument-ceiling",
+            # parity-by-construction: the scale is a win rate against human
+            # professionals, so 50 IS parity by definition (GDPval; ratified
+            # 24 Aug 2026 with the GDPval admission).
+            "parity-by-construction",
         }:
             raise ValueError(f"{self.metrics_name}: anchor_kind {self.anchor_kind!r} not recognised")
         if not self.source_note:

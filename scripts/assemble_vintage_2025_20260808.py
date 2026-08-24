@@ -85,6 +85,16 @@ EXT_GPQA_MATHS = "data/updates/extension_gpqa_maths_2026-08-08.xlsx"
 EXT_AGENTCO = "data/updates/extension_agentcompany_2026-08-08.xlsx"
 EXT_METR = "data/updates/extension_metr_2026-08-13.xlsx"
 EXT_METR80 = "data/updates/extension_metr80_2026-08-24.xlsx"
+# Admitted 24 Aug 2026 (decision 4, Lodefalk & Engberg): the three staged Epoch
+# series plus GDPval. OSWorld and GDPval thicken the agentic basket alongside the
+# METR primary (within-application averaging, disclosed); MATH Level 5 thickens
+# maths/science; SimpleBench thickens language comprehension and QA.
+EXT_ADMITTED_20260824 = [
+    "data/updates/extension_osworld_2026-08-24.xlsx",
+    "data/updates/extension_mathlevel5_2026-08-24.xlsx",
+    "data/updates/extension_simplebench_2026-08-24.xlsx",
+    "data/updates/extension_gdpval_2026-08-24.xlsx",
+]
 
 MATHS_PARENT = "Mathematical and scientific reasoning"
 NEW_CATEGORIES = ["conversat", "software"]          # exposure-capable today (exact FRS18 rows)
@@ -155,7 +165,7 @@ def make_vintage_config(args, out_dir: Path) -> cfgmod.Config:
     # suite, stricter reliability; p50 and p80 are never in the basket together.
     agentic = {"metr": EXT_METR, "metr80": EXT_METR80,
                "agentcompany": EXT_AGENTCO}[args.agentic]
-    raw["benchmark_extensions"] = [gpqa, EXT_TOMBENCH, EXT_SWEBENCH, agentic]
+    raw["benchmark_extensions"] = [gpqa, EXT_TOMBENCH, EXT_SWEBENCH, agentic] + EXT_ADMITTED_20260824
     raw["app_categories"] = PUBLISHED_13 + NEW_CATEGORIES
     raw["app_categories_publication"] = (
         PUBLICATION_11 + (NEW_CATEGORIES if args.membership == "plus-new" else [])
