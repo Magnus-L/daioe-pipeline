@@ -1,117 +1,179 @@
 # DAIOE vintages
 
 This file is the public record of what each vintage of the measure contains and why.
-It travels with the released data. The paper and its online appendix document the
-frozen 2010–2023 index that every published estimate uses; everything below concerns
-later vintages, and none of it can change a frozen value: the assembly gates refuse
-to build a vintage in which any published 2010–2023 cell would differ.
+It ships inside each release bundle and lives at the head of the repository. The
+paper and its online appendix document the frozen 2010–2023 index that every
+published estimate uses; everything below concerns later vintages, and none of it
+can change a frozen value: the assembly gates refuse to build a vintage in which any
+published 2010–2023 cell would differ (see "Provenance and verification" for the
+exact scope of that guarantee).
 
-## The frozen index (2010–2023)
+Two units of count are used throughout and are not interchangeable: a **benchmark**
+is a task (e.g. SWE-bench Verified); a **benchmark series** is one measured score
+track on a benchmark (a benchmark can carry more than one, e.g. separate metrics or
+splits). The frozen index has 140 benchmarks carrying 149 measured series.
 
-The object behind the published estimates. Nine applications, 140 benchmarks, as
-documented in the paper's Online Appendix Section C. Released as v1.0.0 together
-with the 2024 refresh. An errata file (`data/derived/errata_frozen_workbook_v1.csv`)
-lists four small transcription discrepancies found when checking the source workbook
-against the original repositories; the released frozen data are kept exactly as the
-paper estimated them, and the corrections apply from the 2024 chain point, where two
-of them (which would otherwise create or move state-of-the-art frontiers) can take
-effect without touching anything the paper reports.
+## The frozen index (2010–2023) — released as v1.0.0
 
-## The 2024 refresh
+The object behind the published estimates. Nine applications, 140 benchmarks (149
+series), as documented in the paper's Online Appendix Section C. Released as v1.0.0
+together with the 2024 refresh.
+
+**Known errata, retained by design.** An errata file
+(`errata_frozen_workbook_v1.csv`, shipped in the bundle) lists four small
+transcription discrepancies found when checking the source workbook against the
+original repositories. The released frozen data keep them exactly as the paper
+estimated them: the frozen series is a replication object, not a best-current-belief
+series. The corrections are declared for a future chain point and no released
+vintage has yet applied them. When one does, the construction will be chaining, not
+rewriting: corrected values inform the frontier state from which post-seam
+increments are computed, published levels stay as published, and the applying
+vintage will state the equation and a worked example. Two of the four (E2, E4)
+would create or move state-of-the-art frontiers if applied inside history, which is
+why they wait for a seam.
+
+## The 2024 refresh — released as v1.0.0
 
 Appends 2024 to the frozen window from the recovered Papers with Code archive,
 basket-faithfully: 143 benchmarks over the same nine applications (three archive
 continuations enter in image comprehension). No new applications, no membership
 changes. Built under the seam discipline (rebuilt 25 Aug 2026): the 2010–2023
-window is carried verbatim from the frozen files, byte-identical and gate-verified,
-while the 2024 increment is chained on the frozen 2023 level and computed against
-the recovered archive's fuller frontier state, which is what the archive's pre-2024
-rows are for; they inform the frontier, never the published levels.
+window is carried verbatim from the frozen files, cell-identical at stored
+precision and gate-verified, while the 2024 increment is chained on the frozen 2023
+level and computed against the recovered archive's fuller frontier state, which is
+what the archive's pre-2024 rows are for; they inform the frontier, never the
+published levels.
 
-## The 2025 vintage
+## The 2025 vintage — forthcoming as v1.1.0, not part of v1.0.0
 
-Covers 2010–2025 with a single chain point at the 2023–2024 seam. What it adds:
+Everything in this section describes the v1.1.0 release candidate. It is assembled
+and gate-verified, but until v1.1.0 is deposited its details are provisional and
+this section, not any deposited record, is where they may still change.
+
+The vintage covers 2010–2025 with its level chain point at the 2023–2024 seam.
+What it adds:
 
 **Eight admitted benchmark series**, each with a declared source, scale, evaluation
 protocol and licence, and — where the series is used in any human-comparison
-reading — a documented human reference value with quoted evidence. Series that only
-feed progress may enter without a reference value, which is the frozen basket's own
-standard (65 of its 149 benchmark series carried none).
+reading — a documented reference value with quoted evidence. Series that only feed
+progress may enter without a reference value, which is the frozen basket's own
+standard (65 of its 149 series carried none). Reference values never enter the
+index computation: exposure is built from benchmark frontier increments alone, and
+the anchors support admission, human-comparison readings, and a gated robustness
+transform that is not part of any released vintage.
 
 | Series | Application | Reference | Notes |
 |---|---|---|---|
 | METR task horizons (80% reliability) | Agentic task execution | 960 min, instrument ceiling | The primary agentic series: the length of real computer-based work task, in minutes of human working time, completed at 80% reliability. Pinned to METR-Horizon v1.1; used with METR's written permission (cite METR; METR is not affiliated with this work). The suite's 50%-reliability variant was retired when frontier systems outgrew its 16-hour range; the two variants are one construct and are never in the basket together. |
 | OSWorld | Agentic task execution | 72.36, human | Real desktop computer work; externally collected scores, mixed agent scaffolds, declared as such. |
 | GDPval | Agentic task execution | 50, parity by construction | Scored as a win rate against human professionals, so 50 is parity by definition. |
-| TheAgentCompany | Agentic task execution | 95, ceiling (discounted) | Corroboration series, not in the basket: pinned to one simulation environment (results from other environments excluded so an environment change is never booked as capability); the ceiling is discounted by the same convention as SWE-bench. |
+| TheAgentCompany | Agentic task execution | 95, ceiling (by convention) | Corroboration series, not in the basket: pinned to one simulation environment (results from other environments excluded so an environment change is never booked as capability); the ceiling follows the SWE-bench convention. |
 | GPQA Diamond | Mathematical and scientific reasoning | 81.3, expert | Graduate-level science questions, "Google-proof" by design. |
-| MATH Level 5 | Mathematical and scientific reasoning | 90, expert (full-set figure, declared caveat) | Competition mathematics; near-saturated, so it adds precision and corroboration rather than increment. |
-| SWE-bench Verified | Software engineering | 95, ceiling (discounted) | Real GitHub issue resolution, human-screened task subset; Epoch-run harness. |
-| ToMBench | Conversation | 86.1, human | Theory of mind through everyday social scenarios. |
+| MATH Level 5 | Mathematical and scientific reasoning | 90, expert (full-set figure) | Competition mathematics; near-saturated, so it adds corroborating coverage rather than increment. The 90 is a full-set figure, not Level-5-specific: it is declared for provenance and is not usable for Level-5 parity readings; like every reference value it does not enter the index. |
+| SWE-bench Verified | Software engineering | 95, ceiling (by convention) | Real GitHub issue resolution, human-screened task subset; Epoch-run harness. |
+| ToMBench | Conversation | 86.1, human | Theory of mind through everyday social scenarios; organiser-published human baseline. |
 | SimpleBench | Language comprehension and QA | 83.7, human (n=9, declared caveat) | Adversarial everyday reasoning; organisers' own runs on a private test set. |
 
 (Nine rows because TheAgentCompany is carried as corroboration outside the basket.)
+Anchor kinds are declared per row in the released anchors file, whose schema carries
+scale, anchor value, anchor kind, category, source, quoted evidence, and a
+verification status per row.
 
 **Two new application areas with exposure columns.** Agentic task execution and
 mathematical and scientific reasoning enter with their own occupation exposure
 columns. Their ability-relevance rows come from the same expert matrix as every
 other application: Felten, Raj and Seamans (2018) scored sixteen application areas,
-and the two technical-problem rows serve the two new areas. The borrowed rows were
-validated by an independent LLM re-scoring that reproduces the expert matrix on
-held-out cells at r = 0.76 (Pearson; Spearman 0.77), the two rows themselves at
-0.80 and 0.79, confirmed by a second, independently prompted model from a different
-vendor (0.81 and 0.80 against the same expert rows). Conversation and software engineering use their original expert rows.
-Both new columns are chained: no values before 2024.
+and the two technical-problem rows serve the two new areas ("solving real-world
+technical problems" for agentic task execution; "solving constrained,
+well-specified technical problems" for mathematical and scientific reasoning),
+used unedited. The borrowed rows were checked for concordance by an independent
+LLM re-scoring of the expert matrix from definitions alone: held-out r = 0.76
+(Pearson; Spearman 0.77) across the matrix, the two rows themselves at 0.80 and
+0.79, with a second, independently prompted model from a different vendor agreeing
+(0.81 and 0.80 against the same expert rows). This establishes that the rows are
+not idiosyncratic, not that they are validated occupational-ability mappings for
+the new constructs; blinded human expert re-rating of the two new areas is declared
+future work at a chain point. Conversation and software engineering use their
+original expert rows. Both new columns are chained: they are missing (not zero)
+before 2024 in every format, zero at the 2024 chain year, and cumulate from there.
 
 **Composite membership.** The generative-AI composite keeps its name and broadens
 its membership at the chain point, adding conversation and software engineering to
-language modelling and image generation; the frozen generative-AI column is
-unaffected and the narrow-membership continuation is recorded alongside. Agentic
-task execution and mathematical and scientific reasoning are not members of either
-original composite.
+language modelling and image generation, following the chain-linked convention of
+official statistics (membership changes at seams, never inside history). The frozen
+generative-AI column is unaffected, and a seam-crossing movement in `daioe_genai`
+mixes capability progress with the membership change and should be read
+accordingly. The narrow-membership continuation is not a released column; it is
+reproducible from the released pipeline (`--genai legacy`). The two new application
+areas are not members of either original composite: `daioe_allapps` aggregates the
+nine original applications throughout, by design, and the second-generation
+composite below is the aggregate that admits new areas.
 
-**A second-generation overall composite** (`daioe_g2all`) is published as an
-additional column. As new capability domains with different native scales enter the
-basket, a companion aggregate is useful in which every application's annual progress
-is expressed in units of its own historical year-to-year variation and averaged over
-the applications observed that year — one uniform rule for old and new areas alike,
-robust to each benchmark family's scale conventions. Applications with fewer than
-five observed years borrow their scale family's benchmark-increment variation until
-a declared chain point; the released sigma table states each application's basis and
-the switch rule. It carries a complete 2010–2025
-history of its own (before 2024 it simply runs over the nine original areas) and is
-validated on two fatal checks: invariance to an alternative axis convention for the
-METR series (13.7% shift, bound 15%), and no single application above half of any
-chained year's standardised composite (maximum 35%). Within-year rank agreement with
-the original composite is reported as a diagnostic rather than gated, because G2
-aggregates the same areas differently by design: 0.74 in the sparse three-member
-2013 cross-section, 0.97 by 2016, and 0.99 in 2023 and 2025. The original all-applications
-composite continues unchanged; the σ-table behind the standardisation is released
-as `data/derived/g2_sigma_v1.csv`.
+**A second-generation overall composite** (`daioe_g2all`) enters as an additional
+column. As new capability domains with different native scales enter the basket, a
+companion aggregate is useful in which every application's annual progress is
+expressed in units of its historical year-to-year variation and averaged over the
+applications observed that year. Applications with fewer than five observed years
+borrow their scale family's benchmark-increment variation until a declared
+sigma-basis switch (a change of standardisation basis only, prospective, distinct
+from the level chain point; it never touches levels); the released sigma table
+states each application's basis and the switch rule. The composite has values over
+the full 2010–2025 window; each year's mean runs over the applications observed
+that year (an application with a measured zero increment counts as observed; one
+with no source that year does not), so early years have few members — the 2013
+cross-section has three — and 2025 runs on partial coverage (see the caveats).
+Two fatal bounds are checked on every build: a sensitivity bound on the axis
+convention for the METR series (recomputing with METR on its percentage axis moves
+the 2025 composite increment by 13.7%, against a pre-set bound of 15%), and a
+dominance bound (no application's share of any chained year's summed standardised
+progress may exceed one half; the maximum is 35%). Within-year rank agreement with
+`daioe_allapps` is reported as a diagnostic rather than gated, since the two
+aggregate the basket differently by design (Spearman over O*NET-SOC 2010
+occupations, per year: 0.74 in the three-member 2013 cross-section, 0.97 by 2016,
+0.99 in 2023 and 2025). The original all-applications composite continues
+unchanged; the σ-table ships as `g2_sigma_v1.csv`.
 
 **Known caveats, shipped rather than filed.** A newly admitted series' first
 increment is computed against its entry-year frontier; where that baseline is thin
 (SWE-bench Verified: one 2024 evaluation; ToMBench: two), the 2025 increment is an
-upper bound, revisable as harnesses evaluate earlier models retrospectively. Five of
-the nine original applications have no living 2025 source (the archive died; the
-capabilities did not stop), so their series are carried at their last level. Vintage
-values beyond 2023 are revisable in later vintages; the frozen window is not.
+upper bound, revisable as harnesses evaluate earlier models retrospectively. Five
+of the nine original applications have no living 2025 source (abstract strategy
+games, real-time video games, language modelling, translation, and visual question
+answering, whose 2025 increment is measured zero; the archive died, the
+capabilities did not stop), so their series are carried at their last level and
+2025 is a partial-coverage year for the original basket. Vintage values beyond
+2023 are revisable in later vintages; the frozen window is not.
 
 ## Provenance and verification
 
 Every admitted series has a provenance sidecar (`data/updates/provenance_*.json`)
-with content hashes. Every human reference value is in
-`data/derived/human_anchors_v1.csv` with its source and a quoted passage. Every
-vintage assembly re-verifies, cell by cell, that all frozen published values are
-unchanged in every occupational taxonomy, and that no admitted series carries a
-value before its chain year; no vintage is released without these gates green.
+with content hashes. Every reference value is in `human_anchors_v1.csv` (shipped in
+the bundle) with its source and a quoted passage. Every vintage assembly
+re-verifies, cell by cell, that all frozen published values are unchanged in every
+occupational taxonomy, and that no admitted series carries a value before its chain
+year; no vintage is released without these gates green.
 
-One convention worth stating for anyone who diffs releases: percentile ranks are
-order-dependent inside tie groups (year cross-sections where many occupations share
-an identical cumulative value, up to entire all-tie years such as reading
-comprehension in 2013). The frozen v1.0.0 files carry the original Stata ranks; a
-regeneration from the pipeline assigns ties in its own deterministic order. Later
-vintages therefore restore the frozen window's `pctl_rank_*` values from the v1.0.0
-release verbatim, so the frozen window is byte-identical across vintages on every
-column, substantive and rank alike. The substantive `daioe_*` columns never depend
-on tie order and are exactly equal under either construction.
+**The exact scope of the freeze guarantee.** The frozen object is the set of
+2010–2023 rows and the v1.0.0 column set (occupation code, year, the `daioe_*`
+index columns and their `pctl_rank_*` companions), compared cell by cell at stored
+(single) precision. Later vintages may add columns; a new column's 2010–2023 values
+(such as `daioe_g2all`'s) have no v1.0.0 counterpart and are outside the freeze
+claim. File-level byte identity is not claimed and cannot hold for files that gain
+rows or columns; where a release copies a file unmodified, its checksum manifest
+says so.
+
+**Percentile ranks and ties, stated for anyone who diffs releases or regenerates
+from code.** Percentile ranks are order-dependent inside tie groups (year
+cross-sections where many occupations share an identical cumulative value, up to
+entire all-tie years such as reading comprehension in 2013, where every
+occupation's substantive value is the same and the ranks differ only by historical
+row order). The frozen v1.0.0 files carry the original Stata ranks; a regeneration
+from the pipeline assigns ties in its own deterministic order. Later vintages
+restore the frozen window's `pctl_rank_*` values from the v1.0.0 release verbatim,
+so the frozen window is cell-identical across vintages on the full v1.0.0 column
+set, substantive and rank alike. Two consequences users should know: identical
+substantive values can carry different ranks inside a tie group, so ranks should
+not be used where ties matter (the substantive `daioe_*` columns are authoritative
+and never depend on tie order); and a clean pipeline run from raw inputs reproduces
+every substantive cell but not the legacy tie ordering — full reproduction of the
+rank columns uses the deposited v1.0.0 artifact, by construction.

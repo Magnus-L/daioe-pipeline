@@ -92,3 +92,9 @@ From the 25 Aug 2026 described-vs-implemented audit (notes/AUDIT-…_2026-08-25.
   snapshot (`data/out_refresh2024_snapshot/`) is kept for provenance, never ships.
   2024 levels vs the stale build: rank correlation 0.99, mean level 33.2 vs 31.4.
   **v1.0.0 is publishable again.**
+- From the 25 Aug cross-vendor pass (notes/CROSSVENDOR-VERDICT-release-docs_2026-08-25.md):
+  (i) NO code consumes errata_frozen_workbook_v1.csv — chain-point application of the four
+  errata is declared policy with no implementing mechanism; build it into the next vintage
+  assembly or keep deferring explicitly. (ii) Consider tie-invariant midrank pctl columns
+  as NEW columns in v1.1.0 (legacy ranks stay frozen). (iii) Machine-readable
+  DATA_DICTIONARY per bundle. (iv) .tsv naming decision before first publication.
