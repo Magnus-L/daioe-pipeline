@@ -81,9 +81,14 @@ From the 25 Aug 2026 described-vs-implemented audit (notes/AUDIT-…_2026-08-25.
 - ~~Fold the frozen-pctl restore into the wiring~~ DONE same day: the wiring script
   now runs `restore_frozen_pctl_20260825.py` itself, whose closing byte-identity
   assert against dist doubles as the gate. Nothing manual remains; no action needed.
-- **dist refresh-2024 is a 24 Jul build and is STALE**: its 2010–2023 rows differ from
-  the bundle's own frozen files in ~47k substantive daioe_* cells (onetsoc2010 alone;
-  whole application-year cross-sections from 2016 on), while the frozen files, current
-  data/out and the v1.1.0 rc all agree. Do not publish v1.0.0 with this component:
-  rebuild the refresh from the current pipeline (config-refresh2024.yaml) or drop it
-  from v1.0.0 and let the 2025 vintage carry 2024. Decision Magnus + Erik.
+- ~~dist refresh-2024 stale~~ RESOLVED 25 Aug (Magnus: rebuild): the July snapshot had
+  recomputed the published window because the Track A workbook's recovered 2016–2023
+  rows ran through the plain pipeline. Rebuilt under the seam discipline
+  (`scripts/rebuild_refresh2024_seam_20260825.py`): frozen window verbatim (G1 + both
+  seam gates 0 diffs; ranks pinned to the canonical published files, byte-identity
+  assert), 2024 chained at the seam (966/772/438/429/354 rows across the five
+  taxonomies; 143 series; 10 with a positive 2024 frontier move). Bundle repointed and
+  re-staged, 36 files checksummed, frozen-vs-refresh shared window 0 diffs. The old
+  snapshot (`data/out_refresh2024_snapshot/`) is kept for provenance, never ships.
+  2024 levels vs the stale build: rank correlation 0.99, mean level 33.2 vs 31.4.
+  **v1.0.0 is publishable again.**

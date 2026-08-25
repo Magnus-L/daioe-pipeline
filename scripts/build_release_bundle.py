@@ -32,8 +32,13 @@ VINTAGES = [
      ROOT / "data" / "reference" / "Publication",
      "The index behind the published estimates. Use this to replicate."),
     ("refresh-2024",
-     ROOT / "data" / "out_refresh2024_snapshot" / "Publication",
-     "The 2024 annual refresh of surviving series."),
+     # 25 Aug 2026 (audit F6): the July snapshot recomputed the published window
+     # (the Track A workbook's recovered 2016-2023 rows moved 47k frozen cells) and
+     # was replaced by the seam-disciplined rebuild: frozen 2010-2023 verbatim,
+     # 2024 chained at the seam, gates green. The old snapshot folder is kept on
+     # disk for provenance but must never ship.
+     ROOT / "data" / "vintage" / "refresh2024_seam_20260825" / "out" / "Publication",
+     "The 2024 annual refresh: frozen 2010-2023 verbatim, 2024 chained at the seam."),
     # HELD BACK FROM v1.0.0 (decision, 10 Aug 2026). The 2025-onward vintage ships as
     # v1.1.0 once the co-authors have signed off on it. Its three documented caveats
     # (SWE-bench Verified's 2025 increment is an upper bound on a single 2024
@@ -139,9 +144,10 @@ https://github.com/Magnus-L/daioe-pipeline
 |---|---|
 {rows}
 
-**They are not interchangeable.** The frozen index underlies the published estimates;
-the 2024 refresh extends the series and will not reproduce published numbers. Cite the
-vintage you used.
+**They are not interchangeable.** The frozen index underlies the published estimates.
+The 2024 refresh carries the frozen 2010-2023 window byte-identically and appends 2024,
+chained on the frozen 2023 level; its 2024 rows are new and do not appear in any
+published estimate. Cite the vintage you used.
 
 The 2025-onward vintage is not in this release. It exists, but three of its properties
 are still provisional, so it ships separately as v1.1.0 rather than being frozen into a

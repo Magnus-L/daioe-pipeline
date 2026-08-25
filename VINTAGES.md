@@ -22,7 +22,11 @@ effect without touching anything the paper reports.
 Appends 2024 to the frozen window from the recovered Papers with Code archive,
 basket-faithfully: 143 benchmarks over the same nine applications (three archive
 continuations enter in image comprehension). No new applications, no membership
-changes.
+changes. Built under the seam discipline (rebuilt 25 Aug 2026): the 2010–2023
+window is carried verbatim from the frozen files, byte-identical and gate-verified,
+while the 2024 increment is chained on the frozen 2023 level and computed against
+the recovered archive's fuller frontier state, which is what the archive's pre-2024
+rows are for; they inform the frontier, never the published levels.
 
 ## The 2025 vintage
 
