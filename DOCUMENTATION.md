@@ -20,8 +20,9 @@ the abilities an application is relevant for, occupations inherit exposure throu
 ability profiles, and the cumulative sum over years is the index level. Sub-indices are
 built per application, plus composites (all applications; generative AI).
 
-Panels are published for six occupational taxonomies: O*NET-SOC 2010, SOC 2010, SOC 2018,
-ISCO-08, SSYK 2012 and SSYK 96, with per-year percentile ranks.
+Panels are published for five occupational taxonomies — O*NET-SOC 2010, SOC 2010,
+ISCO-08, SSYK 2012 and SSYK 96, each with per-year percentile ranks — plus a SOC 2018
+panel export (not in publication format).
 
 ## 2. Vintages
 
@@ -62,28 +63,51 @@ series carries a value before its chain point.
 surviving series) and Epoch AI's benchmark data (CC BY 4.0) for harness-run and collected
 series.
 
-**Series admitted at the 2024 chain point:**
+**Series admitted at the 2024 chain point** (the full declarations, anchors and quoted
+evidence are in `VINTAGES.md` and `data/derived/human_anchors_v1.csv`):
 
-| Subdomain | Series | Protocol | Human anchor | Licence |
+| Subdomain | Series | Protocol | Human anchor | Licence / permission |
 |---|---|---|---|---|
-| Conversation | Theory of Mind on ToMBench | pure_model | 86.1 (organiser human baseline) | MIT; scores arXiv:2602.10625 |
-| Software engineering | SWE-bench Verified (Epoch-run harness) | system_level | 95.0 ceiling, provisional | CC BY 4.0 |
+| Agentic task execution | METR task horizons, 80% reliability (primary) | system_level | 960 min, instrument ceiling | METR data with written permission (cite METR; not affiliated) |
+| Agentic task execution | OSWorld | system_level | 72.36 (human) | CC BY 4.0 (Epoch collection) |
+| Agentic task execution | GDPval | system_level | 50 (parity by construction: win rate vs human professionals) | CC BY 4.0 (Epoch collection) |
 | Mathematical & scientific reasoning | GPQA Diamond (Epoch-run harness) | pure_model | 81.3 (expert accuracy) | CC BY 4.0 |
-| Agentic task execution | TheAgentCompany (interim; METR task-horizon becomes the declared primary at the next chain point) | system_level | ceiling, provisional | CC BY 4.0 (Epoch collection) |
+| Mathematical & scientific reasoning | MATH Level 5 | pure_model | 90 (expert; full-set figure, declared caveat) | CC BY 4.0 (Epoch collection) |
+| Software engineering | SWE-bench Verified (Epoch-run harness) | system_level | 95.0 ceiling (discounted by convention) | CC BY 4.0 |
+| Conversation | Theory of Mind on ToMBench | pure_model | 86.1 (organiser human baseline) | MIT; scores arXiv:2602.10625 |
+| Language comprehension & QA | SimpleBench | pure_model | 83.7 (organisers' human baseline, n=9, declared caveat) | organiser-published |
+
+TheAgentCompany is carried as a corroboration series outside the basket (95.0 ceiling by
+the SWE-bench convention; pinned to one simulation environment so an environment change is
+never booked as capability). The METR 50%-reliability variant was retired when frontier
+systems outgrew its 960-minute range; the two reliability bars are one construct and are
+never in the basket together.
+
+**Two new application areas with exposure columns.** Agentic task execution and
+mathematical and scientific reasoning enter with their own occupation exposure columns
+(`daioe_agentic`, `daioe_mathsci`), built from the Felten-Raj-Seamans 2018 expert matrix's
+two technical-problem rows, used unedited and validated by two independent LLM re-scorings
+from different vendors (details in `VINTAGES.md`). Both columns are chained: no values
+before 2024.
 
 **Membership change:** the generative-AI composite keeps its name and broadens at the
 chain point from {image generation, language modelling} to also include conversation and
 software engineering; the narrow-membership continuation is recorded alongside. The frozen
-generative-AI column is unaffected.
+generative-AI column is unaffected. The two new application areas are not members of
+either original composite. A second-generation overall composite (`daioe_g2all`) is
+published as an additional column with a complete 2010–2025 history of its own; its
+standardisation table ships as `data/derived/g2_sigma_v1.csv` and its construction and
+checks are documented in `VINTAGES.md`.
 
 **Known caveats, stated rather than discovered:** (i) a newly admitted series' first
 measured year is computed against its entry-year frontier, and where that baseline is thin,
-late-entry-year capability is booked to the first measured year — SWE-bench Verified
-(single 2024 evaluation) is the thin case and its 2025 increment is an upper bound pending
-fuller harness coverage; (ii) five of nine original applications have no living 2025
-source (repository sunset, not capability plateau), so composite values ship with a
-coverage audit; (iii) ceiling-type anchors (tasks human-resolved by construction) are
-provisional pending a uniform anchor convention.
+late-entry-year capability is booked to the first measured year — SWE-bench Verified (one
+2024 evaluation) and ToMBench (two) are the thin cases, so their 2025 increments are upper
+bounds pending fuller harness coverage; (ii) five of nine original applications have no
+living 2025 source (repository sunset, not capability plateau), so composite values ship
+with a coverage audit; (iii) anchor kinds are declared per series — human, expert,
+instrument ceiling, ceiling by convention (discounted), and parity by construction — and
+recorded with quoted evidence in the anchors file.
 
 ## 5. Reading and rescaling the scores
 
@@ -122,10 +146,16 @@ the measure's page at ai-econlab.com.
 
 ## 6. Changelog
 
+- **§4 updated** (25 Aug 2026): the 24 Aug admission round folded in — METR-80 primary
+  agentic with OSWorld and GDPval; MATH Level 5; SimpleBench; TheAgentCompany moved to
+  corroboration outside the basket; the two activated exposure columns and the
+  second-generation composite documented; anchor kinds ratified. The 2024 refresh was
+  rebuilt under the seam discipline the same day (frozen window verbatim, 2024 chained).
 - **§5 added** (11 Aug 2026): reading and rescaling guidance — the relative-to-peak
   transformation is documented for users rather than shipped as a column.
-- **v2025** (Aug 2026): first vintage beyond the frozen window; four subdomain series
-  admitted; generative-AI membership broadened; gates and coverage audit introduced.
+- **v2025** (Aug 2026): first vintage beyond the frozen window; new subdomain series
+  admitted at the 2024 chain point; generative-AI membership broadened; gates and
+  coverage audit introduced.
 - **Frozen 2010–2023** (2023–2024): the paper's series; Stata construction ported to
   Python and validated bit-exact across all published panels.
 
