@@ -219,6 +219,12 @@ for stem, (pkey, _, _) in pub_keys.items():
     assert pub["daioe_g2all"].notna().sum() > 0, f"{stem}: G2 missing"
 print("      chained-column silence + G2 presence: PASSED in all five taxonomies")
 
+# F1 (25 Aug audit): canonicalise frozen-window pctl ranks to the shipped v1.0.0
+# files. The restore script ends with a fatal byte-identity assert against dist, so
+# running it here IS the gate; a re-wire can no longer ship pipeline tie-order ranks.
+import runpy  # noqa: E402
+runpy.run_path(str(ROOT / "scripts/restore_frozen_pctl_20260825.py"))
+
 (REP / "RELEASE-v110rc.md").write_text(
     "# v1.1.0 release candidate (wired 24 Aug 2026)\n\n"
     "Base: vintage_2025_admitted_20260824 (metr80 primary agentic + OSWorld, GDPval; "

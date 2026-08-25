@@ -78,10 +78,9 @@ zeroing; single authority statement for code-vs-appendix divergences (with the �
 conseq-error rows enumerated).
 
 From the 25 Aug 2026 described-vs-implemented audit (notes/AUDIT-…_2026-08-25.md):
-- Fold `scripts/restore_frozen_pctl_20260825.py` into the wiring (or repoint
-  `gate_publication_seam`'s pctl comparison at `dist/…/frozen-2010-2023`) so the
-  frozen-window rank restore is not a manual post-step. Until then, any re-wire of a
-  vintage must re-run the restore script after it.
+- ~~Fold the frozen-pctl restore into the wiring~~ DONE same day: the wiring script
+  now runs `restore_frozen_pctl_20260825.py` itself, whose closing byte-identity
+  assert against dist doubles as the gate. Nothing manual remains; no action needed.
 - **dist refresh-2024 is a 24 Jul build and is STALE**: its 2010–2023 rows differ from
   the bundle's own frozen files in ~47k substantive daioe_* cells (onetsoc2010 alone;
   whole application-year cross-sections from 2016 on), while the frozen files, current
