@@ -108,6 +108,17 @@ class Config:
         return [(self.root / p).resolve() for p in (self.raw.get("benchmark_extensions") or [])]
 
     @property
+    def apply_errata(self) -> bool:
+        """Opt-in application of the declared frozen-workbook errata (VINTAGES.md).
+
+        Default False: every released build to date keeps the frozen values. A build
+        that opts in corrects the source rows so post-seam increments are computed
+        against the corrected frontier state; the splice keeps every published level.
+        Stage 2 refuses the flag in a frozen-window build.
+        """
+        return bool(self.raw.get("apply_errata", False))
+
+    @property
     def frozen_year_final(self) -> int:
         """Last year of the PUBLISHED window, which bounds where an extension may link.
 

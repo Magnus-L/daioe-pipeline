@@ -25,10 +25,13 @@ transcription discrepancies found when checking the source workbook against the
 original repositories. The released frozen data keep them exactly as the paper
 estimated them: the frozen series is a replication object, not a best-current-belief
 series. The corrections are declared for a future chain point and no released
-vintage has yet applied them. When one does, the construction will be chaining, not
-rewriting: corrected values inform the frontier state from which post-seam
-increments are computed, published levels stay as published, and the applying
-vintage will state the equation and a worked example. Two of the four (E2, E4)
+vintage has yet applied them. The applying mechanism ships with the pipeline
+(`apply_errata`, off in every build to date): it corrects the source rows so that
+post-seam increments are computed against the corrected frontier state, the splice
+keeps every published level, and two fatal guards hold — the flag refuses a
+frozen-window build, and every erratum must match exactly one source row. The
+vintage that first switches it on will state the applied construction and a worked
+example beside its numbers. Two of the four (E2, E4)
 would create or move state-of-the-art frontiers if applied inside history, which is
 why they wait for a seam.
 

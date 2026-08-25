@@ -71,7 +71,8 @@ flagged in red in the paper pending co-author review.
 
 ## Open items (Erik / next round)
 
-G2 column-completeness assert; delete or implement the conseq-error switches; glapp ≥ 6
+~~G2 column-completeness assert~~ (DONE 24 Aug, PL-M2: both seam gates fail on a
+missing column); delete or implement the conseq-error switches; glapp ≥ 6
 guard; tests for Eq 5/6, the seven extension guards, and the splice; preflight name
 templates; README refresh (43 tests; validation status; stata_code symlink); roe spike
 zeroing; single authority statement for code-vs-appendix divergences (with the ×10 and
@@ -92,11 +93,15 @@ From the 25 Aug 2026 described-vs-implemented audit (notes/AUDIT-…_2026-08-25.
   snapshot (`data/out_refresh2024_snapshot/`) is kept for provenance, never ships.
   2024 levels vs the stale build: rank correlation 0.99, mean level 33.2 vs 31.4.
   **v1.0.0 is publishable again.**
-- From the 25 Aug cross-vendor pass (notes/CROSSVENDOR-VERDICT-release-docs_2026-08-25.md):
-  (i) NO code consumes errata_frozen_workbook_v1.csv — chain-point application of the four
-  errata is declared policy with no implementing mechanism; build it into the next vintage
-  assembly or keep deferring explicitly. (ii) ~~midrank pctl columns~~ DONE 25 Aug (Magnus): pctl_mid_* companions for every
-  daioe_* column in all five v1.1.0 publication panels, tie-invariance self-verified,
-  folded into the wiring. (iii) Machine-readable DATA_DICTIONARY per bundle — still open.
-  (iv) ~~.tsv naming~~ DONE 25 Aug (Magnus): the bundle builder renames the tab-separated
-  exports to .tsv at copy; internal pipeline naming unchanged.
+- From the 25 Aug cross-vendor pass — ALL FOUR CLOSED same day, no Erik action needed:
+  (i) ~~errata mechanism~~ DONE: `apply_errata` config switch (default off) +
+  `_apply_errata` in stage 2, two fatal guards (refuses frozen-window builds; every
+  erratum must match exactly one source row); 4 tests incl. a real-sheet smoke check,
+  which also caught and fixed a malformed line in the errata CSV itself (E4's model
+  name carried an unquoted comma). Still off in every released build, per policy.
+  (ii) ~~midrank pctl columns~~ DONE: pctl_mid_* companions in all five v1.1.0
+  publication panels, tie-invariance self-verified, folded into the wiring.
+  (iii) ~~DATA_DICTIONARY~~ DONE: generated per bundle from the staged files
+  (JSON + MD, 12 tables, asserted keys); also the archive-snapshot tree hash now
+  ships in the bundle's provenance README. (iv) ~~.tsv naming~~ DONE: bundle
+  builder renames at copy; internal pipeline naming unchanged.

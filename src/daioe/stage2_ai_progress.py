@@ -339,6 +339,44 @@ def _load_extensions(cfg) -> tuple[pd.DataFrame, pd.DataFrame] | None:
     return pd.concat(m_frames, ignore_index=True), pd.concat(k_frames, ignore_index=True)
 
 
+def _apply_errata(new: pd.DataFrame, cfg) -> pd.DataFrame:
+    """Apply the declared frozen-workbook errata to the in-memory measures sheet.
+
+    Policy (VINTAGES.md): the released frozen data keep the four transcription
+    discrepancies; a vintage that opts in (``apply_errata: true``) corrects the
+    SOURCE rows, so that post-seam increments are computed against the corrected
+    frontier state, while the splice keeps every published level untouched. Two
+    guards, both fatal: the flag refuses a frozen-window build (the frozen series
+    retains the errata by design), and every erratum must match exactly one source
+    row — a silent no-op would defeat the public record.
+    """
+    if cfg.year_final <= cfg.frozen_year_final:
+        raise ValueError(
+            "apply_errata=true in a frozen-window build: the frozen series retains "
+            "the errata by design (VINTAGES.md); corrections chain at a seam only")
+    err = pd.read_csv(cfg.root / "data" / "derived" / "errata_frozen_workbook_v1.csv")
+    out = new.copy()
+    for e in err.itertuples():
+        if e.field == "value":
+            m = ((out["metrics_name"] == e.metrics_name)
+                 & (out["name"] == e.name)
+                 & (out["value"].astype("float32") == np.float32(float(e.frozen_value))))
+            n = int(m.sum())
+            assert n == 1, f"{e.erratum_id}: matched {n} rows, need exactly 1"
+            out.loc[m, "value"] = float(e.correct_value)
+        elif e.field == "name":
+            m = ((out["metrics_name"] == e.metrics_name)
+                 & (out["name"] == str(e.frozen_value)))
+            n = int(m.sum())
+            assert n == 1, f"{e.erratum_id}: matched {n} rows, need exactly 1"
+            out.loc[m, "name"] = str(e.correct_value)
+        else:
+            raise ValueError(f"{e.erratum_id}: unknown errata field {e.field!r}")
+        print(f"      erratum {e.erratum_id} applied ({e.field}): "
+              f"{e.frozen_value} -> {e.correct_value}")
+    return out
+
+
 def _build_measures(cfg) -> pd.DataFrame:
     """Construct the merged MEASURES panel (do-file 144-176).
 
@@ -355,6 +393,10 @@ def _build_measures(cfg) -> pd.DataFrame:
     new = ms[["parent_name", "metrics_name", "papername", "name", "date", "value"]].copy()
     # drop if metrics_name=="" (do-file 148)
     new = new[new["metrics_name"].notna() & (new["metrics_name"].astype(str).str.strip() != "")]
+    # Declared errata: applied to the frozen rows only when a seam build opts in;
+    # off by default, guarded fatally inside (see _apply_errata and VINTAGES.md).
+    if cfg.apply_errata:
+        new = _apply_errata(new, cfg)
     # Phase 2 refresh: append update-workbook rows BEFORE the date/dedup steps so
     # they flow through the identical idioms as the frozen rows. Empty list = no-op.
     ext = _load_extensions(cfg)

@@ -88,6 +88,59 @@ def sha256(p: Path) -> str:
     return h.hexdigest()
 
 
+def tree_sha256(root: Path) -> str:
+    """Deterministic content hash of a directory tree: relative path + per-file
+    SHA-256, in sorted order. Identifies the recovered archive snapshot."""
+    h = hashlib.sha256()
+    for f in sorted(root.rglob("*")):
+        if f.is_file():
+            h.update(str(f.relative_to(root)).encode())
+            h.update(sha256(f).encode())
+    return h.hexdigest()
+
+
+def data_dictionary(stage: Path) -> None:
+    """Machine- and human-readable schema of every table in the bundle, generated
+    from the staged files themselves so it cannot drift from what ships."""
+    import json
+    import pandas as pd
+    d = {"_conventions": {
+        "missing": "empty cells are missing values, never zeros",
+        "tsv_delimiter": "\\t",
+        "unique_key": "asserted on the staged file; null means the file is not "
+                      "keyed on (occupation code, year)"}}
+    for dta in sorted(stage.rglob("*.dta")):
+        df = pd.read_stata(dta)
+        rel = str(dta.relative_to(stage))
+        key = None
+        if "year" in df.columns:
+            occ = [c for c in df.columns
+                   if c.startswith(("occ_code", "ssyk", "SOC", "ISCO"))][:1]
+            if occ and not df.duplicated(subset=occ + ["year"]).any():
+                key = occ + ["year"]
+        entry = {"rows": int(len(df)), "unique_key": key,
+                 "columns": {c: str(df[c].dtype) for c in df.columns}}
+        if "year" in df.columns:
+            entry["years"] = [int(df["year"].min()), int(df["year"].max())]
+        d[rel] = entry
+    (stage / "DATA_DICTIONARY.json").write_text(json.dumps(d, indent=1),
+                                                encoding="utf-8")
+    lines = ["# Data dictionary (generated from the staged files at build time)",
+             "", "Empty cells are missing values, never zeros. `.tsv` files are",
+             "tab-separated. The `.csv`-free naming is deliberate.", ""]
+    for rel, e in d.items():
+        if rel.startswith("_"):
+            continue
+        lines.append(f"## `{rel}`")
+        lines.append(f"- rows: {e['rows']}; years: {e.get('years')}; "
+                     f"unique key: {e['unique_key']}")
+        lines.append("- columns: " + ", ".join(f"`{c}` ({t})"
+                     for c, t in e["columns"].items()))
+        lines.append("")
+    (stage / "DATA_DICTIONARY.md").write_text("\n".join(lines), encoding="utf-8")
+    print(f"  DATA_DICTIONARY: {sum(1 for k in d if not k.startswith('_'))} tables")
+
+
 def main():
     if STAGE.exists():
         shutil.rmtree(STAGE)
@@ -125,6 +178,25 @@ def main():
             dst = STAGE / rel
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dst)
+
+    data_dictionary(STAGE)
+
+    # Archive-snapshot identification appended to the staged provenance README
+    # (the source file is untouched): the recovered PwC archive has no DOI, so a
+    # deterministic tree hash is the identifier a permanent record can carry.
+    arch = ROOT / "data" / "updates" / "pwc-archive"
+    if arch.exists():
+        n = sum(1 for f in arch.rglob("*") if f.is_file())
+        prov = STAGE / "provenance" / "README.md"
+        prov.parent.mkdir(parents=True, exist_ok=True)
+        with open(prov, "a", encoding="utf-8") as fh:
+            fh.write(
+                "\n\n## Archive snapshot identification\n\n"
+                "The recovered Papers with Code archive behind the refresh and "
+                "later vintages has no DOI; it is identified by a deterministic "
+                "content hash over the archive tree (sorted relative path + "
+                f"per-file SHA-256): `{tree_sha256(arch)}` ({n} files).\n")
+        print("  provenance: archive snapshot hash appended")
 
     (STAGE / "README.md").write_text(readme(present), encoding="utf-8")
 
@@ -200,7 +272,9 @@ three formats:
   Stata).
 
 Each panel's unique key is (occupation code, `year`). Empty cells are missing
-values, not zeros.
+values, not zeros. `DATA_DICTIONARY.json` and `DATA_DICTIONARY.md` in the bundle
+root give the exact schema of every table — columns, dtypes, row counts, year
+ranges and asserted keys — generated from the staged files at build time.
 
 ## Columns
 
