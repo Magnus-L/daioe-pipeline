@@ -18,9 +18,10 @@ published values are untouched by construction and the seam gates do not see it.
 
 Three checks, reported to G2-REPORT.md and fatal if out of bounds:
   1. axis-invariance: recompute with METR on its percentage axis; the 2025
-     composite increment must move by less than 15 per cent (measured ~10).
-  2. dominance: no application may carry more than 50 per cent of any year's
-     standardised composite (agentic measured ~27).
+     composite increment must move by less than 15 per cent (measured 13.7).
+  2. dominance: no application may carry more than 50 per cent of any chained
+     year's standardised composite (measured maximum 35, visual question
+     answering in 2024).
   3. rank agreement: within-year Spearman of G2 cumulative exposure against the
      published daioe_allapps, reported per year (a diagnostic, not a gate: G2
      aggregates the same areas differently by design).

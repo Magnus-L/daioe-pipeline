@@ -76,3 +76,15 @@ guard; tests for Eq 5/6, the seven extension guards, and the splice; preflight n
 templates; README refresh (43 tests; validation status; stata_code symlink); roe spike
 zeroing; single authority statement for code-vs-appendix divergences (with the ×10 and
 conseq-error rows enumerated).
+
+From the 25 Aug 2026 described-vs-implemented audit (notes/AUDIT-…_2026-08-25.md):
+- Fold `scripts/restore_frozen_pctl_20260825.py` into the wiring (or repoint
+  `gate_publication_seam`'s pctl comparison at `dist/…/frozen-2010-2023`) so the
+  frozen-window rank restore is not a manual post-step. Until then, any re-wire of a
+  vintage must re-run the restore script after it.
+- **dist refresh-2024 is a 24 Jul build and is STALE**: its 2010–2023 rows differ from
+  the bundle's own frozen files in ~47k substantive daioe_* cells (onetsoc2010 alone;
+  whole application-year cross-sections from 2016 on), while the frozen files, current
+  data/out and the v1.1.0 rc all agree. Do not publish v1.0.0 with this component:
+  rebuild the refresh from the current pipeline (config-refresh2024.yaml) or drop it
+  from v1.0.0 and let the 2025 vintage carry 2024. Decision Magnus + Erik.

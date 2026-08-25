@@ -53,10 +53,10 @@ mathematical and scientific reasoning enter with their own occupation exposure
 columns. Their ability-relevance rows come from the same expert matrix as every
 other application: Felten, Raj and Seamans (2018) scored sixteen application areas,
 and the two technical-problem rows serve the two new areas. The borrowed rows were
-validated by an independent LLM re-scoring that reproduces the expert matrix at
-r ≈ 0.78 held-out (the two rows themselves at 0.80 and 0.79), confirmed by a second,
-independently prompted model from a different vendor (0.81 and 0.80 against the same
-expert rows). Conversation and software engineering use their original expert rows.
+validated by an independent LLM re-scoring that reproduces the expert matrix on
+held-out cells at r = 0.76 (Pearson; Spearman 0.77), the two rows themselves at
+0.80 and 0.79, confirmed by a second, independently prompted model from a different
+vendor (0.81 and 0.80 against the same expert rows). Conversation and software engineering use their original expert rows.
 Both new columns are chained: no values before 2024.
 
 **Composite membership.** The generative-AI composite keeps its name and broadens
@@ -71,12 +71,17 @@ additional column. As new capability domains with different native scales enter 
 basket, a companion aggregate is useful in which every application's annual progress
 is expressed in units of its own historical year-to-year variation and averaged over
 the applications observed that year — one uniform rule for old and new areas alike,
-robust to each benchmark family's scale conventions. It carries a complete 2010–2025
+robust to each benchmark family's scale conventions. Applications with fewer than
+five observed years borrow their scale family's benchmark-increment variation until
+a declared chain point; the released sigma table states each application's basis and
+the switch rule. It carries a complete 2010–2025
 history of its own (before 2024 it simply runs over the nine original areas) and is
-validated on three declared checks: invariance to an alternative axis convention for
-the METR series (13.7% shift, bound 15%), no single application above half of any
-chained year's standardised composite (maximum 35%), and within-year rank agreement
-with the original composite (0.99 in 2023 and 2025). The original all-applications
+validated on two fatal checks: invariance to an alternative axis convention for the
+METR series (13.7% shift, bound 15%), and no single application above half of any
+chained year's standardised composite (maximum 35%). Within-year rank agreement with
+the original composite is reported as a diagnostic rather than gated, because G2
+aggregates the same areas differently by design: 0.74 in the sparse three-member
+2013 cross-section, 0.97 by 2016, and 0.99 in 2023 and 2025. The original all-applications
 composite continues unchanged; the σ-table behind the standardisation is released
 as `data/derived/g2_sigma_v1.csv`.
 
@@ -94,5 +99,15 @@ Every admitted series has a provenance sidecar (`data/updates/provenance_*.json`
 with content hashes. Every human reference value is in
 `data/derived/human_anchors_v1.csv` with its source and a quoted passage. Every
 vintage assembly re-verifies, cell by cell, that all frozen published values are
-unchanged in every occupational taxonomy before anything is written, and that no
-admitted series carries a value before its chain year.
+unchanged in every occupational taxonomy, and that no admitted series carries a
+value before its chain year; no vintage is released without these gates green.
+
+One convention worth stating for anyone who diffs releases: percentile ranks are
+order-dependent inside tie groups (year cross-sections where many occupations share
+an identical cumulative value, up to entire all-tie years such as reading
+comprehension in 2013). The frozen v1.0.0 files carry the original Stata ranks; a
+regeneration from the pipeline assigns ties in its own deterministic order. Later
+vintages therefore restore the frozen window's `pctl_rank_*` values from the v1.0.0
+release verbatim, so the frozen window is byte-identical across vintages on every
+column, substantive and rank alike. The substantive `daioe_*` columns never depend
+on tie order and are exactly equal under either construction.
