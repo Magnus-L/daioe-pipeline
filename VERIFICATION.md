@@ -95,6 +95,8 @@ From the 25 Aug 2026 described-vs-implemented audit (notes/AUDIT-…_2026-08-25.
 - From the 25 Aug cross-vendor pass (notes/CROSSVENDOR-VERDICT-release-docs_2026-08-25.md):
   (i) NO code consumes errata_frozen_workbook_v1.csv — chain-point application of the four
   errata is declared policy with no implementing mechanism; build it into the next vintage
-  assembly or keep deferring explicitly. (ii) Consider tie-invariant midrank pctl columns
-  as NEW columns in v1.1.0 (legacy ranks stay frozen). (iii) Machine-readable
-  DATA_DICTIONARY per bundle. (iv) .tsv naming decision before first publication.
+  assembly or keep deferring explicitly. (ii) ~~midrank pctl columns~~ DONE 25 Aug (Magnus): pctl_mid_* companions for every
+  daioe_* column in all five v1.1.0 publication panels, tie-invariance self-verified,
+  folded into the wiring. (iii) Machine-readable DATA_DICTIONARY per bundle — still open.
+  (iv) ~~.tsv naming~~ DONE 25 Aug (Magnus): the bundle builder renames the tab-separated
+  exports to .tsv at copy; internal pipeline naming unchanged.

@@ -225,6 +225,11 @@ print("      chained-column silence + G2 presence: PASSED in all five taxonomies
 import runpy  # noqa: E402
 runpy.run_path(str(ROOT / "scripts/restore_frozen_pctl_20260825.py"))
 
+# Tie-invariant midrank percentiles (Magnus, 25 Aug): pctl_mid_* companions for every
+# daioe_* column, new columns outside the freeze claim; script self-verifies
+# tie-invariance and the all-tie-year behaviour.
+runpy.run_path(str(ROOT / "scripts/add_midrank_pctl_20260825.py"))
+
 (REP / "RELEASE-v110rc.md").write_text(
     "# v1.1.0 release candidate (wired 24 Aug 2026)\n\n"
     "Base: vintage_2025_admitted_20260824 (metr80 primary agentic + OSWorld, GDPval; "

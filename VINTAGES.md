@@ -133,6 +133,14 @@ occupations, per year: 0.74 in the three-member 2013 cross-section, 0.97 by 2016
 0.99 in 2023 and 2025). The original all-applications composite continues
 unchanged; the σ-table ships as `g2_sigma_v1.csv`.
 
+**Tie-invariant percentiles.** Every `daioe_*` column gains a `pctl_mid_*`
+companion: the within-year midrank percentile (average rank of the tied group over
+the number of non-missing occupations, times 100), so identical substantive values
+carry identical percentiles and an all-tie year sits uniformly near 50 instead of
+an arbitrary spread. The legacy `pctl_rank_*` columns are unchanged and remain the
+published replication artifact; the new columns are outside the freeze claim, like
+every column new to a vintage.
+
 **Known caveats, shipped rather than filed.** A newly admitted series' first
 increment is computed against its entry-year frontier; where that baseline is thin
 (SWE-bench Verified: one 2024 evaluation; ToMBench: two), the 2025 increment is an
@@ -174,6 +182,7 @@ so the frozen window is cell-identical across vintages on the full v1.0.0 column
 set, substantive and rank alike. Two consequences users should know: identical
 substantive values can carry different ranks inside a tie group, so ranks should
 not be used where ties matter (the substantive `daioe_*` columns are authoritative
-and never depend on tie order); and a clean pipeline run from raw inputs reproduces
+and never depend on tie order, and from v1.1.0 every panel carries tie-invariant
+`pctl_mid_*` companions); and a clean pipeline run from raw inputs reproduces
 every substantive cell but not the legacy tie ordering — full reproduction of the
 rank columns uses the deposited v1.0.0 artifact, by construction.

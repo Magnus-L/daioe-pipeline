@@ -103,7 +103,11 @@ def main():
         n = 0
         for f in sorted(src.iterdir()):
             if f.is_file() and not f.name.startswith("."):
-                shutil.copy2(f, dst / f.name)
+                # The tab-separated text exports carry a .csv suffix internally
+                # (Stata-era convention); the published artifact names them .tsv
+                # (decision Magnus, 25 Aug 2026, cross-vendor finding 16).
+                name = f.name[:-4] + ".tsv" if f.suffix == ".csv" else f.name
+                shutil.copy2(f, dst / name)
                 n += 1
         present.append((name, desc, n))
         print(f"  {name}: {n} files")
@@ -191,10 +195,9 @@ three formats:
 - `daioe_soc2010.*` — US SOC 2010
 - `daioe_isco08.*` — ISCO-08
 - `daioe_ssyk96.*`, `daioe_ssyk2012.*` — Swedish SSYK
-- `.dta` (Stata), `.xlsx` (Excel), and `.csv` — **note: the `.csv` files are
-  TAB-separated.** Read them with an explicit delimiter, e.g.
+- `.dta` (Stata), `.xlsx` (Excel), and `.tsv` (tab-separated text; read with
   `pd.read_csv(f, sep="\\t")` in Python or `import delimited, delimiters(tab)` in
-  Stata; a default comma parser will load them wrong.
+  Stata).
 
 Each panel's unique key is (occupation code, `year`). Empty cells are missing
 values, not zeros.
@@ -207,7 +210,8 @@ values, not zeros.
 | `daioe_allapps` | the aggregate index over the nine original applications: cumulative exposure to AI progress |
 | `daioe_<subdomain>` | the same for one capability subdomain: `stratgames` (abstract strategy games), `videogames` (real-time video games), `imgrec` (image recognition), `imgcompr` (image comprehension / visual question answering), `imggen` (image generation), `readcompr` (reading comprehension), `lngmod` (language modelling), `translat` (translation), `speechrec` (speech recognition) |
 | `daioe_genai` | generative-AI composite (membership documented per vintage in `VINTAGES.md`) |
-| `pctl_rank_*` | within-year percentile rank of the corresponding index — read the tie warning below before using |
+| `pctl_rank_*` | within-year percentile rank of the corresponding index, legacy tie convention — read the tie warning below before using |
+| `pctl_mid_*` | (from v1.1.0) tie-invariant within-year midrank percentile: identical values share identical percentiles; prefer these where ties could matter |
 
 ## Percentile ranks and ties
 
@@ -217,8 +221,9 @@ year, the ranks differ only by historical row order. In an all-tie year (reading
 comprehension 2013 is one: every occupation's cumulative is the same) the rank
 spread is entirely arbitrary. Use the ranks for coarse within-year standing; where
 ties could matter, or for anything quantitative, use the substantive `daioe_*`
-columns, which never depend on tie order. `VINTAGES.md` documents the convention and
-its consequences for regeneration from code.
+columns, which never depend on tie order — or, from v1.1.0, the tie-invariant
+`pctl_mid_*` companions. `VINTAGES.md` documents the convention and its
+consequences for regeneration from code.
 
 ## Reading the scores
 
