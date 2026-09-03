@@ -182,8 +182,18 @@ def _discount_square_scale(cfg, panel: pd.DataFrame, social: pd.DataFrame,
         workctx[["occ_code_onet", "conseq_error"]], on="occ_code_onet", how="left"
     )
 
-    # Square (line 202), then scale up (line 207).
-    out["exp_change"] = _f32(out["exp_change"] ** 2)
+    # Square (line 202), then scale up (line 207). cfg.exponent is 2 unless a
+    # config overrides it, so this line is bit-identical to the published build
+    # for every existing config; ** 2.0 and ** 2 agree exactly on float32 here,
+    # and the base-variant certification in the variants builder checks it.
+    _exp = float(cfg.exponent)
+    if _exp == 2.0:
+        # the published path, kept verbatim: integer power, not ** 2.0. They agree
+        # on float32 across the whole realised range (checked, 0 of 2e6), but this
+        # pipeline is bit-exact against Erik's Stata and does not rely on that.
+        out["exp_change"] = _f32(out["exp_change"] ** 2)
+    else:
+        out["exp_change"] = _f32(out["exp_change"] ** _exp)
     out["exp_change"] = _f32(out["exp_change"] * cfg.scale_up)
 
     # Eq6: cumulative exposure by occupation over years (lines 210-211).

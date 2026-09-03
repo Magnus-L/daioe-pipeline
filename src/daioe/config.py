@@ -52,6 +52,18 @@ class Config:
     def scale_up(self) -> float:
         return float(self.raw["scale_up"])
 
+    @property
+    def exponent(self) -> float:
+        """Exponent in Eq. (5), ΔDAIOE = (Δe · w)^exponent.
+
+        Defaults to 2, the published construction. Set to 1 for the linear
+        variant a referee or co-author asks for; the regressor is standardised
+        downstream, so scale_up is immaterial to any estimate. Added 3 Sep 2026
+        for the AI Unboxed C3 comment (Sarah Schroeder), which asked to see the
+        specification without the square.
+        """
+        return float(self.raw.get("exponent", 2.0))
+
     # --- categories / columns ---
     @property
     def app_categories(self) -> list[str]:
