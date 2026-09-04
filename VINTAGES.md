@@ -38,9 +38,10 @@ why they wait for a seam.
 ## The 2024 refresh — released as v1.0.0
 
 Appends 2024 to the frozen window from the recovered Papers with Code archive,
-basket-faithfully: 143 benchmarks over the same nine applications (three archive
-continuations enter in image comprehension). No new applications, no membership
-changes. Built under the seam discipline (rebuilt 25 Aug 2026): the 2010–2023
+basket-faithfully. The benchmark count rises from 140 to 143: three continuation
+benchmarks enter image comprehension at the seam, successor tasks that carry an
+existing construct forward after their predecessors' reporting ended. Application
+membership is unchanged: the same nine applications, no new areas. Built under the seam discipline (rebuilt 25 Aug 2026): the 2010–2023
 window is carried verbatim from the frozen files, cell-identical at stored
 precision and gate-verified, while the 2024 increment is chained on the frozen 2023
 level and computed against the recovered archive's fuller frontier state, which is
@@ -89,13 +90,13 @@ other application: Felten, Raj and Seamans (2018) scored sixteen application are
 and the two technical-problem rows serve the two new areas ("solving real-world
 technical problems" for agentic task execution; "solving constrained,
 well-specified technical problems" for mathematical and scientific reasoning),
-used unedited. The borrowed rows were checked for concordance by an independent
-LLM re-scoring of the expert matrix from definitions alone: held-out r = 0.76
-(Pearson; Spearman 0.77) across the matrix, the two rows themselves at 0.80 and
-0.79, with a second, independently prompted model from a different vendor agreeing
-(0.81 and 0.80 against the same expert rows). This establishes that the rows are
-not idiosyncratic, not that they are validated occupational-ability mappings for
-the new constructs; blinded human expert re-rating of the two new areas is declared
+used unedited. The borrowed rows were checked by an informal concordance exercise, an
+independent LLM re-scoring of the expert matrix from definitions alone: held-out
+r = 0.76 (Pearson; Spearman 0.77) across the matrix, the two rows themselves at
+0.80 and 0.79, with a second, independently prompted model from a different vendor
+agreeing (0.81 and 0.80 against the same expert rows). We read this as a
+consistency check only, not as validation of the rows as occupational-ability
+mappings for the new constructs; blinded human expert re-rating of the two new areas is declared
 future work at a chain point. Conversation and software engineering use their
 original expert rows. Both new columns are chained: they are missing (not zero)
 before 2024 in every format, zero at the 2024 chain year, and cumulate from there.
@@ -119,12 +120,17 @@ expressed in units of its historical year-to-year variation and averaged over th
 applications observed that year. Applications with fewer than five observed years
 borrow their scale family's benchmark-increment variation until a declared
 sigma-basis switch (a change of standardisation basis only, prospective, distinct
-from the level chain point; it never touches levels); the released sigma table
+from the level chain point: it does not revise any pre-switch level, while
+increments from the switch year onward, and hence the levels they cumulate into,
+use the new basis); the released sigma table
 states each application's basis and the switch rule. The composite has values over
 the full 2010–2025 window; each year's mean runs over the applications observed
 that year (an application with a measured zero increment counts as observed; one
 with no source that year does not), so early years have few members — the 2013
 cross-section has three — and 2025 runs on partial coverage (see the caveats).
+Like the broadened generative composite, `daioe_g2all` is therefore not a
+constant-basket time series: a movement between years can mix capability progress
+with a change in which applications are observed, and should be read accordingly.
 Two fatal bounds are checked on every build: a sensitivity bound on the axis
 convention for the METR series (recomputing with METR on its percentage axis moves
 the 2025 composite increment by 13.7%, against a pre-set bound of 15%), and a
@@ -147,13 +153,25 @@ every column new to a vintage.
 **Known caveats, shipped rather than filed.** A newly admitted series' first
 increment is computed against its entry-year frontier; where that baseline is thin
 (SWE-bench Verified: one 2024 evaluation; ToMBench: two), the 2025 increment is an
-upper bound, revisable as harnesses evaluate earlier models retrospectively. Five
-of the nine original applications have no living 2025 source (abstract strategy
-games, real-time video games, language modelling, translation, and visual question
-answering, whose 2025 increment is measured zero; the archive died, the
-capabilities did not stop), so their series are carried at their last level and
-2025 is a partial-coverage year for the original basket. Vintage values beyond
+upper bound, revisable as harnesses evaluate earlier models retrospectively. For 2025 the original basket splits three ways, and the distinction matters for
+`daioe_g2all`'s denominator. Four applications are UNOBSERVED in 2025 (abstract
+strategy games, real-time video games, language modelling, translation): their
+sources' reporting ended, their series are carried at the last level, and they are
+outside the 2025 G2 mean. Visual question answering is OBSERVED with a measured
+zero increment (its continuation source reported in 2025 and the frontier did not
+move), so it is inside the 2025 G2 mean. The remaining originals and the new areas
+are observed with measured progress. In every case the archive's death is a
+property of reporting, not of the capability, and 2025 is a partial-coverage year
+for the original basket. Vintage values beyond
 2023 are revisable in later vintages; the frozen window is not.
+
+## Citing a vintage
+
+v1.0.0 contains two objects, the frozen 2010--2023 index and the 2024 refresh, so
+a bare version number is ambiguous. Cite the DOI plus the object name plus the
+filename loaded (for example: ``DAIOE v1.0.0, frozen 2010--2023 index,
+daioe_ssyk2012.dta''). From v1.1.0 each vintage adds one object and the same rule
+applies.
 
 ## Provenance and verification
 
@@ -169,9 +187,13 @@ year; no vintage is released without these gates green.
 index columns and their `pctl_rank_*` companions), compared cell by cell at stored
 (single) precision. Later vintages may add columns; a new column's 2010–2023 values
 (such as `daioe_g2all`'s) have no v1.0.0 counterpart and are outside the freeze
-claim. File-level byte identity is not claimed and cannot hold for files that gain
-rows or columns; where a release copies a file unmodified, its checksum manifest
-says so.
+claim. The canonical frozen artifacts are the five taxonomy publication panels of the
+deposited v1.0.0 scores bundle (`daioe_onetsoc2010`, `daioe_soc2010`,
+`daioe_isco08`, `daioe_ssyk2012`, `daioe_ssyk96`, Stata `.dta`); the CSV and Excel
+files are derived from them and are covered through that derivation rather than
+gated independently. File-level byte identity is not claimed and cannot hold for
+files that gain rows or columns; where a release copies a file unmodified, its
+checksum manifest says so.
 
 **Percentile ranks and ties, stated for anyone who diffs releases or regenerates
 from code.** Percentile ranks are order-dependent inside tie groups (year
