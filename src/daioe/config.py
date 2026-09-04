@@ -57,10 +57,9 @@ class Config:
         """Exponent in Eq. (5), ΔDAIOE = (Δe · w)^exponent.
 
         Defaults to 2, the published construction. Set to 1 for the linear
-        variant a referee or co-author asks for; the regressor is standardised
-        downstream, so scale_up is immaterial to any estimate. Added 3 Sep 2026
-        for the AI Unboxed C3 comment (Sarah Schroeder), which asked to see the
-        specification without the square.
+        (unsquared) variant; the regressor is standardised downstream, so
+        scale_up is immaterial to any estimate. Added 3 Sep 2026 so the
+        specification without the square can be estimated and reported.
         """
         return float(self.raw.get("exponent", 2.0))
 

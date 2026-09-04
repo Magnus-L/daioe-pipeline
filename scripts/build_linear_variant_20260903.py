@@ -1,11 +1,11 @@
 """Add a LINEAR (non-squared) DAIOE variant to the SSYK variant panels.
 
-Sarah Schroeder, AI Unboxed co-author meeting 3 Sep 2026 (comment C3): equation
-(5) squares the exposure increment, and the paper asserts the non-linearity
-rather than showing the specification without it. Erik's stated reason on the
-record is that without the square the between-occupation variation is narrow and
-the index is dominated by the time dimension. That reason belongs in the paper,
-next to an estimate that does not use the square.
+AI Unboxed revision, 3 Sep 2026: equation (5) squares the exposure increment,
+and the paper asserted the non-linearity rather than showing the specification
+without it. The recorded reason for the square is that without it the
+between-occupation variation is narrow and the index is dominated by the time
+dimension. That reason belongs in the paper, next to an estimate that does not
+use the square.
 
 WHAT THIS DOES
     Eq. (5) is  DAIOE_ot = ( De_ot * w_o )^p , cumulated over years.  The
