@@ -97,8 +97,7 @@ frozen level.
 
 Add an entry to `taxonomies` in `config.yaml` (crosswalk path, key, level rule) and
 drop the crosswalk into the data folder. Current status: the five released
-classifications are wired; a SOC 2018 crosswalk is derived and audited but the build
-is internal and not part of any public release; SSYK 2025 waits on an official SCB
+classifications are wired; a SOC 2018 crosswalk is derived and audited, and the v1.0.0 bundle ships its frozen-window panel export as an extra, clearly labelled as not Publication format; SSYK 2025 waits on an official SCB
 crosswalk.
 
 ## Extensions: new benchmark series
