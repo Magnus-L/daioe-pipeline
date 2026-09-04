@@ -13,7 +13,7 @@ relevant capabilities did, which is a testable claim rather than a correlation.
 
 | | |
 |---|---|
-| Coverage | Every occupation in each released taxonomy panel, annually, 2010–2023 in the frozen index (966 O\*NET-SOC, 828 SOC 2010, 438 ISCO-08, 429 SSYK 2012, 354 SSYK 96 occupations) |
+| Coverage | Every occupation in each released taxonomy panel, annually, 2010–2023 in the frozen index (per year: 966 O\*NET-SOC, 772 SOC 2010, 438 ISCO-08, 429 SSYK 2012, 354 SSYK 96 occupations) |
 | Breakdown | An aggregate index plus nine capability subdomains and a generative-AI composite |
 | Classifications | O\*NET-SOC, SOC 2010, ISCO-08, SSYK 96, SSYK 2012 |
 | Formats | Stata `.dta` (the gated originals), with CSV and Excel derived from them |
