@@ -32,7 +32,9 @@ from daioe import io as dio  # noqa: E402
 from daioe import stata_ops as so  # noqa: E402
 
 DIST = ROOT / "dist/daioe-v1.0.0-scores/frozen-2010-2023"
-PUB = ROOT / "data/vintage/vintage_2025_v110rc_20260824/out/Publication"
+import sys
+PUB = (Path(sys.argv[1]) if len(sys.argv) > 1
+       else ROOT / "data/vintage/vintage_2025_v110rc_20260824/out/Publication")
 TAXMAP = {
     "daioe_onetsoc2010": ["occ_code_onetsoc2010", "year"],
     "daioe_soc2010": ["occ_code_soc2010", "year"],

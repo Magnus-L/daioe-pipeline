@@ -102,17 +102,30 @@ future work at a chain point. Conversation and software engineering use their
 original expert rows. Both new columns are chained: they are missing (not zero)
 before 2024 in every format, zero at the 2024 chain year, and cumulate from there.
 
-**Composite membership.** The generative-AI composite keeps its name and broadens
-its membership at the chain point, adding conversation and software engineering to
-language modelling and image generation, following the chain-linked convention of
-official statistics (membership changes at seams, never inside history). The frozen
-generative-AI column is unaffected, and a seam-crossing movement in `daioe_genai`
-mixes capability progress with the membership change and should be read
-accordingly. The narrow-membership continuation is not a released column; it is
-reproducible from the released pipeline (`--genai legacy`). The two new application
-areas are not members of either original composite: `daioe_allapps` aggregates the
-nine original applications throughout, by design, and the second-generation
-composite below is the aggregate that admits new areas.
+**Composite membership (amended 4 September 2026).** `daioe_genai` keeps its
+ORIGINAL membership permanently — language modelling and image generation — the
+same way `daioe_allapps` keeps its nine applications: both are legacy columns
+whose construction never changes. An earlier decision had broadened genai's
+membership at the seam under its raw-sum construction; inspection of the
+assembled candidate showed that 99 per cent of the resulting 2025 step (+1.546
+of +1.564) came from the two newly admitted members' thin-baseline first
+increments, an artefact of scale rather than a measurement of generative
+progress, and the broadening was withdrawn before deposit. The thematic
+broadened composite exists instead as `daioe_g2gen` below, in standardised
+units, where newly admitted applications cannot dominate by scale. The two new
+application areas are not members of either legacy composite, by design.
+
+**A second-generation generative composite** (`daioe_g2gen`) enters as an
+additional column: the second-generation construction (next paragraph) restricted
+to the four generative applications — language modelling, image generation,
+conversation and software engineering. Same sigma table, same
+mean-over-observed-members rule; values from 2012, when its first members begin.
+Its young-membership years are described rather than gated (three observed
+members in 2025; the dominance cap applies from five members, the main
+composite's own convention for young cross-sections), and its 2025 movement is
+still carried mainly by software engineering's first chained increment, an upper
+bound revisable as baselines back-fill. Within-year rank agreement with the
+legacy genai column is 0.97–0.99.
 
 **A second-generation overall composite** (`daioe_g2all`) enters as an additional
 column. As new capability domains with different native scales enter the basket, a

@@ -19,7 +19,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 ROOT = Path(__file__).resolve().parents[1]
 OLD_F = ROOT/"dist/daioe-v1.0.0-scores/frozen-2010-2023/daioe_onetsoc2010.dta"
 OLD_R = ROOT/"dist/daioe-v1.0.0-scores/refresh-2024/daioe_onetsoc2010.dta"
-NEW   = next((ROOT/"data/vintage/vintage_2025_v110rc_20260824").rglob("Publication/daioe_onetsoc2010.dta"))
+NEW   = next((ROOT/"data/vintage/vintage_2025_v110rc2_20260904").rglob("Publication/daioe_onetsoc2010.dta"))
 OUT   = ROOT/"reports/vintage_comparison_20260904.pdf"
 
 C_OLD, C_NEW, C_AUX = "#333333", "#2166ac", "#b2182b"
@@ -141,12 +141,19 @@ with PdfPages(OUT) as pdf:
     fig.suptitle("Trajectories: generative composite, and the columns only the new vintage has", fontsize=14, fontweight="bold")
     ax=axes[0]
     for df,lab,c,ls in ((oldr,"old genai (original membership, to 2024)",C_OLD,"-"),
-                        (new,"new genai (broadened at the 2023–24 seam)",C_NEW,"--")):
+                        (new,"new genai (SAME membership, permanently)",C_NEW,"--")):
         g=df.groupby("year")["daioe_genai"].mean(); ax.plot(g.index,g.values,color=c,ls=ls,lw=2.2,label=lab)
-    ax.set_title("Generative composite, mean across occupations",fontsize=10.5)
+    if "daioe_g2gen" in new.columns:
+        ax2=ax.twinx() if False else ax
+        g=new.groupby("year")["daioe_g2gen"].mean()
+        ax.plot(g.index,g.values/ g.max()*new.groupby("year")["daioe_genai"].mean().max(),
+                color=C_AUX,ls=":",lw=2.0,label="g2gen (standardised units, rescaled for display)")
+    ax.legend(frameon=False,fontsize=9)
+    ax.set_title("Generative composites, mean across occupations",fontsize=10.5)
     ax.legend(frameon=False,fontsize=9); ax.grid(alpha=.25); ax.spines[['top','right']].set_visible(False)
     ax=axes[1]
     for col,lab,c,ls in (("daioe_g2all","G2 second-generation composite",C_NEW,"-"),
+                         ("daioe_g2gen","G2-style generative (g2gen)",C_NEW,"-."),
                          ("daioe_agentic","agentic (chained 2024)",C_AUX,"--"),
                          ("daioe_mathsci","maths/science (chained 2024)",C_OLD,":")):
         if col in new.columns:

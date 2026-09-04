@@ -29,7 +29,9 @@ sys.path.insert(0, str(ROOT / "src"))
 from daioe import io as dio  # noqa: E402
 from daioe import stata_ops as so  # noqa: E402
 
-PUB = ROOT / "data/vintage/vintage_2025_v110rc_20260824/out/Publication"
+import sys
+PUB = (Path(sys.argv[1]) if len(sys.argv) > 1
+       else ROOT / "data/vintage/vintage_2025_v110rc_20260824/out/Publication")
 STEMS = ["daioe_onetsoc2010", "daioe_soc2010", "daioe_isco08",
          "daioe_ssyk2012", "daioe_ssyk96"]
 

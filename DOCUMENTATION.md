@@ -111,16 +111,20 @@ recorded with quoted evidence in the anchors file.
 
 ## 5. The four aggregates, and which to use
 
-From the 2025 vintage the release carries three composite indices beside the
+From the 2025 vintage the release carries four composite indices beside the
 subdomains, and they answer different questions.
 
-**`daioe_genai` — exposure to the generative wave.** A thematic composite: how
-exposed an occupation is to AI systems that produce content — text (language
-modelling), images (image generation), dialogue (conversation) and code (software
-engineering). Raw-sum construction; frozen history intact; the membership broadens
-from the original two to these four at the 2023–24 seam, so a seam-crossing
-movement mixes progress with membership. Use it when the question is specifically
-about generative AI, which is usually what policy audiences mean by "AI".
+**`daioe_genai` — the legacy generative composite.** Raw-sum construction over
+its original two members, language modelling and image generation, permanently —
+like `allapps`, a column whose construction never changes. Use it for continuity
+with the published measure.
+
+**`daioe_g2gen` — exposure to the generative wave, current.** The
+second-generation construction restricted to the four generative applications —
+language modelling, image generation, conversation, software engineering — so
+newly admitted generative areas join in standardised units without dominating by
+scale. Use it when the question is specifically about generative AI, which is
+usually what policy audiences mean by "AI".
 
 **`daioe_agentic` — exposure to AI that does rather than produces.** A subdomain:
 autonomous multi-step execution of real computer work, measured by how long a
@@ -142,7 +146,7 @@ one number without any of them dominating by scale. Values over the full window;
 not a constant-basket series. Use it when the question is overall exposure, now
 and in later vintages.
 
-**The relations in one breath:** genai, agentic and mathsci are three kinds of AI
+**The relations in one breath:** generative capability (g2gen, with genai as its legacy ancestor), agentic and mathsci are three kinds of AI
 capability — producing, doing, reasoning — and g2all is the roof over all of
 them. `daioe_allapps` remains the legacy overall index, aggregating the nine
 original applications unchanged, and stays the replication object behind the
