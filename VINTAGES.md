@@ -103,7 +103,7 @@ original expert rows. Both new columns are chained: they are missing (not zero)
 before 2024 in every format, zero at the 2024 chain year, and cumulate from there.
 
 **Composite membership (amended 4 September 2026).** `daioe_genai` keeps its
-ORIGINAL membership permanently — language modelling and image generation — the
+original membership permanently — language modelling and image generation — the
 same way `daioe_allapps` keeps its nine applications: both are legacy columns
 whose construction never changes. An earlier decision had broadened genai's
 membership at the seam under its raw-sum construction; inspection of the
@@ -119,10 +119,12 @@ application areas are not members of either legacy composite, by design.
 additional column: the second-generation construction (next paragraph) restricted
 to the four generative applications — language modelling, image generation,
 conversation and software engineering. Same sigma table, same
-mean-over-observed-members rule; values from 2012, when its first members begin.
-Its young-membership years are described rather than gated (three observed
-members in 2025; the dominance cap applies from five members, the main
-composite's own convention for young cross-sections), and its 2025 movement is
+mean-over-observed-members rule; the column is carried at zero until its first
+members enter in 2012. Its member shares are described rather than gated: the
+dominance cap applies from five observed members (the main composite's own
+convention for young cross-sections), a threshold a four-member composite can
+never reach, so for `daioe_g2gen` the cap never binds and per-year member
+shares are reported in the release documentation instead, and its 2025 movement is
 still carried mainly by software engineering's first chained increment, an upper
 bound revisable as baselines back-fill. Within-year rank agreement with the
 legacy genai column is 0.97–0.99.
@@ -161,7 +163,7 @@ companion: the within-year midrank percentile (average rank of the tied group ov
 the number of non-missing occupations, times 100), so identical substantive values
 carry identical percentiles and an all-tie year sits uniformly near 50 instead of
 an arbitrary spread. The legacy `pctl_rank_*` columns are unchanged and remain the
-published replication artifact; the new columns are outside the freeze claim, like
+published replication artefact; the new columns are outside the freeze claim, like
 every column new to a vintage.
 
 **Known caveats, shipped rather than filed.** A newly admitted series' first
@@ -198,12 +200,14 @@ year; no vintage is released without these gates green.
 
 **The exact scope of the freeze guarantee.** The frozen object is the set of
 2010–2023 rows and the v1.0.0 column set (occupation code, year, the `daioe_*`
-index columns and their `pctl_rank_*` companions), compared cell by cell at stored
+index columns and their `pctl_rank_*` companions), together with SOC 2010's 68
+inherited year-less rows, which the deposited v1.0.0 file carries and every later
+vintage must carry with the same values; all compared cell by cell at stored
 (single) precision. Later vintages may add columns; a new column's 2010–2023 values
 (such as `daioe_g2all`'s) have no v1.0.0 counterpart and are outside the freeze
-claim. The canonical frozen artifacts are the five taxonomy publication panels of the
+claim. The canonical frozen artefacts are the five taxonomy publication panels of the
 deposited v1.0.0 scores bundle (`daioe_onetsoc2010`, `daioe_soc2010`,
-`daioe_isco08`, `daioe_ssyk2012`, `daioe_ssyk96`, Stata `.dta`); the CSV and Excel
+`daioe_isco08`, `daioe_ssyk2012`, `daioe_ssyk96`, Stata `.dta`); the TSV and Excel
 files are derived from them and are covered through that derivation rather than
 gated independently. File-level byte identity is not claimed and cannot hold for
 files that gain rows or columns; where a release copies a file unmodified, its
@@ -224,4 +228,4 @@ not be used where ties matter (the substantive `daioe_*` columns are authoritati
 and never depend on tie order, and from v1.1.0 every panel carries tie-invariant
 `pctl_mid_*` companions); and a clean pipeline run from raw inputs reproduces
 every substantive cell but not the legacy tie ordering — full reproduction of the
-rank columns uses the deposited v1.0.0 artifact, by construction.
+rank columns uses the deposited v1.0.0 artefact, by construction.

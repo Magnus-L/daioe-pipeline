@@ -116,9 +116,16 @@ G1 splice integrity (zero frozen cells changed), G2 publication seam (every taxo
 panel cell-identical to the deposited frozen publication files over 2010–2023, on the
 full v1.0.0 column set), G3 entry discipline (new-domain columns silent before their
 chain year). Assembly decisions are explicit command-line flags recorded in the
-release report; the shipped 2025 assembly used `--gpqa-parent maths`,
-`--allapps-rule survivors`, `--membership published`, `--genai broad`,
-`--agentic metr80`. Output: `data/vintage/<tag>/` plus `reports/<tag>/RELEASE.md`
+release report; the shipped 2025 assembly (the v1.1.0 candidate) used
+`--gpqa-parent maths`, `--allapps-rule survivors`, `--membership published`,
+`--genai legacy`, `--agentic metr80`; the earlier `--genai broad` run was
+superseded by the 4 September 2026 membership amendment (see `VINTAGES.md`).
+The broadened generative composite is then built as a separate column by
+`scripts/build_g2gen_composite_20260904.py` (standardised units over the four
+generative applications, reusing `g2_sigma_v1.csv`), and
+`scripts/wire_v110_release_rc2_20260904.py` wires the new columns
+(`g2all`, `g2gen`, `agentic`, `mathsci`) into the release candidate's
+publication panels. Output: `data/vintage/<tag>/` plus `reports/<tag>/RELEASE.md`
 with an input sha256 manifest. Before any deposit,
 `scripts/gate_panel_structure.py` additionally verifies every publication
 panel's structure (no missing keys, unique occupation-year pairs, exact expected

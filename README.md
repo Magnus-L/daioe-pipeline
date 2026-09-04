@@ -14,7 +14,7 @@ relevant capabilities did, which is a testable claim rather than a correlation.
 | | |
 |---|---|
 | Coverage | Every occupation in each released taxonomy panel, annually, 2010–2023 in the frozen index (per year: 966 O\*NET-SOC, 772 SOC 2010, 438 ISCO-08, 429 SSYK 2012, 354 SSYK 96 occupations) |
-| Breakdown | An aggregate index plus nine capability subdomains and a generative-AI composite |
+| Breakdown | An aggregate index plus nine capability subdomains and a generative-AI composite (v1.1.0 adds two subdomains and two second-generation composites) |
 | Classifications | O\*NET-SOC, SOC 2010, ISCO-08, SSYK 96, SSYK 2012; plus a SOC 2018 panel export on the frozen window (clearly labelled, not Publication format) |
 | Formats | Stata `.dta` (the gated originals), with TSV and Excel derivatives |
 | Built from | Public AI benchmark results and O\*NET occupational ability profiles |
@@ -32,8 +32,10 @@ you used.
   or to compare against published work.
 - **2024 refresh** — the newest released object; appends 2024 under the seam discipline.
   Use it for current analysis.
-- **2025 vintage (v1.1.0)** — forthcoming; adds two application areas and a
-  second-generation composite. Use it for current analysis when released.
+- **2025 vintage (v1.1.0)** — forthcoming; adds two application areas and two
+  second-generation composites (overall and generative), while the legacy
+  composites keep their original membership. Use it for current analysis when
+  released.
 
 `VINTAGES.md` is the full record of what each vintage contains and what the freeze
 guarantee covers.
@@ -70,8 +72,7 @@ implementation differ, the implementation is authoritative and the differences
 are the documented residual classes in `VALIDATION.md`. Two properties are worth knowing up front: benchmarks enter and
 retire over time, so an application's basket thins as its benchmarks are solved, and the
 subdomain series are highly correlated with one another, which limits how far the
-decomposition can attribute an effect to any single capability. Both are documented
-rather than left for you to discover.
+decomposition can attribute an effect to any single capability.
 
 ## Rebuilding or extending the measure
 
