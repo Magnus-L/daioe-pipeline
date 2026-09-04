@@ -16,7 +16,7 @@ relevant capabilities did, which is a testable claim rather than a correlation.
 | Coverage | Every occupation in each released taxonomy panel, annually, 2010–2023 in the frozen index (per year: 966 O\*NET-SOC, 772 SOC 2010, 438 ISCO-08, 429 SSYK 2012, 354 SSYK 96 occupations) |
 | Breakdown | An aggregate index plus nine capability subdomains and a generative-AI composite |
 | Classifications | O\*NET-SOC, SOC 2010, ISCO-08, SSYK 96, SSYK 2012 |
-| Formats | Stata `.dta` (the gated originals), with CSV and Excel derived from them |
+| Formats | Stata `.dta` (the gated originals), with TSV and Excel derivatives |
 | Built from | Public AI benchmark results and O\*NET occupational ability profiles |
 
 Scores are published on Zenodo; this repository holds the code that builds them, its
@@ -45,8 +45,12 @@ release fixes which version of the measure, the paper documents what it is.
 
 - **This version (v1.0.0):** https://doi.org/10.5281/zenodo.21873968
 - **Always the newest version:** the concept DOI on the Zenodo record
-- Because v1.0.0 contains two objects, cite as: DOI, plus the object (``frozen
-  2010--2023 index'' or ``2024 refresh''), plus the filename you loaded.
+- Because v1.0.0 contains two objects, cite as: DOI, plus the object ("frozen
+  2010-2023 index" or "2024 refresh"), plus the filename you loaded.
+- The paper: Engberg et al., "AI Unboxed: Capability Arrival and the Clerical
+  Decline" (full bibliographic form in `CITATION.cff`, updated on publication).
+- The all-versions concept DOI appears at the top of the Zenodo record and is
+  recorded here at first deposit.
 
 `CITATION.cff` carries the machine-readable form; GitHub's "Cite this repository"
 button reads it.
@@ -59,8 +63,11 @@ benchmark measurement came from and the licences those sources carry.
 
 ## Before you rely on it
 
-Read `DOCUMENTATION.md`, and in particular the sections on how series are admitted and
-on basket composition. Two properties are worth knowing up front: benchmarks enter and
+Read `DOCUMENTATION.md`, the public technical reference, and in particular the
+sections on how series are admitted and on basket composition; `VINTAGES.md` is
+the record of what each vintage contains. Where the paper's appendix and the
+implementation differ, the implementation is authoritative and the differences
+are the documented residual classes in `VALIDATION.md`. Two properties are worth knowing up front: benchmarks enter and
 retire over time, so an application's basket thins as its benchmarks are solved, and the
 subdomain series are highly correlated with one another, which limits how far the
 decomposition can attribute an effect to any single capability. Both are documented
@@ -70,5 +77,7 @@ rather than left for you to discover.
 
 `BUILDING.md` is the developer reference: environment, the five build stages, the
 validation bar, and how annual updates, new taxonomies, new benchmark series and
-vintage assembly work. The build is deterministic, validated against the frozen
-original outputs, and takes about 75 seconds.
+vintage assembly work. The build's substantive index values are deterministic and
+validated against the frozen original outputs (file hashes and tie-order details
+are not; `BUILDING.md` explains the distinction), and a full build takes about
+75 seconds.

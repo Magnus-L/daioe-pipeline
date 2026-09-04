@@ -68,7 +68,7 @@ transform that is not part of any released vintage.
 
 | Series | Application | Reference | Notes |
 |---|---|---|---|
-| METR task horizons (80% reliability) | Agentic task execution | 960 min, instrument ceiling | The primary agentic series: the length of real computer-based work task, in minutes of human working time, completed at 80% reliability. Pinned to METR-Horizon v1.1; used with METR's written permission (cite METR; METR is not affiliated with this work). The suite's 50%-reliability variant was retired when frontier systems outgrew its 16-hour range; the two variants are one construct and are never in the basket together. |
+| METR task horizons (80% reliability) | Agentic task execution | 960 min, instrument ceiling | The primary agentic series: the length of real computer-based work task, in minutes of human working time, completed at 80% reliability. Pinned to METR-Horizon v1.1; used with METR's written permission of 13 Aug 2026 (cite METR; METR is not affiliated with this work), with the licence basis restated at each deposit per LICENSE-DATA and scripts/check_metr_licence.py. The suite's 50%-reliability variant was retired when frontier systems outgrew its 16-hour range; the two variants are one construct and are never in the basket together. |
 | OSWorld | Agentic task execution | 72.36, human | Real desktop computer work; externally collected scores, mixed agent scaffolds, declared as such. |
 | GDPval | Agentic task execution | 50, parity by construction | Scored as a win rate against human professionals, so 50 is parity by definition. |
 | TheAgentCompany | Agentic task execution | 95, ceiling (by convention) | Corroboration series, not in the basket: pinned to one simulation environment (results from other environments excluded so an environment change is never booked as capability); the ceiling follows the SWE-bench convention. |
@@ -94,8 +94,9 @@ used unedited. The borrowed rows were checked by an informal concordance exercis
 independent LLM re-scoring of the expert matrix from definitions alone: held-out
 r = 0.76 (Pearson; Spearman 0.77) across the matrix, the two rows themselves at
 0.80 and 0.79, with a second, independently prompted model from a different vendor
-agreeing (0.81 and 0.80 against the same expert rows). We read this as a
-consistency check only, not as validation of the rows as occupational-ability
+agreeing (0.81 and 0.80 against the same expert rows; the runs and scores ship in
+the repository at `mapping/output/frs_validation_published_v2018.json`, generator
+`mapping/code/validate_against_frs.py`). We read this as a consistency check only, not as validation of the rows as occupational-ability
 mappings for the new constructs; blinded human expert re-rating of the two new areas is declared
 future work at a chain point. Conversation and software engineering use their
 original expert rows. Both new columns are chained: they are missing (not zero)

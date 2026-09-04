@@ -1,7 +1,7 @@
 # Building DAIOE
 
 The developer reference: how the scores are built, validated, updated and released.
-Users of the scores need only `README.md` and `VINTAGES.md`.
+Users of the scores need `README.md`, `VINTAGES.md` and `DOCUMENTATION.md`; this file is for rebuilding or extending.
 
 ## What this repository is
 
@@ -51,10 +51,10 @@ implicitly by pandas — see the header of `requirements.txt`.
 ## Run
 
 ```bash
-python scripts/preflight.py        # check every input resolves BEFORE running
-python run_all.py                  # all stages + validation report
-python run_all.py --stages 1,2,3   # subset
-pytest -q
+.venv/bin/python scripts/preflight.py   # check every input resolves BEFORE running
+.venv/bin/python run_all.py             # all stages + validation report
+.venv/bin/python run_all.py --stages 1,2,3
+.venv/bin/python -m pytest -q
 ```
 
 A full build takes about 75 seconds.
@@ -120,7 +120,11 @@ chain year). Assembly decisions are explicit command-line flags recorded in the
 release report; the shipped 2025 assembly used `--gpqa-parent maths`,
 `--allapps-rule survivors`, `--membership published`, `--genai broad`,
 `--agentic metr80`. Output: `data/vintage/<tag>/` plus `reports/<tag>/RELEASE.md`
-with an input sha256 manifest.
+with an input sha256 manifest. Before any deposit,
+`scripts/gate_panel_structure.py` additionally verifies every publication
+panel's structure (no missing keys, unique occupation-year pairs, exact expected
+row counts, and year-less rows only where the deposited v1.0.0 file carries the
+same inherited rows).
 
 ## Release bundle
 
