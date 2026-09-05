@@ -111,7 +111,7 @@ builds its configuration in memory from explicit flags.
 ## Vintage assembly
 
 `scripts/assemble_vintage_2025_20260808.py` assembles a release under the seam policy
-(frozen 2010–2023 immutable; later years chained at the seam) with three fatal gates:
+(frozen 2010–2023 immutable; later years chained at the seam) with three gates, each of which stops the build on failure:
 G1 splice integrity (zero frozen cells changed), G2 publication seam (every taxonomy
 panel cell-identical to the deposited frozen publication files over 2010–2023, on the
 full v1.0.0 column set), G3 entry discipline (new-domain columns silent before their

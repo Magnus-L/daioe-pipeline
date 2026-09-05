@@ -19,23 +19,31 @@ The object behind the published estimates. Nine applications, 140 benchmarks (14
 series), as documented in the paper's Online Appendix Section C. Released as v1.0.0
 together with the 2024 refresh.
 
-**Known errata, retained by design.** Checking the source workbook against the
-original benchmark repositories turned up four small transcription discrepancies.
-They are listed in `errata_frozen_workbook_v1.csv`, shipped in the bundle. The
-released frozen data keep all four exactly as the paper estimated them, because
-the frozen series is a replication object rather than a best-current-belief
-series.
+**Four transcription slips in the source workbook, and what they touch.** Checking
+the source workbook against the original benchmark repositories found four
+transcription slips among its 3,933 score rows. They are listed with evidence in
+`errata_frozen_workbook_v1.csv`, shipped in the bundle, and were reported to the
+workbook's author in July 2026. Two of them (E1, a translation score attached to
+the wrong model; E3, a model-name typo with the correct value) never touch a
+frontier, so they affect no number in any release. The other two are small: one
+translation benchmark's 2018 BLEU recorded as 28.36 rather than 29.11, and ARC's
+2023 score as 96.3 rather than the source's own revised 96.4. Both sit inside
+published history, and correcting them there would move a handful of 2018--2023
+application-year means by amounts far below the paper's reported precision. The
+frozen series reproduces the paper, so all four rows are retained exactly as
+published; holding revisions for a chain point is the same convention official
+statistics apply to benchmark revisions.
 
-Corrections wait for a future chain point; no released vintage has applied them.
-The reason is the seam discipline itself: two of the four (E2, E4) would create
-or move a state-of-the-art frontier if corrected inside history, which is
-precisely the silent rewriting the freeze exists to prevent. The pipeline ships
-the switch (`apply_errata`, off in every build to date). Turned on at a seam, it
-corrects the source rows so that later increments start from the corrected
-frontier state, while every published level stays as released. Two guards are
-fatal: the switch refuses a frozen-window build, and each erratum must match
-exactly one source row. The vintage that first applies it will document the
-construction with a worked example beside its numbers.
+The slips do not affect the appended years either. Neither benchmark has a
+post-2023 observation anywhere near its frontier (the best 2024 ARC score in the
+archive is 81.5 against a frontier of 96.3), so a corrected and an uncorrected
+release are numerically identical in 2024 and 2025; verified against the shipped
+frontier data, September 2026. The pipeline still ships the correction switch
+(`apply_errata`, off in every build to date) so that a future full re-estimation,
+for instance at a journal revision, can apply the corrections from a stated chain
+point with the construction documented. The switch will not run on a
+frozen-window build, and each erratum must match exactly one source row; either
+violation stops the build.
 
 ## The 2024 refresh, released as v1.0.0
 
@@ -149,7 +157,7 @@ cross-section has three) and 2025 runs on partial coverage (see the caveats).
 Like the broadened generative composite, `daioe_g2all` is therefore not a
 constant-basket time series: a movement between years can mix capability progress
 with a change in which applications are observed, and should be read accordingly.
-Two fatal bounds are checked on every build: a sensitivity bound on the axis
+Two hard bounds are checked on every build, and the build stops if either fails: a sensitivity bound on the axis
 convention for the METR series (recomputing with METR on its percentage axis moves
 the 2025 composite increment by 13.7%, against a pre-set bound of 15%), and a
 dominance bound (no application's share of any chained year's summed standardised
