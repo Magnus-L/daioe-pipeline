@@ -19,7 +19,7 @@ rather than a correlation.
 | Coverage | Every occupation in each released taxonomy panel, annually, 2010–2023 in the frozen index (per year: 966 O\*NET-SOC, 772 SOC 2010, 438 ISCO-08, 429 SSYK 2012, 354 SSYK 96 occupations) |
 | Decomposition | An aggregate index, nine capability subdomains, and a generative-AI composite (v1.1.0 adds two subdomains and two second-generation composites) |
 | Classifications | O\*NET-SOC, SOC 2010, ISCO-08, SSYK 96, SSYK 2012; plus a SOC 2018 panel export on the frozen window, labelled as such and not in the publication format |
-| Formats | Stata `.dta` (the gated originals), with TSV and Excel derivatives |
+| Formats | Stata `.dta` (the verified originals), with TSV and Excel derivatives |
 | Built from | Public AI benchmark results and O\*NET occupational ability profiles |
 
 Scores are published on Zenodo. This repository holds the code that builds them, its

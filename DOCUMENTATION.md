@@ -65,8 +65,9 @@ cumulative levels; no percentile companions and no publication-format gating).
 - **Vintages are labelled by coverage window** (e.g. *DAIOE v2025* covers 2010–2025) and
   are separate, citable objects.
 - **Year assignment.** A benchmark score is assigned to the year of the evaluated
-  model's release, not the year of the evaluation, so a harness that scores earlier
-  models retrospectively updates the frontier at the model's own date. This is what
+  model's release, not the year of the evaluation, so an evaluation suite that
+  scores earlier models retrospectively updates the frontier at the model's own
+  date. This is what
   makes later revision of post-2023 values possible, and it is the semantics a
   capability-arrival measure needs.
 - **Chain points.** All basket, series and membership changes take effect at a vintage's
@@ -89,7 +90,7 @@ citation); and provenance (source, retrieval date, file hashes).
 
 An entrant's direct contribution is zero in its entry year, and it enters an
 observed-member mean's denominator only from its first measured year, so admission
-changes no composite value at the chain point. Automated gates verify on every assembly
+changes no composite value at the chain point. Automated checks verify on every assembly
 that the protected window is cell-identical (all taxonomies, stored precision) and that
 no admitted series carries a value before its chain point.
 
@@ -98,8 +99,8 @@ no admitted series carries a value before its chain point.
 Until v1.1.0 is deposited, everything here describes the assembled release candidate.
 
 **Sources for the appended years:** the recovered Papers with Code archive (2024 refresh
-of surviving series) and Epoch AI's benchmark data (CC BY 4.0) for harness-run and
-collected series.
+of surviving series) and Epoch AI's benchmark data (CC BY 4.0), both Epoch's own
+standardised evaluation runs and its collected series.
 
 **Series admitted at the 2024 chain point** (full declarations, reference values and
 quoted evidence in `VINTAGES.md` and the shipped anchors file):
@@ -109,14 +110,14 @@ quoted evidence in `VINTAGES.md` and the shipped anchors file):
 | Agentic task execution | METR task horizons, 80% reliability (primary) | system_level | 960 min, instrument ceiling | METR data with written permission (cite METR; not affiliated) |
 | Agentic task execution | OSWorld | system_level | 72.36 (human) | CC BY 4.0 (Epoch collection) |
 | Agentic task execution | GDPval | system_level | 50 (parity by construction: win rate vs human professionals) | CC BY 4.0 (Epoch collection) |
-| Mathematical & scientific reasoning | GPQA Diamond (Epoch-run harness) | pure_model | 81.3 (expert accuracy) | CC BY 4.0 |
+| Mathematical & scientific reasoning | GPQA Diamond (Epoch's own runs) | pure_model | 81.3 (expert accuracy) | CC BY 4.0 |
 | Mathematical & scientific reasoning | MATH Level 5 | pure_model | 90 (expert; full-set figure, declared caveat) | CC BY 4.0 (Epoch collection) |
-| Software engineering | SWE-bench Verified (Epoch-run harness) | system_level | 95, ceiling by convention | CC BY 4.0 |
+| Software engineering | SWE-bench Verified (Epoch's own runs) | system_level | 95, ceiling by convention | CC BY 4.0 |
 | Conversation | Theory of Mind on ToMBench | pure_model | 86.1 (organiser human baseline) | MIT |
 | Language comprehension & QA | SimpleBench | pure_model | 83.7 (organisers' human baseline, n=9, declared caveat) | scores quoted as published facts with citation (simple-bench.com) |
 
 TheAgentCompany is carried as a corroboration series outside the basket (95, the ceiling by
-the SWE-bench convention; pinned to one simulation environment so an environment change
+the SWE-bench convention; fixed to one simulation environment so an environment change
 is never booked as capability). The METR 50%-reliability variant was retired when
 frontier systems outgrew its range; the two reliability bars are one construct and are
 never in the basket together.
@@ -143,7 +144,7 @@ published with a complete history of its own; the standardisation table ships as
 its entry-year frontier, and where that baseline is thin, late-entry-year capability is
 booked to the first measured year: SWE-bench Verified (one 2024 evaluation) and
 ToMBench (two) are the thin cases, so their 2025 increments are upper bounds pending
-fuller harness coverage; (ii) in 2025, four of the nine original applications are
+fuller evaluation coverage; (ii) in 2025, four of the nine original applications are
 unobserved (abstract strategy games, real-time video games, language modelling,
 translation: reporting ended, series carried at their last level, outside the
 observed-member means), while visual question answering is observed with a measured
@@ -176,11 +177,11 @@ occupations is 0.74 in the three-member 2013 cross-section, 0.97 by 2016 and 0.9
 
 **`daioe_g2gen`, generative exposure, current.** The same construction restricted to
 the four generative applications (language modelling, image generation, conversation,
-software engineering). Because its membership is at most four, the dominance cap that
-gates the overall composite from five observed members can never bind here; member
-shares are instead reported per year in the release documentation, and in 2025 software
-engineering carries 71 per cent of the standardised sum, on a thin-baseline first
-increment. Use it when the question is generative AI specifically. Within-year rank
+software engineering). No concentration bound applies to it: with three or four members, one member
+will often carry more than half of a year's movement, so the overall composite's
+bound would carry no information here. Member shares are instead reported per
+year in the release documentation; in 2025 software engineering carries 71 per
+cent of the standardised sum, on a thin-baseline first increment. Use it when the question is generative AI specifically. Within-year rank
 agreement with `daioe_genai` (Spearman, O*NET-SOC occupations) is 0.97–0.99 from 2016.
 
 **The two new subdomains.** `daioe_agentic` (autonomous multi-step execution of real
@@ -233,7 +234,7 @@ vintage when rescaling them.
 computed once, for the columns that have them.
 
 We deliberately ship raw values rather than a rescaled column: the raw cells are the
-citable stratum the release gates protect and published work builds on, and one
+citable layer the release checks protect and published work builds on, and one
 canonical scale avoids version ambiguity.
 
 ## 7. Changelog
@@ -253,7 +254,7 @@ canonical scale avoids version ambiguity.
 - **Aug 2026, v2025 assembled** (release candidate): first vintage extending the
   window beyond 2023 with new application areas (the 2024 refresh, released with
   v1.0.0, appends a year without membership change); new series admitted at the 2024
-  chain point; gates and coverage audit introduced.
+  chain point; the automated checks and the coverage audit introduced.
 - **2023–2024, the frozen 2010–2023 index**: the paper's series. The Stata
   construction was later ported to Python; a clean build reproduces every substantive
   cell at stored precision (documented residual classes in `VALIDATION.md`), while the
