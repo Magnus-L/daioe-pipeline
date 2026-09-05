@@ -318,7 +318,18 @@ histories, but as columns new to v1.1.0 those histories sit outside the freeze
 guarantee (Section 2), so state the vintage when rescaling them.
 
 **Estimation: standardise on frozen moments.** As in Section 2: 2010–2020
-moments, computed once, for the columns that have them.
+moments, computed once, for the columns that have them. To make this
+foolproof, the bundle ships the moments themselves
+(`standardisation_moments_v1.csv`: mean and standard deviation per taxonomy
+and column, computed over the 2010–2020 rows), so standardising is one line
+and cannot be done on the wrong window:
+
+```
+z = (value - mean) / sd     # mean, sd from standardisation_moments_v1.csv
+```
+
+The file carries no rows for `daioe_agentic` and `daioe_mathsci`, which have
+no 2010–2020 history; read those through their percentile companions instead.
 
 We deliberately ship raw values rather than a rescaled column. The raw cells
 are the citable layer the release checks protect and published work builds on,

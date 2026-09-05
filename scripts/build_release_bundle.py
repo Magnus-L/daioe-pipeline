@@ -55,6 +55,10 @@ VINTAGES = [
 EXTRAS = [
     # data/out's copy spans 2010-2023, the frozen window, so it belongs in v1.0.0.
     # The copy inside the 2025 vintage folder runs to 2025 and is held back with it.
+    ("standardisation_moments_v1.csv",
+     ROOT / "data" / "derived" / "standardisation_moments_v1.csv",
+     "Frozen 2010-2020 standardisation moments (mean, sd) per taxonomy and column, "
+     "so users standardise on the correct window without recomputing."),
     ("soc2018/daioe_panel_soc2018.dta",
      ROOT / "data" / "out" / "daioe_panel_soc2018.dta",
      "SOC 2018 build on the frozen 2010-2023 window; panel export, not Publication format."),
