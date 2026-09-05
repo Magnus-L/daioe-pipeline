@@ -217,11 +217,12 @@ agreement with `daioe_genai` (Spearman, O*NET-SOC occupations) is 0.97–0.99 fr
 in levels; in increments it is 0.98–0.99 until 2025 and 0.89 in 2025, the first year
 the two constructions genuinely differ.
 
-**`daioe_g2nine`, the balanced companion.** The second-generation construction
-restricted to the nine original applications, membership never changing: its
-movement is capability progress on the original basket and nothing else, and
-the gap to `daioe_g2all` in any year is what the new domains contribute. Use it
-to separate progress from composition.
+**`daioe_g2nine`, the balanced composite.** A third second-generation
+composite: the same standardised construction as `daioe_g2all`, restricted to
+the nine original applications, with membership that never changes. Its
+movement is therefore capability progress on the original basket and nothing
+else, and the gap to `daioe_g2all` in any year is what the new domains
+contribute. Use it to separate progress from composition.
 
 **The two new subdomains.** `daioe_agentic` (autonomous multi-step execution of real
 computer work, measured as the length of human task completed reliably) and

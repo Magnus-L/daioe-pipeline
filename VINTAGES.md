@@ -258,12 +258,13 @@ read as an upper bound that later vintages will revise as more evaluations
 accumulate. Within a year its ranking of occupations agrees closely with the
 legacy generative composite (Spearman 0.97--0.99).
 
-**A balanced nine-member companion** (`daioe_g2nine`) is the same construction
-restricted to the nine original applications. Its membership never changes, so
-a movement in `daioe_g2nine` is capability progress on the original basket and
-nothing else, and the gap between `daioe_g2all` and `daioe_g2nine` in a year
-is exactly what the new domains contribute. Use it to separate progress from
-composition at a glance.
+**A balanced nine-member composite** (`daioe_g2nine`) is a third
+second-generation composite: the same standardised construction as
+`daioe_g2all`, restricted to the nine original applications. Unlike the other
+composites its membership never changes, so a movement in `daioe_g2nine` is
+capability progress on the original basket and nothing else, and the gap
+between `daioe_g2all` and `daioe_g2nine` in a year is exactly what the new
+domains contribute. Use it to separate progress from composition at a glance.
 
 **Tie-invariant percentiles.** Every `daioe_*` column gains a `pctl_mid_*`
 companion: the within-year midrank percentile (average rank of the tied group over
