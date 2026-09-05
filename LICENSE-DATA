@@ -43,12 +43,13 @@ permits redistribution of derived work under CC BY with attribution.
 | Agentic corroboration and collected series (OSWorld, GDPval, TheAgentCompany) | Epoch AI benchmark collection | CC BY 4.0 (Epoch collection); underlying scores externally collected, declared as such |
 | Language-QA series (SimpleBench) | SimpleBench organisers | scores quoted as published facts with citation (simple-bench.com) |
 | Occupational crosswalks | Statistics Sweden, BLS, ILO | public, attribution requested |
+| Comparator exposure columns in the SOC 2018 export (frs18_*, frs21_aioe, webb19_*, open24_*, fo17_p_computerisation) | quoted from the cited papers' published replication materials: Felten, Raj and Seamans (2018, 2021); Webb (2020, author's replication package); Eloundou et al. (2024); Frey and Osborne (2017) | as published by each source, for comparison use with citation of the original paper |
 
-## Cleared but not yet ingested
+## The METR basis, stated in full
 
-METR's task-horizon evaluations are the declared primary anchor for the agentic subdomain
-from the next chain point. They are not in any released vintage yet, so they carry no row
-above. Their basis differs from every row that does: METR's `eval-analysis-public`
+METR's task-horizon evaluations are the primary agentic series of the v1.1.0
+release candidate; the summary row above exists because that candidate is
+assembled, and no METR-derived value ships until v1.1.0 is deposited. Their basis differs from every row that does: METR's `eval-analysis-public`
 repository carries no licence file, and our use rests on **written permission granted to
 the AI-Econ Lab on 13 Aug 2026** to derive occupation-year values and redistribute them as
 part of this index. A permission granted to us is not a licence that travels with the

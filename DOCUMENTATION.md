@@ -26,8 +26,13 @@ occupation ability profiles with a social-skill discount.
 
 The construction order matters, and it includes one nonlinear step. Per
 occupation and year, the ability-weighted exposure increment is discounted for
-social intensity, **squared**, scaled, and cumulated over years to the index
-level. Squaring preserves the ordering of increments within a year exactly, because
+social intensity (socially intensive work resists automation, so equal
+capability arrival exposes it less), **squared** (the paper's construction:
+squaring stretches the distribution of increments so dispersion across
+occupations grows as capabilities accumulate), scaled by a constant ten common
+to every cell, and cumulated over years to the index level. The rationale for
+each step is the paper's construction section; here we state what each does
+and what it leaves invariant. Squaring preserves the ordering of increments within a year exactly, because
 increments are non-negative. Two properties do not follow automatically, and we
 check them rather than assume them: in principle the ordering of cumulated
 levels could differ, and the timing of progress could matter, since the same
@@ -59,24 +64,36 @@ The applications and their columns, with membership in each composite:
 
 ¹ The released column set is the published paper's plus the two new application
 areas; conversation and software engineering enter the composites as measured
-members from 2024 and receive their own columns once their series thicken. A
+members from 2024; granting them columns is a discretionary decision taken at
+a chain point. A
 third second-generation composite, `daioe_g2nine`, runs over the nine original
 applications only (Section 5).
 
 Panels are published for five occupational taxonomies (O*NET-SOC 2010,
 SOC 2010, ISCO-08, SSYK 2012 and SSYK 96), each with per-year percentile
-companions. The v1.0.0 bundle additionally ships
+companions. One caution for Swedish users: the frozen SSYK panels store the
+occupation key as a label fusing code and title ("0110 Officerare") while the
+refresh panels store it numerically, which drops leading zeros; the shipped
+`occupation_titles_ssyk.csv` carries canonical zero-padded codes and titles
+for safe joins and readable lists. The v1.0.0 bundle additionally ships
 `soc2018/daioe_panel_soc2018.dta`, a SOC 2018 panel export on the frozen window
 in the pipeline's internal panel schema: exposure changes and cumulative
 levels, each cumulative column with a tie-invariant midrank percentile
-companion, outside the publication-format gating.
+companion, outside the publication-format gating. The export also carries the
+robotics series excluded from the index (`roe`), a seven-member non-generative
+variant of the aggregate (`redux`), and comparator exposure measures from the
+literature (Felten-Raj-Seamans, Webb, Eloundou et al., Frey-Osborne; sources
+and terms in `LICENSE-DATA`); its headline cumulative column `exp_cumul`
+corresponds to `daioe_allapps`.
 
 ## 2. Vintages
 
 **The frozen window, 2010–2023, is the series estimated in the paper.** Its
 protection is precise: every 2010–2023 cell of the v1.0.0 column set (the
 `daioe_*` columns and their `pctl_rank_*` companions, plus SOC 2010's 68
-inherited year-less rows) is verified cell-identical at stored precision on
+inherited year-less rows: one row for each of 68 codes that appear nowhere
+else in the panel, a property of the original construction's crosswalk,
+retained verbatim) is verified cell-identical at stored precision on
 every assembly. Values after 2023 are revisable in later vintages; columns new
 to a vintage carry their own history and are outside this guarantee.
 
@@ -190,6 +207,11 @@ declared per series and recorded with quoted evidence in the anchors file.
 
 ## 5. The five composites, and which to use
 
+Availability differs by version: v1.0.0 ships the two legacy composites and
+the nine subdomain columns; the three second-generation composites, the two
+new subdomain columns and the precomputed `pctl_mid_*` companions ship from
+v1.1.0.
+
 **`daioe_allapps`, the legacy overall index.** Raw-sum construction over the
 nine original applications, permanently; the replication object behind the
 published estimates. The construction has no denominator: each year's
@@ -289,7 +311,12 @@ occupations". The legacy `pctl_rank_*` columns remain the published replication
 artefact, with a caveat: they are order-dependent inside tied groups, so two
 occupations with identical scores can carry different ranks, up to whole
 all-tie years. For v1.0.0, where only the legacy ranks exist, do not use ranks
-where ties matter; the substantive columns are authoritative.
+where ties matter; the substantive columns are authoritative, and the midrank
+is one line to compute yourself:
+
+```
+pctl_mid = 100 * rank(value, method="average", within year) / count(within year)
+```
 
 **Rankings and top-N lists.** To list the most exposed occupations in a year,
 sort on the substantive column itself (`daioe_allapps` for continuity with the
@@ -314,8 +341,9 @@ score_rel_max = 100 * value / peak
 ```
 
 The result reads "per cent of the most exposed occupation-year in the frozen
-window"; that peak is a 2023 clerical cell in every panel (office clerks 4413
-on ISCO-08, mail clerks 43-9081 on the SOC panels, 2121 on the SSYK panels),
+window"; that peak is a 2023 cell in every panel (coding and proof-reading
+clerks 4413 on ISCO-08, proofreaders and copy markers 43-9081 on the SOC
+panels, and mathematicians and actuaries 2121 on the SSYK panels),
 and values above 100 read as exposure beyond the frozen-window peak. The
 transformation is linear, so ratios and time paths survive. Never take each
 vintage's own maximum, which would rescale history with every release. The

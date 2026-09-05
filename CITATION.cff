@@ -2,17 +2,9 @@ cff-version: 1.2.0
 title: "DAIOE: Dynamic AI Occupational Exposure"
 message: "If you use DAIOE, please cite both this release and the paper below."
 type: dataset
-# Authors are the paper's eleven, in the paper's order (alphabetical by surname).
-#
-# OWED BEFORE PUBLISHING, and it cannot be filled in from here:
-#   1. DONE 19 Aug 2026: all eleven ORCIDs are in, each taken from that person's
-#      own email and never looked up. A wrong ORCID credits a stranger permanently.
-#   2. Affiliations for the eight left blank. Only Görg, Javed and Lodefalk carry a
-#      verified affiliation in the manuscript; the others are anonymised placeholders
-#      there, so they are omitted here rather than guessed.
-# Zenodo also supports `contributors` with DataCite roles (DataCurator, Researcher,
-# ProjectLeader) if the group later wants to distinguish who built the measure from
-# who contributed to the work around it.
+# Authors are the paper's eleven, in the paper's order. Affiliations are given
+# only where verified in the manuscript; each author's ORCID record carries
+# their own current affiliation.
 authors:
   - family-names: Engberg
     given-names: Erik
@@ -101,7 +93,9 @@ references:
         given-names: Sarah
       - family-names: Tang
         given-names: Aili
-    notes: "Working paper; replace with the published reference at acceptance."
+    year: 2026
+    url: "https://www.ai-econlab.com"
+    notes: "Working paper, AI-Econ Lab; this entry is replaced with the journal reference at acceptance."
 notes: >-
   VINTAGES ARE SEPARATE OBJECTS. The frozen 2010-2023 index underlies the published
   estimates; the 2024 refresh, the SOC2018 build and the 2025-onward vintage are

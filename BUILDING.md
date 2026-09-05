@@ -120,12 +120,12 @@ release report; the shipped 2025 assembly (the v1.1.0 candidate) used
 `--gpqa-parent maths`, `--allapps-rule survivors`, `--membership published`,
 `--genai legacy`, `--agentic metr80`; the earlier `--genai broad` run was
 superseded by the 4 September 2026 membership amendment (see `VINTAGES.md`).
-The broadened generative composite is then built as a separate column by
-`scripts/build_g2gen_composite_20260904.py` (standardised units over the four
-generative applications, reusing `g2_sigma_v1.csv`), and
-`scripts/wire_v110_release_rc2_20260904.py` wires the new columns
-(`g2all`, `g2gen`, `agentic`, `mathsci`) into the release candidate's
-publication panels. Output: `data/vintage/<tag>/` plus `reports/<tag>/RELEASE.md`
+The three second-generation composites are then built by
+`scripts/build_g2_v2_20260905.py` (shrinkage standard deviations, table
+`g2_sigma_v2.csv`; overall, generative and balanced nine-member variants), and
+`scripts/wire_v110_release_rc3_20260905.py` wires the new columns
+(`g2all`, `g2gen`, `g2nine`, `agentic`, `mathsci` — sixteen `daioe_*` columns
+in all) into the release candidate's publication panels. Output: `data/vintage/<tag>/` plus `reports/<tag>/RELEASE.md`
 with an input sha256 manifest. Before any deposit,
 `scripts/gate_panel_structure.py` additionally verifies every publication
 panel's structure (no missing keys, unique occupation-year pairs, exact expected

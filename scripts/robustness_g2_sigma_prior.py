@@ -32,11 +32,11 @@ prog = (pd.concat(frames).drop_duplicates(["application","year"])
 prog = prog[prog.application.notna() & (prog.application!="robotics")]
 
 tab = pd.read_csv(ROOT/"data/derived/g2_sigma_v2.csv").drop_duplicates("application").set_index("application")
-def sigma_with(fam_mult):
+def sigma_with(fam_mult, K_override=None):
     own = pd.to_numeric(tab["own_sd"], errors="coerce")
     n = tab["n_history_years"].astype(float)
     fam = tab["family_sd"].astype(float)*fam_mult
-    K = tab["K"].astype(float)
+    K = tab["K"].astype(float) if K_override is None else K_override
     s = (n*own.fillna(0) + K*fam)/(n+K)
     return s
 
@@ -61,14 +61,24 @@ M.columns=[re.sub(r"[^a-z]","",str(ab.get(i,"")).lower()) for i in M.columns]
 M=M.loc[:,[c for c in M.columns if c]]
 w52,_=bv.load_weights(None); social=bv.load_social_score(2.0)
 
-def panel_with(fam_mult, members=None):
+def panel_with(fam_mult, members=None, K_override=None):
     z=prog.copy()
     if members is not None: z=z[z.application.isin(members)]
-    z["progress"]=z.progress/z.application.map(sigma_with(fam_mult))
+    z["progress"]=z.progress/z.application.map(sigma_with(fam_mult, K_override))
     nt=z.groupby("year")["application"].transform("count")
     z["progress"]=z.progress/nt
     mm = M if members is None else M.loc[[a for a in M.index if a in members]]
     return bv.build_panel(mm, w52, z, social, 10.0)
+
+print("prior-WEIGHT sensitivity (K=5 shipped; halved and doubled):")
+base = panel_with(1.0)
+for K in (2.5, 10.0):
+    var = panel_with(1.0, K_override=K)
+    m = base.merge(var, on=["occ_code_onet","year"], suffixes=("_b","_v"))
+    y25 = m[m.year==2025]
+    print(f"g2all K={K}: Spearman 2025 increment={y25.exp_change_b.corr(y25.exp_change_v, method='spearman'):.4f}, "
+          f"level={y25.exp_cumul_b.corr(y25.exp_cumul_v, method='spearman'):.4f}, "
+          f"mean 2025 increment {y25.exp_change_b.mean():.3f} -> {y25.exp_change_v.mean():.3f}")
 
 for label, members in [("g2all", None), ("g2gen", GEN4)]:
     base=panel_with(1.0, members)

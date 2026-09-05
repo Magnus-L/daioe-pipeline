@@ -55,6 +55,10 @@ VINTAGES = [
 EXTRAS = [
     # data/out's copy spans 2010-2023, the frozen window, so it belongs in v1.0.0.
     # The copy inside the 2025 vintage folder runs to 2025 and is held back with it.
+    ("occupation_titles_ssyk.csv",
+     ROOT / "data" / "derived" / "occupation_titles_ssyk.csv",
+     "SSYK code-title lookup with canonical zero-padded string codes, for titles "
+     "on top-N lists and safe joins to Swedish registers."),
     ("standardisation_moments_v1.csv",
      ROOT / "data" / "derived" / "standardisation_moments_v1.csv",
      "Frozen 2010-2020 standardisation moments (mean, sd) per taxonomy and column, "
@@ -65,6 +69,7 @@ EXTRAS = [
 ]
 
 DOCS = [
+    (ROOT / "CITATION.cff", "CITATION.cff"),
     (ROOT / "LICENSE-DATA", "LICENSE-DATA"),
     (ROOT / "VINTAGES.md", "VINTAGES.md"),
     (ROOT / "data" / "derived" / "errata_frozen_workbook_v1.csv",
@@ -163,8 +168,8 @@ def main():
                 # The tab-separated text exports carry a .csv suffix internally
                 # (Stata-era convention); the published artifact names them .tsv
                 # (decision Magnus, 25 Aug 2026, cross-vendor finding 16).
-                name = f.name[:-4] + ".tsv" if f.suffix == ".csv" else f.name
-                shutil.copy2(f, dst / name)
+                out_name = f.name[:-4] + ".tsv" if f.suffix == ".csv" else f.name
+                shutil.copy2(f, dst / out_name)
                 n += 1
         present.append((name, desc, n))
         print(f"  {name}: {n} files")
@@ -174,7 +179,7 @@ def main():
             dst = STAGE / rel
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dst)
-            present.append((rel.split("/")[0], desc, 1))
+            present.append((rel.split("/")[0] if "/" in rel else rel, desc, 1))
             print(f"  {rel}: 1 file")
 
     for src, rel in DOCS:
@@ -222,7 +227,7 @@ def main():
 
 
 def readme(present):
-    rows = "\n".join(f"| `{n}/` | {d} |" for n, d, _ in present)
+    rows = "\n".join(f"| `{n}{'' if '.' in n else '/'}` | {d} |" for n, d, _ in present)
     return f"""# DAIOE — Dynamic AI Occupational Exposure, scores v{VERSION}
 
 Occupation-year AI exposure scores, built from measured performance gains on public AI
@@ -233,6 +238,21 @@ https://github.com/Magnus-L/daioe-pipeline — this bundle was built at commit
 `{repo_commit()}`. The pipeline reproduces every substantive `daioe_*` cell from raw
 inputs; the legacy percentile columns are reproduced from this deposited artifact
 itself (see "Percentile ranks and ties" below and `VINTAGES.md`).
+
+## Quick start
+
+```python
+import pandas as pd
+d = pd.read_stata("refresh-2024/daioe_ssyk2012.dta")          # or any taxonomy panel
+titles = pd.read_csv("occupation_titles_ssyk.csv", dtype={{"code": str}}).query("taxonomy=='ssyk2012'")
+top10 = (d[d.year == 2024].nlargest(10, "daioe_allapps")
+         .assign(code=lambda x: x.ssyk2012_4.astype(int).astype(str).str.zfill(4))
+         .merge(titles, on="code"))[["code", "title", "daioe_allapps"]]
+```
+
+To standardise as the paper does: merge `standardisation_moments_v1.csv` and
+compute `z = (value - mean) / sd`. Details, caveats and citing: `VINTAGES.md`
+here, and `DOCUMENTATION.md` in the repository.
 
 ## The folders are different objects
 
@@ -289,7 +309,7 @@ ranges and asserted keys — generated from the staged files at build time.
 | `daioe_<subdomain>` | the same for one capability subdomain: `stratgames` (abstract strategy games), `videogames` (real-time video games), `imgrec` (image recognition), `imgcompr` (image comprehension / visual question answering), `imggen` (image generation), `readcompr` (reading comprehension), `lngmod` (language modelling), `translat` (translation), `speechrec` (speech recognition) |
 | `daioe_genai` | generative-AI composite (membership documented per vintage in `VINTAGES.md`) |
 | `pctl_rank_*` | within-year percentile rank of the corresponding index, legacy tie convention — read the tie warning below before using |
-| `pctl_mid_*` | (from v1.1.0) tie-invariant within-year midrank percentile: identical values share identical percentiles; prefer these where ties could matter |
+| `pctl_mid_*` | tie-invariant within-year midrank percentile: identical values share identical percentiles; prefer these where ties could matter. In v1.0.0 they ship in the SOC 2018 extra; the taxonomy panels carry them from v1.1.0, and for v1.0.0 the recipe is one line: 100 * rank(value, method "average", within year) / count(within year) |
 
 ## Percentile ranks and ties
 

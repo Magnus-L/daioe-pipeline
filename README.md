@@ -12,6 +12,24 @@ progress that exposure rests on, and the time dimension lets you ask whether
 labour-market outcomes moved *when* the relevant capabilities did: a testable claim
 rather than a correlation.
 
+## Quick start
+
+Three lines get you a ranked list; no manual needed. From the Zenodo bundle:
+
+```python
+import pandas as pd
+d = pd.read_stata("refresh-2024/daioe_ssyk2012.dta")          # or any taxonomy panel
+titles = pd.read_csv("occupation_titles_ssyk.csv", dtype={"code": str}).query("taxonomy=='ssyk2012'")
+top10 = (d[d.year == 2024].nlargest(10, "daioe_allapps")
+         .assign(code=lambda x: x.ssyk2012_4.astype(int).astype(str).str.zfill(4))
+         .merge(titles, on="code"))[["code", "title", "daioe_allapps"]]
+```
+
+To standardise the way the paper does, merge `standardisation_moments_v1.csv`
+and compute `z = (value - mean) / sd`. To cite, see "Citing" below. Everything
+else (vintages, caveats, rescaling) is in the two documents this README
+points to.
+
 ## What the release contains
 
 | | |
@@ -22,7 +40,7 @@ rather than a correlation.
 | Formats | Stata `.dta` (the verified originals), with TSV and Excel derivatives; the standardisation moments the paper uses ship as a small CSV |
 | Built from | Public AI benchmark results and O\*NET occupational ability profiles |
 
-Scores are published on Zenodo. This repository holds the code that builds them, its
+Scores are distributed via Zenodo. This repository holds the code that builds them, its
 test suite, and the documentation.
 
 ## Which vintage to use, and why it matters
@@ -68,7 +86,7 @@ every benchmark measurement came from and the licences those sources carry.
 ## Before you rely on it
 
 Read `DOCUMENTATION.md`, the public technical reference, in particular the sections
-“How new series and subdomains enter” and “The four composites, and which to use”. Where the paper's appendix and
+“How new series and subdomains enter” and “The five composites, and which to use”. Where the paper's appendix and
 the implementation differ, the implementation is authoritative; the differences are
 the documented residual classes in `VALIDATION.md`.
 

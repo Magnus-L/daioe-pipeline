@@ -15,6 +15,12 @@ ROOT = Path(__file__).resolve().parents[1]
 F = ROOT / "data" / "out" / "daioe_panel_soc2018.dta"
 d = pd.read_stata(F)
 cum = [c for c in d.columns if c.startswith("exp_cumul_")]
+if "exp_cumul" in d.columns and "pctl_mid_allapps" not in d.columns:
+    r = d.groupby("year")["exp_cumul"].rank(method="average")
+    n = d.groupby("year")["exp_cumul"].transform("count")
+    d["pctl_mid_allapps"] = (100.0 * r / n).astype("float32")
+    chk = d.groupby(["year", "exp_cumul"])["pctl_mid_allapps"].nunique()
+    assert (chk <= 1).all(), "tie-invariance failed for pctl_mid_allapps" 
 added = []
 for c in cum:
     out = "pctl_mid_" + c.removeprefix("exp_cumul_")
