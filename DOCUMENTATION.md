@@ -325,7 +325,9 @@ and column, computed over the 2010–2020 rows), so standardising is one line
 and cannot be done on the wrong window:
 
 ```
-z = (value - mean) / sd     # mean, sd from standardisation_moments_v1.csv
+mean = mean(value where 2010 <= year <= 2020)   # once per taxonomy panel and column;
+sd   = sd(value   where 2010 <= year <= 2020)   # shipped in standardisation_moments_v1.csv
+z    = (value - mean) / sd
 ```
 
 The file carries no rows for `daioe_agentic` and `daioe_mathsci`, which have
