@@ -177,11 +177,14 @@ occupations is 0.74 in the three-member 2013 cross-section, 0.97 by 2016 and 0.9
 
 **`daioe_g2gen`, generative exposure, current.** The same construction restricted to
 the four generative applications (language modelling, image generation, conversation,
-software engineering). No concentration bound applies to it: with three or four members, one member
-will often carry more than half of a year's movement, so the overall composite's
-bound would carry no information here. Member shares are instead reported per
-year in the release documentation; in 2025 software engineering carries 71 per
-cent of the standardised sum, on a thin-baseline first increment. Use it when the question is generative AI specifically. Within-year rank
+software engineering). The overall composite's rule that no single member may drive more than half of
+a year's movement is not applied here, and for a simple reason: among only
+three or four members, one will often account for more than half even when
+everything works as intended, just as one person in a group of three often
+contributes more than half of anything. The rule would trip constantly while
+revealing nothing. Instead the release documentation shows, year by year, how
+much each member contributed; in 2025 software engineering contributed 71 per
+cent, largely its first measured year against a thin baseline. Use it when the question is generative AI specifically. Within-year rank
 agreement with `daioe_genai` (Spearman, O*NET-SOC occupations) is 0.97–0.99 from 2016.
 
 **The two new subdomains.** `daioe_agentic` (autonomous multi-step execution of real

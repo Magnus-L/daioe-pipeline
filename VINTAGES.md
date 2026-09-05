@@ -157,10 +157,16 @@ all-applications composite continues unchanged.
 construction restricted to the four generative applications: language
 modelling, image generation, conversation and software engineering. It uses the
 same standard deviations and the same mean over observed members, and it equals
-zero until its first members begin in 2012. No concentration bound is applied to it: with three or four members, one
-member will often carry more than half of a year's movement, so the overall
-composite's bound would carry no information here. Instead the release
-documentation reports each member's share by year. In 2025 most of its movement comes from software
+zero until its first members begin in 2012. The overall composite above has up to thirteen members, and its assembly stops
+if any single member ever accounts for more than half of a year's total
+movement: among that many members, such dominance would signal a fault. The
+generative composite has at most four members, and in a typical year only three
+with data. Among so few, one member will often account for more than half even
+when everything works as intended, just as one person in a group of three often
+contributes more than half of anything. A more-than-half rule would therefore
+stop every build while revealing nothing. We replace the rule with openness:
+the release documentation shows, year by year, how much each member
+contributed. In 2025 most of its movement comes from software
 engineering's first measured year, computed against a thin baseline and best
 read as an upper bound that later vintages will revise as more evaluations
 accumulate. Within a year its ranking of occupations agrees closely with the
