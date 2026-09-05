@@ -19,21 +19,23 @@ The object behind the published estimates. Nine applications, 140 benchmarks (14
 series), as documented in the paper's Online Appendix Section C. Released as v1.0.0
 together with the 2024 refresh.
 
-**Known errata, retained by design.** An errata file
-(`errata_frozen_workbook_v1.csv`, shipped in the bundle) lists four small
-transcription discrepancies found when checking the source workbook against the
-original repositories. The released frozen data keep them exactly as the paper
-estimated them: the frozen series is a replication object, not a best-current-belief
-series. The corrections are declared for a future chain point and no released
-vintage has yet applied them. The applying mechanism ships with the pipeline
-(`apply_errata`, off in every build to date): it corrects the source rows so that
-post-seam increments are computed against the corrected frontier state, the splice
-keeps every published level, and two fatal guards hold: the flag refuses a
-frozen-window build, and every erratum must match exactly one source row. The
-vintage that first switches it on will state the applied construction and a worked
-example beside its numbers. Two of the four (E2, E4)
-would create or move state-of-the-art frontiers if applied inside history, which is
-why they wait for a seam.
+**Known errata, retained by design.** Checking the source workbook against the
+original benchmark repositories turned up four small transcription discrepancies.
+They are listed in `errata_frozen_workbook_v1.csv`, shipped in the bundle. The
+released frozen data keep all four exactly as the paper estimated them, because
+the frozen series is a replication object rather than a best-current-belief
+series.
+
+Corrections wait for a future chain point; no released vintage has applied them.
+The reason is the seam discipline itself: two of the four (E2, E4) would create
+or move a state-of-the-art frontier if corrected inside history, which is
+precisely the silent rewriting the freeze exists to prevent. The pipeline ships
+the switch (`apply_errata`, off in every build to date). Turned on at a seam, it
+corrects the source rows so that later increments start from the corrected
+frontier state, while every published level stays as released. Two guards are
+fatal: the switch refuses a frozen-window build, and each erratum must match
+exactly one source row. The vintage that first applies it will document the
+construction with a worked example beside its numbers.
 
 ## The 2024 refresh, released as v1.0.0
 
