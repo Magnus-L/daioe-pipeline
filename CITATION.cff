@@ -79,8 +79,28 @@ references:
   - type: article
     title: "AI Unboxed: Capability Arrival and the Clerical Decline"
     authors:
+      - family-names: Engberg
+        given-names: Erik
+      - family-names: Görg
+        given-names: Holger
+      - family-names: Hellsten
+        given-names: Mark
+      - family-names: Javed
+        given-names: Farrukh
       - family-names: Lodefalk
         given-names: Magnus
+      - family-names: Längkvist
+        given-names: Martin
+      - family-names: Monteiro
+        given-names: Natália
+      - family-names: Kyvik Nordås
+        given-names: Hildegunn
+      - family-names: Pulito
+        given-names: Giuseppe
+      - family-names: Schroeder
+        given-names: Sarah
+      - family-names: Tang
+        given-names: Aili
     notes: "Working paper; replace with the published reference at acceptance."
 notes: >-
   VINTAGES ARE SEPARATE OBJECTS. The frozen 2010-2023 index underlies the published

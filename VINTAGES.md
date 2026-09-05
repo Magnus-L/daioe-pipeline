@@ -1,7 +1,9 @@
 # DAIOE vintages
 
 This file is the public record of what each vintage of the measure contains and why.
-It ships inside each release bundle and lives at the head of the repository. The
+It ships inside each release bundle and lives at the head of the repository; when
+the two copies differ, the copy inside a deposited bundle is the record for that
+version and the repository head describes the forthcoming one. The
 paper and its online appendix document the frozen 2010–2023 index that every
 published estimate uses; everything below concerns later vintages, and none of it
 can change a frozen value: assembly stops rather than produce a vintage in which any
@@ -49,7 +51,9 @@ frontier data, September 2026. The pipeline still ships the correction switch
 for instance at a journal revision, can apply the corrections from a stated chain
 point with the construction documented. The switch will not run on a
 frozen-window build, and each erratum must match exactly one source row; either
-violation stops the build.
+violation stops the build. The corrections are committed, not merely available:
+they apply at the next full re-estimation of the series, which completes the
+analogy with a scheduled benchmark revision.
 
 ## The 2024 refresh, released as v1.0.0
 
@@ -79,12 +83,14 @@ reading, a documented reference value with quoted evidence. Series that only fee
 progress may enter without a reference value, which is the frozen basket's own
 standard (65 of its 149 series carried none). Reference values never enter the
 index computation: exposure is built from benchmark frontier increments alone, and
-the anchors support admission, human-comparison readings, and a robustness
-transformation that is checked at assembly but is not part of any released vintage.
+the anchors support admission, human-comparison readings, and the anchored
+capability transform (an information-weighted alternative construction,
+`notes` design of 7 Aug 2026) that is computed as a robustness check at
+assembly but is not part of any released vintage.
 
 | Series | Application | Reference | Notes |
 |---|---|---|---|
-| METR task horizons (80% reliability) | Agentic task execution | 960 min, instrument ceiling | The primary agentic series: the length of real computer-based work task, in minutes of human working time, completed at 80% reliability. Fixed to version 1.1 of METR's task suite; used with METR's written permission of 13 Aug 2026 (cite METR; METR is not affiliated with this work), with the licence basis restated at each deposit per LICENSE-DATA and scripts/check_metr_licence.py. The suite's 50%-reliability variant was retired when frontier systems outgrew its 16-hour range; the two variants are one construct and are never in the basket together. |
+| METR task horizons (80% reliability) | Agentic task execution | 960 min, instrument ceiling | The primary agentic series: the length of real computer-based work task, in minutes of human working time, completed at 80% reliability. Fixed to version 1.1 of METR's task suite; used with METR's written permission of 13 Aug 2026 (cite METR; METR is not affiliated with this work), with the licence basis restated at each deposit per LICENSE-DATA and scripts/check_metr_licence.py. The suite's 50%-reliability variant was retired when frontier systems outgrew its 16-hour range; the two variants are one construct and are never in the basket together. The 80% variant's best observed value is 186 minutes against the 960-minute ceiling, and when it saturates in its turn the same rule applies: a successor reliability bar enters at a chain point. |
 | OSWorld | Agentic task execution | 72.36, human | Real desktop computer work; externally collected scores from heterogeneous system set-ups, declared as such. |
 | GDPval | Agentic task execution | 50, parity by construction | Scored as a win rate against human professionals, so 50 is parity by definition. |
 | TheAgentCompany | Agentic task execution | 95, ceiling (by convention) | Corroboration series, not in the basket: fixed to one simulation environment (results from other environments excluded so an environment change is never booked as capability); the ceiling follows the SWE-bench convention. |
@@ -107,16 +113,27 @@ and the two technical-problem rows serve the two new areas ("solving real-world
 technical problems" for agentic task execution; "solving constrained,
 well-specified technical problems" for mathematical and scientific reasoning),
 used unedited. The borrowed rows were checked by an informal concordance exercise, an
-independent LLM re-scoring of the expert matrix from definitions alone: held-out
-r = 0.76 (Pearson; Spearman 0.77) across the matrix, the two rows themselves at
-0.80 and 0.79, with a second, independently prompted model from a different vendor
-agreeing (0.81 and 0.80 against the same expert rows; the runs and scores ship in
-the repository at `mapping/output/frs_validation_published_v2018.json`, generator
-`mapping/code/validate_against_frs.py`). We read this as a consistency check only, not as validation of the rows as occupational-ability
+independent LLM re-scoring of the sixteen-row expert matrix from definitions
+alone: held-out r = 0.78 (Pearson; Spearman 0.79) across the matrix, the two
+rows themselves at 0.80 (agentic) and 0.79 (maths/science)
+(`mapping/output/frs_validation_claude_v2026_13apps.json`, generator
+`mapping/code/validate_against_frs.py`; the same generator's re-scoring of the
+published nine-row matrix alone gives held-out 0.69/0.74,
+`frs_validation_published_v2018.json`). A second, independently prompted model
+from a different vendor agrees: 0.81 and 0.80 against the same expert rows, and
+0.92/0.91 with the first model
+(`mapping/output/frs_crossvendor_chatgpt_2026-08-24.md`, raw scores beside it).
+One caveat belongs to both runs: the models were plausibly trained on the
+published 2018 matrix, so "from definitions alone" constrains the prompt, not
+the models' prior exposure. We read this as a consistency check only, not as validation of the rows as occupational-ability
 mappings for the new constructs; blinded human expert re-rating of the two new areas is declared
 future work at a chain point. Conversation and software engineering use their
 original expert rows. Both new columns are chained: they are missing (not zero)
-before 2024 in every format, zero at the 2024 chain year, and cumulate from there.
+before 2024 in every format, zero at the 2024 chain year, and cumulate from
+there. The pre-history convention differs by object on one rule: a subdomain
+column is missing before its construct is measured, while a composite is
+defined (at zero) wherever its formula has members, which is why `daioe_g2gen`
+carries zeros in 2010--2011 and values from 2012.
 
 **Composite membership (amended 4 September 2026).** `daioe_genai` keeps its
 original membership permanently (language modelling and image generation), the
@@ -140,11 +157,20 @@ from the construction: each application's annual progress is divided by the
 standard deviation of its own historical year-to-year changes, and the
 composite is the mean over the applications observed that year. An application
 observed for fewer than five years has no usable standard deviation of its
-own, so it borrows the value estimated for benchmarks measured on the same
-scale until its own history accumulates; the later switch to its own history
-is prospective, revises no earlier level, and the released table
-(`g2_sigma_v1.csv`) records each application's standard deviation, its basis
-and the switch rule. The composite has values over the full 2010--2025 window.
+own, so it borrows one estimated at the benchmark level: the standard deviation
+of positive frontier increments, 2010--2023, pooled over all benchmarks sharing
+the application's measurement scale (0.392 for the percentage-correct family,
+which conversation, software engineering and mathematical and scientific
+reasoning borrow; 0.835 for the score family, which the agentic series
+borrows). The later switch to an application's own history is prospective and
+revises no earlier level. The released table (`g2_sigma_v1.csv`, generated by
+`scripts/build_g2_composite_20260824.py`) records each application's standard
+deviation, its basis and the switch rule; the table is versioned and frozen as
+shipped, and any re-estimation is itself a declared change at a chain point,
+never a silent one. Unlike the two assembly checks below, which stop a build
+and never enter a released number, these standard deviations sit inside every
+second-generation value: they are construction parameters, and their
+sensitivity is quantified in the caveats. The composite has values over the full 2010--2025 window.
 Each year's mean runs over the applications observed that year (a measured
 zero counts as observed; a year with no source does not), so early years have
 few members (three in 2013) and 2025 runs on partial coverage (see the
@@ -176,6 +202,13 @@ by design (Spearman over O*NET-SOC 2010 occupations, per year: 0.74 in the
 three-member 2013 cross-section, 0.97 by 2016, 0.99 in 2023 and 2025). The
 original all-applications composite continues unchanged.
 
+The count behind "thirteen": the nine original applications, the two new areas
+with their own columns, and conversation and software engineering, which enter
+the second-generation composites as measured members from 2024 but carry no
+subdomain columns of their own (their columns are planned once their series
+thicken; the release keeps the published paper's column set plus the two new
+areas).
+
 **A second-generation generative composite** (`daioe_g2gen`) is the same
 construction restricted to the four generative applications: language
 modelling, image generation, conversation and software engineering. It uses the
@@ -199,27 +232,92 @@ an arbitrary spread. The legacy `pctl_rank_*` columns are unchanged and remain t
 published replication artefact; the new columns are outside the freeze claim, like
 every column new to a vintage.
 
-**Known caveats, shipped rather than filed.** A newly admitted series' first
-increment is computed against its entry-year frontier; where that baseline is thin
-(SWE-bench Verified: one 2024 evaluation; ToMBench: two), the 2025 increment is an
-upper bound, revisable as evaluation suites score earlier models retrospectively.
-The same caution applies to the borrowed standard deviations: halving or
-doubling the scale-family values that the four young applications borrow moves
-the size of the 2025 composite increment by a factor of roughly three in either
-direction, while leaving occupation rankings essentially unchanged (Spearman at
-least 0.995 across occupations, increments and levels alike;
-`scripts/robustness_g2_sigma_prior.py`). The level of the 2025 step should
-therefore be read as provisional, and cross-sectional comparisons of
-occupations as robust. For 2025 the original basket splits three ways, and the distinction matters for
-`daioe_g2all`'s denominator. Four applications are unobserved in 2025 (abstract
-strategy games, real-time video games, language modelling, translation): their
-sources' reporting ended, their series are carried at the last level, and they are
-outside the 2025 G2 mean. Visual question answering is observed, with a measured
-zero increment (its continuation source reported in 2025 and the frontier did not
-move), so it is inside the 2025 G2 mean. The remaining originals and the new areas
-are observed with measured progress. In every case it is the reporting that ended, not the capability, and 2025 is a partial-coverage year
-for the original basket. Vintage values beyond
-2023 are revisable in later vintages; the frozen window is not.
+**Known caveats, shipped rather than filed.** Four things a user of the
+appended years should know, each with its number.
+
+*Thin entry baselines.* A newly admitted series' first increment is computed
+against its entry-year frontier. The 2024 evaluation counts are: SWE-bench
+Verified 1, GDPval 1, OSWorld 2, ToMBench 2, METR-80 7, GPQA Diamond 7,
+SimpleBench 19, MATH Level 5 52. Where the count is low the 2025 increment is
+an upper bound in one precise sense: a frontier taken over fewer evaluations is
+weakly understated, so later retrospective scoring of 2024-released models can
+only raise the 2024 baseline and shrink the 2025 step. The two increments that
+matter most, software engineering's and conversation's, rest on baselines of
+one and two evaluations respectively.
+
+*Entrant weight in the 2025 composites.* The four applications in their first
+measured year (conversation, software engineering, agentic, maths/science)
+jointly carry 63 per cent of 2025's summed standardised progress. With them the
+application-level mean 2025 increment is 1.30; without them it is 0.87, and the
+honest reading of the 2025 step is that range rather than either endpoint
+(`scripts/robustness_composite_diagnostics.py`). The principle separating this
+from the withdrawn genai broadening: there the raw-sum construction let the
+entrants' arbitrary units misstate the composite, a defect of construction; here
+the units are standardised and the remaining uncertainty is timing, which is
+bounded, disclosed and revisable. Member contributions by chained year:
+
+| Share of summed standardised progress | 2024 | 2025 |
+|---|---|---|
+| visual question answering | 35% | 0% |
+| speech recognition | 21% | 0% |
+| language modelling | 15% | unobserved |
+| reading comprehension | 12% | 29% |
+| generating images | 9% | 7% |
+| image recognition | 7% | 1% |
+| conversation | entry year | 2% |
+| software engineering | entry year | 24% |
+| agentic task execution | entry year | 13% |
+| maths/science reasoning | entry year | 24% |
+
+*What missingness means, in both conventions.* The release handles a series
+with no source in a year in two ways, and they bracket the truth from opposite
+sides. The legacy columns carry a dead series at its last level, which books
+zero progress: `daioe_allapps` and the subdomain columns are therefore biased
+downward from 2024 as sources end, and the legacy generative composite is
+nearly flat in 2025 (increment +0.02 at the occupation mean) because language
+modelling, one of its two members, is unobserved that year. The
+second-generation composites instead drop the unobserved application from that
+year's mean, which implicitly imputes to it the average progress of the
+observed members; because series tend to die when saturated, the survivors are
+disproportionately still-moving, so this convention leans upward. The practical
+consequence for 2025 cross-sections: occupations loaded on agentic, software
+and maths/science are measured toward the top of their plausible range, and
+occupations loaded on language modelling and translation toward the bottom.
+The remedy is replacement, not imputation: a dead construct re-enters when a
+successor series carrying the same construct is admitted at a chain point (the
+image-comprehension continuations are the precedent), and evaluating successor
+series for language modelling and translation is first on the v2026 workplan.
+This mirrors price-index practice, where carrying a missing price forward is
+discouraged precisely because it biases measured change toward zero.
+
+*The borrowed standard deviations.* Halving or doubling the scale-family
+values that the four young applications borrow moves the size of the 2025
+composite increment by a factor of roughly three in either direction, while
+leaving occupation rankings essentially unchanged (Spearman at least 0.995
+across occupations, increments and levels alike;
+`scripts/robustness_g2_sigma_prior.py`). Read the level of the 2025 step as
+provisional and cross-sectional comparisons as robust; the same conclusion
+holds for the paper's own squaring step (within-year orderings unchanged by
+construction; cumulative-level rankings at Spearman 0.97 or higher against an
+unsquared variant) and for the choice of expert row behind the two new columns
+(swapping the two borrowed rows moves their 2025 occupation rankings by less
+than half a Spearman point: 0.996).
+
+For 2025 the original basket splits three ways. Four applications are
+unobserved (abstract strategy games, real-time video games, language modelling,
+translation); visual question answering is observed with a measured zero
+increment (inside the G2 mean); the remaining originals and the new areas are
+observed with measured progress. In every case it is the reporting that ended,
+not the capability, and 2025 is a partial-coverage year for the original
+basket. Vintage values beyond 2023 are revisable in later vintages; the frozen
+window is not. Because the two overall composites weight the basket differently
+by design, their agreement is also a time-series question, not only a
+cross-sectional one: the occupation-mean annual increments of `daioe_allapps`
+and `daioe_g2all` correlate at 0.81 over 2013--2023 and 0.62 through 2025, the
+divergence arriving exactly where the new domains enter, and per-year
+increment rank agreement across occupations is 0.90--1.00 throughout (for the
+generative pair, 0.98--0.99 until 2025 and 0.89 in 2025, the first year the
+two constructions genuinely differ).
 
 ## Citing a vintage
 
@@ -231,8 +329,10 @@ applies.
 
 ## Provenance and verification
 
-Every admitted series has a provenance record (`data/updates/provenance_*.json`)
-naming its source, retrieval date and file hashes. Every reference value is in `human_anchors_v1.csv` (shipped in
+Every admitted series has a provenance record (`data/updates/provenance_*.json`
+in the repository, which is the audit surface for admissions; the scores bundle
+carries the archive-level `provenance/pwc_provenance.csv`) naming its source,
+retrieval date and file hashes. Every reference value is in `human_anchors_v1.csv` (shipped in
 the bundle) with its source and a quoted passage. Every vintage assembly
 re-verifies, cell by cell, that all frozen published values are unchanged in every
 occupational taxonomy, and that no admitted series carries a value before its chain

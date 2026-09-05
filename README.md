@@ -47,7 +47,8 @@ guarantee covers.
 Cite the release *and* the paper, and name the object you used. Both matter: the
 release fixes which version of the measure, the paper documents what it is.
 
-- **This version (v1.0.0):** https://doi.org/10.5281/zenodo.21873968
+- **This version (v1.0.0):** https://doi.org/10.5281/zenodo.21873968 (reserved;
+  resolves once the first deposit is published)
 - **All versions:** the concept DOI on the Zenodo record, added here at first deposit.
 - v1.0.0 contains two objects, so cite the DOI, the object ("frozen 2010–2023 index"
   or "2024 refresh"), and the filename you loaded.
@@ -66,7 +67,7 @@ every benchmark measurement came from and the licences those sources carry.
 ## Before you rely on it
 
 Read `DOCUMENTATION.md`, the public technical reference, in particular the sections
-on how series are admitted and on basket composition. Where the paper's appendix and
+“How new series and subdomains enter” and “The four composites, and which to use”. Where the paper's appendix and
 the implementation differ, the implementation is authoritative; the differences are
 the documented residual classes in `VALIDATION.md`.
 

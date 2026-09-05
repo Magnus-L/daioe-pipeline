@@ -21,9 +21,15 @@ frontiers over public benchmarks, rescaled per Felten et al. 2018 so linear incr
 reflect exponential improvement); an application-to-ability relevance matrix; and O*NET
 occupation ability profiles with a social-skill discount. The construction order matters
 and includes a nonlinear step: per occupation and year, the ability-weighted exposure
-increment is discounted for social intensity, **squared** (spreading the distribution of
-increments; ordinal comparisons are preserved because increments are non-negative),
-scaled, and cumulated over years to the index level. Composites aggregate at the
+increment is discounted for social intensity, **squared**, scaled, and cumulated over
+years to the index level. The squaring preserves the ordering of increments within a
+year exactly (increments are non-negative) but not, in principle, the ordering of
+cumulated levels; in the data the level rankings barely move (Spearman 0.97 or
+higher against an unsquared variant in every year), and the paper reports the
+headline estimate re-run on the unsquared index (Online Appendix, Section M).
+One consequence is worth knowing: with squared increments the annual frequency is
+substantive, since the same cumulative progress arriving in fewer, larger steps
+yields a higher level. Composites aggregate at the
 application level before this occupation-level chain.
 
 The applications and their columns, with membership in each composite:
@@ -39,10 +45,14 @@ The applications and their columns, with membership in each composite:
 | Language modelling | `daioe_lngmod` | yes | yes | yes | yes | yes |
 | Translation | `daioe_translat` | yes | yes | – | – | yes |
 | Speech recognition | `daioe_speechrec` | yes | yes | – | – | yes |
-| Conversation | *(no own column yet)* | 2024 entrant | – | – | yes | yes |
+| Conversation¹ | *(no own column yet)* | 2024 entrant | – | – | yes | yes |
 | Software engineering | *(no own column yet)* | 2024 entrant | – | – | yes | yes |
 | Agentic task execution | `daioe_agentic` | 2024 entrant | – | – | – | yes |
 | Mathematical and scientific reasoning | `daioe_mathsci` | 2024 entrant | – | – | – | yes |
+
+¹ The released column set is the published paper's plus the two new application
+areas; conversation and software engineering enter the composites as measured
+members from 2024 and receive their own columns once their series thicken.
 
 Panels are published for five occupational taxonomies (O*NET-SOC 2010, SOC 2010,
 ISCO-08, SSYK 2012 and SSYK 96), each with per-year percentile companions. The v1.0.0
@@ -60,7 +70,9 @@ cumulative levels; no percentile companions and no publication-format gating).
   outside this guarantee.
   The released panels are unstandardised. Standardisation to frozen 2010–2020 moments
   happens at estimation, where the moments are computed once and reused, so appending a
-  vintage never rescales an estimated year. Users who standardise a later vintage
+  vintage never rescales an estimated year; the window ends in 2020 so that the
+  moments predate the estimation frontier and the 2021--2023 acceleration,
+  keeping standardised coefficients in pre-shock units. Users who standardise a later vintage
   themselves must compute moments on 2010–2020 only, never on the full window.
 - **Vintages are labelled by coverage window** (e.g. *DAIOE v2025* covers 2010–2025) and
   are separate, citable objects.
@@ -142,9 +154,12 @@ published with a complete history of its own; the standardisation table ships as
 
 **Known caveats:** (i) a newly admitted series' first measured year is computed against
 its entry-year frontier, and where that baseline is thin, late-entry-year capability is
-booked to the first measured year: SWE-bench Verified (one 2024 evaluation) and
-ToMBench (two) are the thin cases, so their 2025 increments are upper bounds pending
-fuller evaluation coverage; (ii) in 2025, four of the nine original applications are
+booked to the first measured year. The 2024 evaluation counts are SWE-bench
+Verified 1, GDPval 1, OSWorld 2, ToMBench 2, METR-80 7, GPQA 7, SimpleBench 19,
+MATH Level 5 52; the low-count cases' 2025 increments are upper bounds in a
+precise sense (a frontier over fewer evaluations is weakly understated, so
+retrospective scoring of 2024 models can only raise the baseline and shrink the
+step); (ii) in 2025, four of the nine original applications are
 unobserved (abstract strategy games, real-time video games, language modelling,
 translation: reporting ended, series carried at their last level, outside the
 observed-member means), while visual question answering is observed with a measured
@@ -156,9 +171,11 @@ in the anchors file.
 
 **`daioe_allapps`, the legacy overall index.** Raw-sum construction over the nine
 original applications, permanently; the replication object behind the published
-estimates. Note that its *appended* years (2024 onward) average over the applications
-observed each year, so while eligibility is fixed, the effective denominator can shrink
-as sources end; the coverage audit states which.
+estimates. The construction has no denominator: each year's occupation-level
+increment adds the ability-weighted contributions of the applications observed
+that year, and an application with no source contributes zero. Appended
+increments (2024 onward) are therefore understated, not rescaled, as sources
+end; the coverage audit states which applications each year books at zero.
 
 **`daioe_genai`, the legacy generative composite.** Raw-sum over its original two
 members, language modelling and image generation, permanently. Use either legacy column
@@ -168,12 +185,19 @@ for continuity with the published measure.
 units of its historical year-to-year variation, averaged over the applications observed
 that year; all thirteen applications are eligible. This is what lets generative,
 agentic and reasoning domains sit in one number, and it is the recommended headline for
-current monitoring from 2024 onward. Not a constant-basket series. An application with
+current monitoring from 2024 onward, read with its composition in view: the four
+applications in their first measured year jointly carry 63 per cent of 2025's
+summed standardised progress, and the application-level mean 2025 increment is
+1.30 with them and 0.87 without them, a range the release reports rather than
+resolves. Not a constant-basket series. An application with
 fewer than five observed years borrows its scale family's variation until a declared,
 prospective sigma-basis switch (the sigma table states each basis and the rule). Where
 the two overall indices overlap, within-year Spearman rank agreement across O*NET-SOC
 occupations is 0.74 in the three-member 2013 cross-section, 0.97 by 2016 and 0.99 from
-2023.
+2023; cross-sections of cumulated indices agree near-mechanically, so the informative
+diagnostics are the increment ones: per-year increment rank agreement is 0.90--1.00
+throughout, and the occupation-mean increment paths correlate at 0.81 over 2013--2023
+and 0.62 through 2025, the divergence arriving exactly where the new domains enter.
 
 **`daioe_g2gen`, generative exposure, current.** The same construction restricted to
 the four generative applications (language modelling, image generation, conversation,
@@ -184,7 +208,9 @@ would stop every build while revealing nothing. Instead the release
 documentation reports, year by year, how much each member contributed; in 2025
 software engineering contributed 71 per cent, largely its first measured year
 against a thin baseline. Use it when the question is generative AI specifically. Within-year rank
-agreement with `daioe_genai` (Spearman, O*NET-SOC occupations) is 0.97–0.99 from 2016.
+agreement with `daioe_genai` (Spearman, O*NET-SOC occupations) is 0.97–0.99 from 2016
+in levels; in increments it is 0.98–0.99 until 2025 and 0.89 in 2025, the first year
+the two constructions genuinely differ.
 
 **The two new subdomains.** `daioe_agentic` (autonomous multi-step execution of real
 computer work, measured as the length of human task completed reliably) and
@@ -193,8 +219,11 @@ subdomain columns like `daioe_lngmod`, not composites. Both are chained at 2024 
 earlier values, so their histories are short and their early movements rest on few
 series: agentic on one primary series (METR), and mathematical and scientific
 reasoning showing, with software engineering, the largest standardised 2025
-increments of any application (each about 2.8 historical standard deviations),
-all on thin entry-year baselines and revisable. The borrowed standard
+increments of any application (each about 2.8 borrowed scale-family standard
+deviations). The two magnitudes have different anatomies: software
+engineering's rests on a one-evaluation 2024 baseline and is an upper bound,
+while maths/science's rests on a seven-evaluation baseline and a genuine GPQA
+surge, with the borrowed denominator the main uncertainty in both. The borrowed standard
 deviations behind the standardised units matter for levels but not for ranks:
 halving or doubling them moves the size of the 2025 composite increment by a
 factor of roughly three while leaving occupation rankings essentially unchanged
@@ -225,7 +254,9 @@ peak = max(value where 2010 <= year <= 2023)   # once per taxonomy panel and col
 score_rel_max = 100 * value / peak
 ```
 
-The result reads "per cent of the most exposed occupation-year in the frozen window";
+The result reads "per cent of the most exposed occupation-year in the frozen window"
+(that peak is a 2023 clerical cell in every panel: office clerks 4413 on ISCO-08,
+mail clerks 43-9081 on the SOC panels, 2121 on the SSYK panels);
 values above 100 read as exposure beyond the frozen-window peak. The transformation is
 linear, so ratios and time paths survive. Never take each vintage's own maximum, which
 would rescale history with every release. The same convention applies per sub-index,
@@ -246,6 +277,12 @@ canonical scale avoids version ambiguity.
 
 ## 7. Changelog
 
+- **5 Sep 2026, external-review hardening.** Three independent cold reviews of the
+  public documents; every numeric claim they challenged is now computed and shipped
+  as a robustness script (errata counterfactual, sigma-prior sensitivity, composite
+  diagnostics), known biases of the appended years are stated with directions and
+  magnitudes, and the concordance statistics were corrected to the shipped
+  artefacts.
 - **4 Sep 2026, composite-membership amendment.** The planned broadening of
   `daioe_genai` was withdrawn before deposit (99 per cent of the resulting 2025 step
   traced to two thin-baseline first increments under raw-sum aggregation); `daioe_genai`

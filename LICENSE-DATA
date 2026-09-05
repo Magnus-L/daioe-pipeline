@@ -12,8 +12,10 @@ give appropriate credit, link to the licence, and indicate whether changes were 
 
 ## How to attribute
 
-> Lodefalk, M. and Engberg, E. (2026). *DAIOE: Dynamic AI Occupational Exposure*
-> [data set]. Version and DOI as recorded in CITATION.cff.
+> Engberg, E., Görg, H., Hellsten, M., Javed, F., Lodefalk, M., Längkvist, M.,
+> Monteiro, N., Kyvik Nordås, H., Pulito, G., Schroeder, S. and Tang, A. (2026).
+> *DAIOE: Dynamic AI Occupational Exposure* [data set]. Version and DOI as
+> recorded in CITATION.cff, which is the authoritative citation form.
 
 ## Why CC BY and not something more restrictive
 
@@ -36,7 +38,10 @@ permits redistribution of derived work under CC BY with attribution.
 | Benchmark series, original nine applications (the frozen 2010-2023 index) | EFF AI Progress Measurement | data declared uncopyrightable by the source; prose and code CC BY-SA 4.0 / GPLv2+ |
 | Benchmark series, 190 rows of the frozen index plus the 2024 refresh | Papers with Code archived dumps | CC BY-SA 4.0; every row re-attributed to its publishing paper, see below |
 | Benchmark series, 2024 chain point onward | Epoch AI | CC BY 4.0 |
-| Theory-of-mind series (ToMBench) | ToMBench authors | MIT |
+| Theory-of-mind series (ToMBench) | ToMBench authors | MIT (benchmark); scores quoted from the organisers' publication |
+| Agentic task series (METR task horizons) | METR | written permission of 13 Aug 2026: scores may be redistributed in this dataset with citation of METR; METR is not affiliated with this work and the permission does not transfer to onward redistribution of the raw METR series |
+| Agentic corroboration and collected series (OSWorld, GDPval, TheAgentCompany) | Epoch AI benchmark collection | CC BY 4.0 (Epoch collection); underlying scores externally collected, declared as such |
+| Language-QA series (SimpleBench) | SimpleBench organisers | scores quoted as published facts with citation (simple-bench.com) |
 | Occupational crosswalks | Statistics Sweden, BLS, ILO | public, attribution requested |
 
 ## Cleared but not yet ingested
