@@ -183,7 +183,9 @@ for continuity with the published measure.
 
 **`daioe_g2all`, overall exposure, current.** Each application's annual progress in
 units of its historical year-to-year variation, averaged over the applications observed
-that year; all thirteen applications are eligible. This is what lets generative,
+that year (equal weights: the object is average progress across domains, and weighting
+by expert-matrix relevance mass instead reorders occupations imperceptibly); all
+thirteen applications are eligible. This is what lets generative,
 agentic and reasoning domains sit in one number, and it is the recommended headline for
 current monitoring from 2024 onward, read with its composition in view: the four
 applications in their first measured year jointly carry 63 per cent of 2025's

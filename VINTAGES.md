@@ -155,7 +155,14 @@ percentage points. Summing raw units would let the units, rather than the
 progress, set the weights. The companion aggregate therefore removes scale
 from the construction: each application's annual progress is divided by the
 standard deviation of its own historical year-to-year changes, and the
-composite is the mean over the applications observed that year. An application
+composite is the mean over the applications observed that year. Equal weights
+are a choice, not an absence of one: the composite's object is average progress
+across capability domains, so each domain counts once. The natural alternative,
+weighting each application by the ability-relevance mass it carries in the
+expert matrix, reorders occupations imperceptibly (increment rankings identical
+at Spearman 1.000, levels 0.97--0.99;
+`scripts/robustness_composite_diagnostics.py`), so the choice of weights does
+not drive the cross-section. An application
 observed for fewer than five years has no usable standard deviation of its
 own, so it borrows one estimated at the benchmark level: the standard deviation
 of positive frontier increments, 2010--2023, pooled over all benchmarks sharing

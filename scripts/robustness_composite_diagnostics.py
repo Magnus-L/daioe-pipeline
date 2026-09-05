@@ -125,3 +125,41 @@ for tx in ["onetsoc2010","soc2010","isco08","ssyk2012","ssyk96"]:
     i=fz.daioe_allapps.idxmax(); r=fz.loc[i]
     key=[c for c in d.columns if c not in ("year",) and not c.startswith(("daioe","pctl"))][0]
     print(f"  {tx:12s} peak={r.daioe_allapps:.3f} at {r[key]} in {int(r.year)}")
+
+print("== J. equal vs FRS-mass application weights (g2all) ==")
+mass = M.sum(axis=1)
+def panel_mass(z0):
+    z = z0.copy(); z["progress"] = z.progress/z.application.map(S)
+    tot = z.groupby("year")["application"].transform(lambda s: mass.loc[s].sum())
+    z["progress"] = z.progress*z.application.map(mass)/tot
+    abil=[c for c in M.columns if c in w52.columns]; Mx=M[abil]; Wx=w52[abil]
+    out=[]
+    for year,g in z.groupby("year"):
+        p=g.set_index("application").progress
+        a=[x for x in Mx.index if x in p.index]
+        ai=Mx.loc[a].mul(p.loc[a],axis=0).sum(axis=0)
+        ec=Wx.values@ai.reindex(abil).fillna(0.0).values
+        out.append(pd.DataFrame({"occ":Wx.index,"year":year,"chg":ec}))
+    pl=pd.concat(out,ignore_index=True)
+    pl["chg"]*=pl.occ.map(social).values; pl["chg"]=pl.chg**2*10
+    pl=pl.sort_values(["occ","year"]); pl["cum"]=pl.groupby("occ").chg.cumsum()
+    return pl
+zs=prog.copy(); zs["progress"]=zs.progress/zs.application.map(S)
+nt=zs.groupby("year")["application"].transform("count"); zs["progress"]=zs.progress/nt
+abil=[c for c in M.columns if c in w52.columns]; Mx=M[abil]; Wx=w52[abil]
+out=[]
+for year,g in zs.groupby("year"):
+    pp=g.set_index("application").progress
+    a=[x for x in Mx.index if x in pp.index]
+    ai=Mx.loc[a].mul(pp.loc[a],axis=0).sum(axis=0)
+    ec=Wx.values@ai.reindex(abil).fillna(0.0).values
+    out.append(pd.DataFrame({"occ":Wx.index,"year":year,"chg":ec}))
+peq=pd.concat(out,ignore_index=True)
+peq["chg"]*=peq.occ.map(social).values; peq["chg"]=peq.chg**2*10
+peq=peq.sort_values(["occ","year"]); peq["cum"]=peq.groupby("occ").chg.cumsum()
+pms=panel_mass(prog)
+mm=peq.merge(pms,on=["occ","year"],suffixes=("_eq","_ms"))
+for y in (2023,2025):
+    my=mm[mm.year==y]
+    print(f"  {y}: Spearman levels={my.cum_eq.corr(my.cum_ms,method='spearman'):.4f} "
+          f"increments={my.chg_eq.corr(my.chg_ms,method='spearman'):.4f}")
