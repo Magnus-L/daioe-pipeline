@@ -73,7 +73,7 @@ repository-code: "https://github.com/Magnus-L/daioe-pipeline"
 # and belongs in the manuscript and on the landing page instead.
 version: "1.0.0"
 doi: "10.5281/zenodo.21873968"
-date-released: "2026-08-10"
+date-released: "2026-09-05"
 # -----------------------------------------------------------------------------
 references:
   - type: article
