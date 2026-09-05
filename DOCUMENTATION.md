@@ -27,14 +27,16 @@ occupation ability profiles with a social-skill discount.
 The construction order matters, and it includes one nonlinear step. Per
 occupation and year, the ability-weighted exposure increment is discounted for
 social intensity, **squared**, scaled, and cumulated over years to the index
-level. The squaring preserves the ordering of increments within a year exactly,
-because increments are non-negative. It does not, in principle, preserve the
-ordering of cumulated levels; in the data the level rankings barely move
-(Spearman 0.97 or higher against an unsquared variant in every year), and the
-paper reports the headline estimate re-run on the unsquared index (Online
-Appendix, Section M). One consequence is worth knowing: with squared increments
-the annual frequency is substantive, since the same cumulative progress
-arriving in fewer, larger steps yields a higher level. Composites aggregate at
+level. Squaring preserves the ordering of increments within a year exactly, because
+increments are non-negative. Two properties do not follow automatically, and we
+check them rather than assume them: in principle the ordering of cumulated
+levels could differ, and the timing of progress could matter, since the same
+cumulative progress arriving in fewer, larger steps yields a higher level. In
+the data neither has bite for the rankings the index is read through.
+Occupation rankings of levels against an unsquared variant, in which neither
+concern arises, stay at Spearman 0.97 or higher in every year, and the paper
+reports the headline estimate re-run on the unsquared index (Online Appendix,
+Section M). Composites aggregate at
 the application level before this occupation-level chain.
 
 The applications and their columns, with membership in each composite:
@@ -66,7 +68,8 @@ SOC 2010, ISCO-08, SSYK 2012 and SSYK 96), each with per-year percentile
 companions. The v1.0.0 bundle additionally ships
 `soc2018/daioe_panel_soc2018.dta`, a SOC 2018 panel export on the frozen window
 in the pipeline's internal panel schema: exposure changes and cumulative
-levels, with no percentile companions and no publication-format gating.
+levels, each cumulative column with a tie-invariant midrank percentile
+companion, outside the publication-format gating.
 
 ## 2. Vintages
 
