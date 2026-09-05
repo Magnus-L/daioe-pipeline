@@ -349,45 +349,11 @@ We deliberately ship raw values rather than a rescaled column. The raw cells
 are the citable layer the release checks protect and published work builds on,
 and one canonical scale avoids version ambiguity.
 
-## 7. Changelog
+## 7. Versions of this document
 
-- **5 Sep 2026, revision 3 of the release candidate.** Shrinkage standard
-  deviations replace the five-year rule (prior worth five years of
-  pseudo-history; no threshold, no unit break); a balanced nine-member
-  composite column (`daioe_g2nine`) is added; and a fresh Epoch retrieval
-  verified that no 2024 frontier revises, so the thin-baseline caveat stands
-  with a dated check.
-- **5 Sep 2026, external-review hardening.** Three independent cold reviews of
-  the public documents; every numeric claim they challenged is now computed and
-  shipped as a robustness script (errata counterfactual, sigma-prior
-  sensitivity, composite diagnostics), known biases of the appended years are
-  stated with directions and magnitudes, and the concordance statistics were
-  corrected to the shipped artefacts.
-- **4 Sep 2026, composite-membership amendment.** The planned broadening of
-  `daioe_genai` was withdrawn before deposit (99 per cent of the resulting 2025
-  step traced to two thin-baseline first increments under raw-sum aggregation);
-  `daioe_genai` keeps its original membership permanently and `daioe_g2gen`
-  carries the broadened thematic composite in standardised units. Sections 4
-  and 5 updated accordingly.
-- **25 Aug 2026, §4 updated.** The 24 Aug admission round folded in: METR-80
-  primary agentic with OSWorld and GDPval; MATH Level 5; SimpleBench;
-  TheAgentCompany moved to corroboration outside the basket; the two activated
-  exposure columns and the second-generation composite documented; anchor kinds
-  ratified. The 2024 refresh was rebuilt under the seam discipline the same day
-  (frozen window verbatim, 2024 chained).
-- **11 Aug 2026, rescaling guidance added** (now Section 6): the
-  relative-to-peak transformation documented for users rather than shipped as a
-  column.
-- **Aug 2026, v2025 assembled** (release candidate): first vintage extending
-  the window beyond 2023 with new application areas (the 2024 refresh, released
-  with v1.0.0, appends a year without membership change); new series admitted
-  at the 2024 chain point; the automated checks and the coverage audit
-  introduced.
-- **2023–2024, the frozen 2010–2023 index**: the paper's series. The Stata
-  construction was later ported to Python; a clean build reproduces every
-  substantive cell at stored precision (documented residual classes in
-  `VALIDATION.md`), while the legacy tie ordering of rank columns is preserved
-  by restoring the deposited v1.0.0 values rather than by regeneration.
+This reference is updated with each release, and changes are logged from the
+first deposit onward: each Zenodo version carries the documentation that
+describes it, and the repository history records the rest.
 
 What each released vintage contains, and why, is documented in
 [VINTAGES.md](VINTAGES.md).
