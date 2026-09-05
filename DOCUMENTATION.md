@@ -106,7 +106,7 @@ changes no composite value at the chain point. Automated checks verify on every 
 that the protected window is cell-identical (all taxonomies, stored precision) and that
 no admitted series carries a value before its chain point.
 
-## 4. Vintage v2025 (release candidate; assembled August 2026, amended 4 September 2026)
+## 4. Vintage v2025 (release candidate; assembled August 2026, amended 4 September, revised 5 September 2026)
 
 Until v1.1.0 is deposited, everything here describes the assembled release candidate.
 
@@ -167,7 +167,7 @@ zero increment (inside them); composite values ship with a coverage audit;
 (iii) reference-value kinds are declared per series and recorded with quoted evidence
 in the anchors file.
 
-## 5. The four composites, and which to use
+## 5. The five composites, and which to use
 
 **`daioe_allapps`, the legacy overall index.** Raw-sum construction over the nine
 original applications, permanently; the replication object behind the published
@@ -188,18 +188,22 @@ by expert-matrix relevance mass instead reorders occupations imperceptibly); all
 thirteen applications are eligible. This is what lets generative,
 agentic and reasoning domains sit in one number, and it is the recommended headline for
 current monitoring from 2024 onward, read with its composition in view: the four
-applications in their first measured year jointly carry 63 per cent of 2025's
+applications in their first measured year jointly carry 72 per cent of 2025's
 summed standardised progress, and the application-level mean 2025 increment is
-1.30 with them and 0.87 without them, a range the release reports rather than
-resolves. Not a constant-basket series. An application with
-fewer than five observed years borrows its scale family's variation until a declared,
-prospective sigma-basis switch (the sigma table states each basis and the rule). Where
+1.15 with them and 0.59 without them, a range the release reports rather than
+resolves (the shipped `daioe_g2nine` carries the second reading as a column). Not a constant-basket series. Every application's standard deviation blends its
+own history with a scale-family prior in proportion to how much history it has
+(shrinkage, the prior worth five years of pseudo-history; the released sigma
+table states each application's components and weights), so a new application
+starts on its family's typical variation and grows into its own smoothly, with
+no threshold and no unit break. Where
 the two overall indices overlap, within-year Spearman rank agreement across O*NET-SOC
-occupations is 0.74 in the three-member 2013 cross-section, 0.97 by 2016 and 0.99 from
+occupations is 0.61 in the young 2013 cross-section, 0.95 by 2016 and 0.99 from
 2023; cross-sections of cumulated indices agree near-mechanically, so the informative
-diagnostics are the increment ones: per-year increment rank agreement is 0.90--1.00
+diagnostics are the increment ones: per-year increment rank agreement is 0.94--1.00
 throughout, and the occupation-mean increment paths correlate at 0.81 over 2013--2023
-and 0.62 through 2025, the divergence arriving exactly where the new domains enter.
+and 0.30 through 2025, the divergence arriving exactly where the new domains enter
+and widening under the shrinkage standardisation, which gives them more weight.
 
 **`daioe_g2gen`, generative exposure, current.** The same construction restricted to
 the four generative applications (language modelling, image generation, conversation,
@@ -208,11 +212,16 @@ a year's movement is not applied here. With only three or four members, a share
 above one half is the expected outcome rather than a warning sign, so the rule
 would stop every build while revealing nothing. Instead the release
 documentation reports, year by year, how much each member contributed; in 2025
-software engineering contributed 71 per cent, largely its first measured year
-against a thin baseline. Use it when the question is generative AI specifically. Within-year rank
+software engineering contributed 73 per cent of the generative composite's standardised sum, largely its first measured year against a thin baseline. Use it when the question is generative AI specifically. Within-year rank
 agreement with `daioe_genai` (Spearman, O*NET-SOC occupations) is 0.97–0.99 from 2016
 in levels; in increments it is 0.98–0.99 until 2025 and 0.89 in 2025, the first year
 the two constructions genuinely differ.
+
+**`daioe_g2nine`, the balanced companion.** The second-generation construction
+restricted to the nine original applications, membership never changing: its
+movement is capability progress on the original basket and nothing else, and
+the gap to `daioe_g2all` in any year is what the new domains contribute. Use it
+to separate progress from composition.
 
 **The two new subdomains.** `daioe_agentic` (autonomous multi-step execution of real
 computer work, measured as the length of human task completed reliably) and
@@ -279,6 +288,12 @@ canonical scale avoids version ambiguity.
 
 ## 7. Changelog
 
+- **5 Sep 2026, revision 3 of the release candidate.** Shrinkage standard
+  deviations replace the five-year rule (prior worth five years of
+  pseudo-history; no threshold, no unit break); a balanced nine-member
+  companion column (`daioe_g2nine`) is added; and a fresh Epoch retrieval
+  verified that no 2024 frontier revises, so the thin-baseline caveat stands
+  with a dated check.
 - **5 Sep 2026, external-review hardening.** Three independent cold reviews of the
   public documents; every numeric claim they challenged is now computed and shipped
   as a robustness script (errata counterfactual, sigma-prior sensitivity, composite

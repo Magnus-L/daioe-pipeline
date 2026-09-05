@@ -19,7 +19,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 ROOT = Path(__file__).resolve().parents[1]
 OLD_F = ROOT/"dist/daioe-v1.0.0-scores/frozen-2010-2023/daioe_onetsoc2010.dta"
 OLD_R = ROOT/"dist/daioe-v1.0.0-scores/refresh-2024/daioe_onetsoc2010.dta"
-NEW   = next((ROOT/"data/vintage/vintage_2025_v110rc2_20260904").rglob("Publication/daioe_onetsoc2010.dta"))
+NEW   = next((ROOT/"data/vintage/vintage_2025_v110rc3_20260905").rglob("Publication/daioe_onetsoc2010.dta"))
 OUT   = ROOT/"reports/vintage_comparison_20260904.pdf"
 
 C_OLD, C_NEW, C_AUX = "#333333", "#2166ac", "#b2182b"

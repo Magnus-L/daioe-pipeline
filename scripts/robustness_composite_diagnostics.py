@@ -5,11 +5,11 @@ One script, six checks (results of 5 Sep 2026 in parentheses):
      increment rankings identical by construction (Spearman 1.000); cumulative
      level rankings 0.97-1.00 in every year.
   B. 2025 application-level mean increment of the second-generation composites
-     with and without the four first-measured-year entrants (g2all 1.30 vs 0.87;
-     g2gen 1.30 vs 0.87) - the honest range for the 2025 step.
-  E. Leave-one-out member influence, g2all 2025 (largest: reading comprehension).
+     with and without the four first-measured-year entrants (g2all 1.15 vs 0.59;
+     g2gen 1.26 vs 0.75, sigma v2) - the honest range for the 2025 step.
+  E. Leave-one-out member influence, g2all 2025 (largest under sigma v2: maths/science and software engineering).
   G. Time-series agreement of the two overall composites: occupation-mean annual
-     increment correlation 0.81 over 2013-2023, 0.62 through 2025.
+     increment correlation 0.81 over 2013-2023, 0.30 through 2025 (sigma v2).
   H. Expert-row swap bound for the two new columns (Spearman 0.996).
   I. Frozen-window peak cell per taxonomy (2023 clerical occupations).
 """
@@ -32,7 +32,7 @@ for f in sorted(VIN.glob("slopes_slimmed_*.parquet")):
 prog = (pd.concat(frames).drop_duplicates(["application","year"])
         .rename(columns={"mean":"progress"}))
 prog = prog[prog.application.notna() & (prog.application!="robotics")]
-S = pd.read_csv(ROOT/"data/derived/g2_sigma_v1.csv").drop_duplicates("application").set_index("application")["sigma"]
+S = pd.read_csv(ROOT/"data/derived/g2_sigma_v2.csv").drop_duplicates("application").set_index("application")["sigma"]
 
 # matrix machinery (as in the g2 build)
 apps = pd.read_csv(ROOT/"mapping/raw_data/applications_v2.csv").set_index("ai_app_id")
@@ -98,7 +98,7 @@ for a in o25.index:
     print(f"  drop {a[:40]:42s} mean={o25.drop(a).mean():.3f}")
 
 print("== G. time-series agreement allapps vs g2all, occupation-mean annual increments ==")
-pan=pd.read_stata(ROOT/"data/vintage/vintage_2025_v110rc2_20260904/out/Publication/daioe_onetsoc2010.dta")
+pan=pd.read_stata(ROOT/"data/vintage/vintage_2025_v110rc3_20260905/out/Publication/daioe_onetsoc2010.dta")
 lv=pan.groupby("year")[["daioe_allapps","daioe_g2all"]].mean()
 inc=lv.diff().dropna()
 w=inc.loc[2013:2023]
@@ -120,7 +120,7 @@ for a,b in [(ag,ms),(ms,ag)]:
 
 print("== I. frozen-window peak cell per taxonomy (daioe_allapps) ==")
 for tx in ["onetsoc2010","soc2010","isco08","ssyk2012","ssyk96"]:
-    d=pd.read_stata(ROOT/f"data/vintage/vintage_2025_v110rc2_20260904/out/Publication/daioe_{tx}.dta")
+    d=pd.read_stata(ROOT/f"data/vintage/vintage_2025_v110rc3_20260905/out/Publication/daioe_{tx}.dta")
     fz=d[(d.year>=2010)&(d.year<=2023)]
     i=fz.daioe_allapps.idxmax(); r=fz.loc[i]
     key=[c for c in d.columns if c not in ("year",) and not c.startswith(("daioe","pctl"))][0]

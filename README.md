@@ -17,7 +17,7 @@ rather than a correlation.
 | | |
 |---|---|
 | Coverage | Every occupation in each released taxonomy panel, annually, 2010–2023 in the frozen index (per year: 966 O\*NET-SOC, 772 SOC 2010, 438 ISCO-08, 429 SSYK 2012, 354 SSYK 96 occupations) |
-| Decomposition | An aggregate index, nine capability subdomains, and a generative-AI composite (v1.1.0 adds two subdomains and two second-generation composites) |
+| Decomposition | An aggregate index, nine capability subdomains, and a generative-AI composite (v1.1.0 adds two subdomains, two second-generation composites and a balanced companion) |
 | Classifications | O\*NET-SOC, SOC 2010, ISCO-08, SSYK 96, SSYK 2012; plus a SOC 2018 panel export on the frozen window, labelled as such and not in the publication format |
 | Formats | Stata `.dta` (the verified originals), with TSV and Excel derivatives |
 | Built from | Public AI benchmark results and O\*NET occupational ability profiles |
@@ -35,9 +35,10 @@ cite the one you used.
   or to compare against published work.
 - **2024 refresh**: the newest released object; appends 2024 under the seam
   discipline. Use it for current analysis.
-- **2025 vintage (v1.1.0)**: forthcoming. It adds two application areas and two
-  second-generation composites (overall and generative), while the legacy composites
-  keep their original membership. Use it for current analysis when released.
+- **2025 vintage (v1.1.0)**: forthcoming. It adds two application areas, two
+  second-generation composites (overall and generative) and a balanced
+  nine-member companion, while the legacy composites keep their original
+  membership. Use it for current analysis when released.
 
 `VINTAGES.md` is the full record of what each vintage contains and what the freeze
 guarantee covers.
