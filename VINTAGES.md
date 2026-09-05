@@ -126,48 +126,51 @@ units, where newly admitted applications cannot dominate by scale. The two new
 application areas are not members of either legacy composite, by design.
 
 **A second-generation overall composite** (`daioe_g2all`) enters as an
-additional column. As capability domains with different native scales enter the
-basket, a companion aggregate is useful in which scale plays no role: each
-application's annual progress is divided by the standard deviation of its own
-historical year-to-year changes, and the composite is the mean over the
-applications observed that year. An application observed for fewer than five
-years has no usable standard deviation of its own, so it borrows the value
-estimated for benchmarks on the same measurement scale until its own history
-accumulates; the later switch to its own history is prospective, revises no
-earlier level, and the released table (`g2_sigma_v1.csv`) records each
-application's standard deviation, its basis and the switch rule. The composite
-has values over the full 2010--2025 window. Each year's mean runs over the
-applications observed that year (a measured zero counts as observed; a year with
-no source does not), so early years have few members (three in 2013) and 2025
-runs on partial coverage (see the caveats). It is therefore not a
-constant-basket series: a movement between years can mix capability progress
-with a change in which applications are observed, and should be read
-accordingly. Two bounds are checked on every build, and the build stops if
-either fails: recomputing with the METR series on its percentage axis must move
-the 2025 composite increment by less than 15 per cent (it moves it by 13.7),
-and no application may contribute more than half of any chained year's summed
-standardised progress (the maximum observed is 35 per cent). Within-year rank
-agreement with `daioe_allapps` is reported as a diagnostic rather than
-enforced, since the two aggregates weight the basket differently by design
-(Spearman over O*NET-SOC 2010 occupations, per year: 0.74 in the three-member
-2013 cross-section, 0.97 by 2016, 0.99 in 2023 and 2025). The original
-all-applications composite continues unchanged.
+additional column. The new areas arrive in different units: METR's agentic
+series is measured in minutes of task length, most older benchmarks in
+percentage points. Summing raw units would let the units, rather than the
+progress, set the weights. The companion aggregate therefore removes scale
+from the construction: each application's annual progress is divided by the
+standard deviation of its own historical year-to-year changes, and the
+composite is the mean over the applications observed that year. An application
+observed for fewer than five years has no usable standard deviation of its
+own, so it borrows the value estimated for benchmarks measured on the same
+scale until its own history accumulates; the later switch to its own history
+is prospective, revises no earlier level, and the released table
+(`g2_sigma_v1.csv`) records each application's standard deviation, its basis
+and the switch rule. The composite has values over the full 2010--2025 window.
+Each year's mean runs over the applications observed that year (a measured
+zero counts as observed; a year with no source does not), so early years have
+few members (three in 2013) and 2025 runs on partial coverage (see the
+caveats). It is therefore not a constant-basket series: a movement between
+years can mix capability progress with a change in which applications are
+observed, and should be read accordingly.
+
+Two checks run on every assembly, and the assembly stops if either fails.
+First, the composite must not depend on how the METR series is expressed: that
+series can be stated in task minutes or as a percentage-style score, and
+recomputing the composite the other way must move the 2025 increment by less
+than 15 per cent (it moves it by 13.7). Second, no application may contribute
+more than half of a year's summed standardised progress (the maximum observed
+is 35 per cent); if one application out of thirteen drove more than half, the
+likeliest explanation would be an error in its data or scale rather than
+genuine progress, so the assembly stops for inspection instead of publishing.
+Within-year rank agreement with `daioe_allapps` is reported as a diagnostic
+rather than enforced, since the two aggregates weight the basket differently
+by design (Spearman over O*NET-SOC 2010 occupations, per year: 0.74 in the
+three-member 2013 cross-section, 0.97 by 2016, 0.99 in 2023 and 2025). The
+original all-applications composite continues unchanged.
 
 **A second-generation generative composite** (`daioe_g2gen`) is the same
 construction restricted to the four generative applications: language
 modelling, image generation, conversation and software engineering. It uses the
 same standard deviations and the same mean over observed members, and it equals
-zero until its first members begin in 2012. The overall composite above has up to thirteen members, and its assembly stops
-if any single member ever accounts for more than half of a year's total
-movement. The logic is diagnostic: when one application out of thirteen drives
-more than half of the total, the likeliest explanation is an error in that
-application's data or scale rather than genuine progress, so the build stops
-for inspection instead of publishing. The generative composite has at most four
-members, and in a typical year three with data. With so few members, a share
-above one half is the expected outcome rather than a warning sign, and the same
-rule would stop every build while revealing nothing. We therefore replace the
-rule with transparency: the release documentation reports, year by year, how
-much each member contributed. In 2025 most of its movement comes from software
+zero until its first members begin in 2012. The overall composite's more-than-half rule is not applied here: with at most
+four members, and in a typical year three with data, a share above one half is
+the expected outcome rather than a warning sign, so the rule would stop every
+assembly while revealing nothing. We therefore replace the rule with
+transparency: the release documentation reports, year by year, how much each
+member contributed. In 2025 most of its movement comes from software
 engineering's first measured year, computed against a thin baseline and best
 read as an upper bound that later vintages will revise as more evaluations
 accumulate. Within a year its ranking of occupations agrees closely with the
