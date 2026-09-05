@@ -291,6 +291,18 @@ occupations with identical scores can carry different ranks, up to whole
 all-tie years. For v1.0.0, where only the legacy ranks exist, do not use ranks
 where ties matter; the substantive columns are authoritative.
 
+**Rankings and top-N lists.** To list the most exposed occupations in a year,
+sort on the substantive column itself (`daioe_allapps` for continuity with the
+published measure, `daioe_g2all` for current monitoring), which is the
+authoritative object, and use the midrank percentile whenever you want a
+percentile to display. Both give the same list, since the percentile is a
+transform of the same values; the midrank additionally makes ties visible, so
+a shared tenth place shows as a shared percentile instead of an arbitrary
+ordering. Never build such a list from the classical `pctl_rank_*` columns:
+inside a tied group they order by historical row position, and a top-N cut
+through a tie would include one occupation and exclude its equal on nothing
+but that.
+
 **Level and growth: rescale to the frozen-window peak.** For a cardinal
 reading, divide by the panel's frozen-window maximum and multiply by 100. The
 denominator is computed once, on the 2010–2023 rows only, and reused unchanged
