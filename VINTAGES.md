@@ -13,7 +13,7 @@ is a task (e.g. SWE-bench Verified); a **benchmark series** is one measured scor
 track on a benchmark (a benchmark can carry more than one, e.g. separate metrics or
 splits). The frozen index has 140 benchmarks carrying 149 measured series.
 
-## The frozen index (2010–2023) — released as v1.0.0
+## The frozen index (2010–2023), released as v1.0.0
 
 The object behind the published estimates. Nine applications, 140 benchmarks (149
 series), as documented in the paper's Online Appendix Section C. Released as v1.0.0
@@ -28,14 +28,14 @@ series. The corrections are declared for a future chain point and no released
 vintage has yet applied them. The applying mechanism ships with the pipeline
 (`apply_errata`, off in every build to date): it corrects the source rows so that
 post-seam increments are computed against the corrected frontier state, the splice
-keeps every published level, and two fatal guards hold — the flag refuses a
+keeps every published level, and two fatal guards hold: the flag refuses a
 frozen-window build, and every erratum must match exactly one source row. The
 vintage that first switches it on will state the applied construction and a worked
 example beside its numbers. Two of the four (E2, E4)
 would create or move state-of-the-art frontiers if applied inside history, which is
 why they wait for a seam.
 
-## The 2024 refresh — released as v1.0.0
+## The 2024 refresh, released as v1.0.0
 
 Appends 2024 to the frozen window from the recovered Papers with Code archive,
 basket-faithfully. The benchmark count rises from 140 to 143: three continuation
@@ -48,7 +48,7 @@ level and computed against the recovered archive's fuller frontier state, which 
 what the archive's pre-2024 rows are for; they inform the frontier, never the
 published levels.
 
-## The 2025 vintage — forthcoming as v1.1.0, not part of v1.0.0
+## The 2025 vintage, forthcoming as v1.1.0 (not part of v1.0.0)
 
 Everything in this section describes the v1.1.0 release candidate. It is assembled
 and gate-verified, but until v1.1.0 is deposited its details are provisional and
@@ -58,8 +58,8 @@ The vintage covers 2010–2025 with its level chain point at the 2023–2024 sea
 What it adds:
 
 **Eight admitted benchmark series**, each with a declared source, scale, evaluation
-protocol and licence, and — where the series is used in any human-comparison
-reading — a documented reference value with quoted evidence. Series that only feed
+protocol and licence, and, where the series is used in any human-comparison
+reading, a documented reference value with quoted evidence. Series that only feed
 progress may enter without a reference value, which is the frozen basket's own
 standard (65 of its 149 series carried none). Reference values never enter the
 index computation: exposure is built from benchmark frontier increments alone, and
@@ -103,7 +103,7 @@ original expert rows. Both new columns are chained: they are missing (not zero)
 before 2024 in every format, zero at the 2024 chain year, and cumulate from there.
 
 **Composite membership (amended 4 September 2026).** `daioe_genai` keeps its
-original membership permanently — language modelling and image generation — the
+original membership permanently (language modelling and image generation), the
 same way `daioe_allapps` keeps its nine applications: both are legacy columns
 whose construction never changes. An earlier decision had broadened genai's
 membership at the seam under its raw-sum construction; inspection of the
@@ -117,8 +117,8 @@ application areas are not members of either legacy composite, by design.
 
 **A second-generation generative composite** (`daioe_g2gen`) enters as an
 additional column: the second-generation construction (next paragraph) restricted
-to the four generative applications — language modelling, image generation,
-conversation and software engineering. Same sigma table, same
+to the four generative applications (language modelling, image generation,
+conversation and software engineering). Same sigma table, same
 mean-over-observed-members rule; the column is carried at zero until its first
 members enter in 2012. Its member shares are described rather than gated: the
 dominance cap applies from five observed members (the main composite's own
@@ -142,8 +142,8 @@ use the new basis); the released sigma table
 states each application's basis and the switch rule. The composite has values over
 the full 2010–2025 window; each year's mean runs over the applications observed
 that year (an application with a measured zero increment counts as observed; one
-with no source that year does not), so early years have few members — the 2013
-cross-section has three — and 2025 runs on partial coverage (see the caveats).
+with no source that year does not), so early years have few members (the 2013
+cross-section has three) and 2025 runs on partial coverage (see the caveats).
 Like the broadened generative composite, `daioe_g2all` is therefore not a
 constant-basket time series: a movement between years can mix capability progress
 with a change in which applications are observed, and should be read accordingly.
@@ -227,5 +227,5 @@ substantive values can carry different ranks inside a tie group, so ranks should
 not be used where ties matter (the substantive `daioe_*` columns are authoritative
 and never depend on tie order, and from v1.1.0 every panel carries tie-invariant
 `pctl_mid_*` companions); and a clean pipeline run from raw inputs reproduces
-every substantive cell but not the legacy tie ordering — full reproduction of the
+every substantive cell but not the legacy tie ordering; full reproduction of the
 rank columns uses the deposited v1.0.0 artefact, by construction.

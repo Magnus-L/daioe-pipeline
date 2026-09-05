@@ -44,8 +44,8 @@ The applications and their columns, with membership in each composite:
 | Agentic task execution | `daioe_agentic` | 2024 entrant | – | – | – | yes |
 | Mathematical and scientific reasoning | `daioe_mathsci` | 2024 entrant | – | – | – | yes |
 
-Panels are published for five occupational taxonomies — O*NET-SOC 2010, SOC 2010,
-ISCO-08, SSYK 2012 and SSYK 96, each with per-year percentile companions. The v1.0.0
+Panels are published for five occupational taxonomies (O*NET-SOC 2010, SOC 2010,
+ISCO-08, SSYK 2012 and SSYK 96), each with per-year percentile companions. The v1.0.0
 bundle additionally ships `soc2018/daioe_panel_soc2018.dta`, a SOC 2018 panel export on
 the frozen window in the pipeline's internal panel schema (exposure changes and
 cumulative levels; no percentile companions and no publication-format gating).
@@ -81,7 +81,7 @@ cumulative levels; no percentile companions and no publication-format gating).
 A series is admitted only with a complete declaration: scale (one of eight declared
 families); a reference value where the series is used in any human-comparison reading
 (anchor kinds: human, expert, instrument ceiling, ceiling by convention, parity by
-construction — series that only feed progress may enter without one); an evaluation
+construction; series that only feed progress may enter without one); an evaluation
 protocol (`pure_model` or `system_level`, never mixed within a series); a chain year at
 or after the current vintage's chain point; a stated licence or permission basis (where
 scores are quoted from an organiser's publication, the basis is published facts with
@@ -124,12 +124,12 @@ never in the basket together.
 **Two new application areas with exposure columns** (`daioe_agentic`, `daioe_mathsci`),
 built from the Felten-Raj-Seamans 2018 expert matrix's two technical-problem rows, used
 unedited and checked for concordance by two independent LLM re-scorings from different
-vendors — a consistency check, not a validation of the rows for the new constructs
-(details and the shipped run outputs in `VINTAGES.md`). Both columns are chained: no
+vendors, a consistency check rather than a validation of the rows for the new
+constructs (details and the shipped run outputs in `VINTAGES.md`). Both columns are chained: no
 values before 2024.
 
 **Composite membership (amended 4 September 2026).** `daioe_genai` keeps its original
-membership — language modelling and image generation — permanently. An earlier decision
+membership (language modelling and image generation) permanently. An earlier decision
 to broaden its membership at the seam was withdrawn before deposit: under the raw-sum
 construction, 99 per cent of the resulting 2025 step came from two newly admitted
 members' thin-baseline first increments, a scale artefact rather than measured
@@ -141,29 +141,29 @@ published with a complete history of its own; the standardisation table ships as
 
 **Known caveats:** (i) a newly admitted series' first measured year is computed against
 its entry-year frontier, and where that baseline is thin, late-entry-year capability is
-booked to the first measured year — SWE-bench Verified (one 2024 evaluation) and
+booked to the first measured year: SWE-bench Verified (one 2024 evaluation) and
 ToMBench (two) are the thin cases, so their 2025 increments are upper bounds pending
 fuller harness coverage; (ii) in 2025, four of the nine original applications are
 unobserved (abstract strategy games, real-time video games, language modelling,
 translation: reporting ended, series carried at their last level, outside the
 observed-member means), while visual question answering is observed with a measured
-zero increment (inside them) — composite values ship with a coverage audit;
+zero increment (inside them); composite values ship with a coverage audit;
 (iii) reference-value kinds are declared per series and recorded with quoted evidence
 in the anchors file.
 
 ## 5. The four composites, and which to use
 
-**`daioe_allapps` — the legacy overall index.** Raw-sum construction over the nine
+**`daioe_allapps`, the legacy overall index.** Raw-sum construction over the nine
 original applications, permanently; the replication object behind the published
 estimates. Note that its *appended* years (2024 onward) average over the applications
 observed each year, so while eligibility is fixed, the effective denominator can shrink
 as sources end; the coverage audit states which.
 
-**`daioe_genai` — the legacy generative composite.** Raw-sum over its original two
+**`daioe_genai`, the legacy generative composite.** Raw-sum over its original two
 members, language modelling and image generation, permanently. Use either legacy column
 for continuity with the published measure.
 
-**`daioe_g2all` — overall exposure, current.** Each application's annual progress in
+**`daioe_g2all`, overall exposure, current.** Each application's annual progress in
 units of its historical year-to-year variation, averaged over the applications observed
 that year; all thirteen applications are eligible. This is what lets generative,
 agentic and reasoning domains sit in one number, and it is the recommended headline for
@@ -174,7 +174,7 @@ the two overall indices overlap, within-year Spearman rank agreement across O*NE
 occupations is 0.74 in the three-member 2013 cross-section, 0.97 by 2016 and 0.99 from
 2023.
 
-**`daioe_g2gen` — generative exposure, current.** The same construction restricted to
+**`daioe_g2gen`, generative exposure, current.** The same construction restricted to
 the four generative applications (language modelling, image generation, conversation,
 software engineering). Because its membership is at most four, the dominance cap that
 gates the overall composite from five observed members can never bind here; member
@@ -223,14 +223,14 @@ linear, so ratios and time paths survive. Never take each vintage's own maximum,
 would rescale history with every release. The same convention applies per sub-index,
 each with its own frozen-window maximum; do not compare rescaled values across
 sub-indices. **This convention does not apply to `daioe_agentic` and `daioe_mathsci`**, which have
-no 2010–2023 history of their own — read them through their percentile companions or
+no 2010–2023 history of their own: read them through their percentile companions or
 in their own units, and treat any rescaling base as a choice to be stated. The
 second-generation composites do carry full-window histories, but as columns new to
 v1.1.0 those histories sit outside the freeze guarantee (Section 2), so state the
 vintage when rescaling them.
 
 **Estimation: standardise on frozen moments.** As in Section 2: 2010–2020 moments,
-computed once — for the columns that have them.
+computed once, for the columns that have them.
 
 We deliberately ship raw values rather than a rescaled column: the raw cells are the
 citable stratum the release gates protect and published work builds on, and one
@@ -238,23 +238,23 @@ canonical scale avoids version ambiguity.
 
 ## 7. Changelog
 
-- **4 Sep 2026 — composite-membership amendment.** The planned broadening of
+- **4 Sep 2026, composite-membership amendment.** The planned broadening of
   `daioe_genai` was withdrawn before deposit (99 per cent of the resulting 2025 step
   traced to two thin-baseline first increments under raw-sum aggregation); `daioe_genai`
   keeps its original membership permanently and `daioe_g2gen` carries the broadened
   thematic composite in standardised units. Sections 4 and 5 updated accordingly.
-- **25 Aug 2026 — §4 updated.** The 24 Aug admission round folded in — METR-80 primary
+- **25 Aug 2026, §4 updated.** The 24 Aug admission round folded in: METR-80 primary
   agentic with OSWorld and GDPval; MATH Level 5; SimpleBench; TheAgentCompany moved to
   corroboration outside the basket; the two activated exposure columns and the
   second-generation composite documented; anchor kinds ratified. The 2024 refresh was
   rebuilt under the seam discipline the same day (frozen window verbatim, 2024 chained).
-- **11 Aug 2026 — rescaling guidance added** (now Section 6): the relative-to-peak
+- **11 Aug 2026, rescaling guidance added** (now Section 6): the relative-to-peak
   transformation documented for users rather than shipped as a column.
-- **Aug 2026 — v2025 assembled** (release candidate): first vintage extending the
+- **Aug 2026, v2025 assembled** (release candidate): first vintage extending the
   window beyond 2023 with new application areas (the 2024 refresh, released with
   v1.0.0, appends a year without membership change); new series admitted at the 2024
   chain point; gates and coverage audit introduced.
-- **2023–2024 — the frozen 2010–2023 index**: the paper's series. The Stata
+- **2023–2024, the frozen 2010–2023 index**: the paper's series. The Stata
   construction was later ported to Python; a clean build reproduces every substantive
   cell at stored precision (documented residual classes in `VALIDATION.md`), while the
   legacy tie ordering of rank columns is preserved by restoring the deposited v1.0.0

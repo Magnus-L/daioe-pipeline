@@ -26,11 +26,11 @@ reports/               validation and release reports
 
 ## The five stages (run order; each validated against a frozen target)
 
-1. **stage1_onet** — ability relevance r_oj and social intensity S_o from O\*NET 22.2.
-2. **stage2_ai_progress** — benchmark progress from SOTA frontiers (the time-varying input).
-3. **stage3_mapping** — the application-to-ability mapping matrix.
-4. **stage4_index** — exposure increments, social discount, square, cumulate, ranks.
-5. **stage5_taxonomies** — translate to the released classifications, merge comparator
+1. **stage1_onet**: ability relevance r_oj and social intensity S_o from O\*NET 22.2.
+2. **stage2_ai_progress**: benchmark progress from SOTA frontiers (the time-varying input).
+3. **stage3_mapping**: the application-to-ability mapping matrix.
+4. **stage4_index**: exposure increments, social discount, square, cumulate, ranks.
+5. **stage5_taxonomies**: translate to the released classifications, merge comparator
    indices, write internal and publication panels.
 
 Stages 1–3 are independent; 4 needs 1–3; 5 needs 4.
@@ -46,7 +46,7 @@ python3.10 -m venv .venv
 `numpy` and `pandas` are pinned hard because the reproduction claim depends on float32
 storage semantics and on groupby summation order; re-run the full validation before
 changing either. Three dependencies (`pyarrow`, `xlrd`, `openpyxl`) are loaded
-implicitly by pandas — see the header of `requirements.txt`.
+implicitly by pandas; see the header of `requirements.txt`.
 
 ## Run
 
