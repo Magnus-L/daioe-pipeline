@@ -155,7 +155,14 @@ more than half of a year's summed standardised progress (the maximum observed
 is 35 per cent); if one application out of thirteen drove more than half, the
 likeliest explanation would be an error in its data or scale rather than
 genuine progress, so the assembly stops for inspection instead of publishing.
-Within-year rank agreement with `daioe_allapps` is reported as a diagnostic
+Both tolerances are conventions rather than estimates, like a significance
+level: the one-half rule takes the natural majority threshold, and the 15 per
+cent tolerance was set at the composite's introduction just above the
+sensitivity then measured and accepted, committing later assemblies to being
+no more unit-dependent than the one inspected here. Their value lies in being
+fixed in advance (a failing assembly cannot pass without a documented
+decision), and the measured values are published beside them so the reader can
+see the slack. Within-year rank agreement with `daioe_allapps` is reported as a diagnostic
 rather than enforced, since the two aggregates weight the basket differently
 by design (Spearman over O*NET-SOC 2010 occupations, per year: 0.74 in the
 three-member 2013 cross-section, 0.97 by 2016, 0.99 in 2023 and 2025). The
