@@ -28,8 +28,14 @@ the wrong model; E3, a model-name typo with the correct value) never touch a
 frontier, so they affect no number in any release. The other two are small: one
 translation benchmark's 2018 BLEU recorded as 28.36 rather than 29.11, and ARC's
 2023 score as 96.3 rather than the source's own revised 96.4. Both sit inside
-published history, and correcting them there would move a handful of 2018--2023
-application-year means by amounts far below the paper's reported precision. The
+published history. We have computed exactly what correcting them there would do
+(`scripts/robustness_errata_counterfactual.py`): the translation application
+mean for 2018 would rise by 5.0 per cent of its value and the language-QA mean
+for 2023 by 1.0 per cent, and propagated through the occupation index no
+occupation-year level moves by more than half a per cent of a within-year
+standard deviation (rank correlation with the published series 0.999998).
+Since every estimate in the paper standardises exposure on within-year spreads,
+the corrections are numerically irrelevant to any published result. The
 frozen series reproduces the paper, so all four rows are retained exactly as
 published; holding revisions for a chain point is the same convention official
 statistics apply to benchmark revisions.
@@ -196,7 +202,15 @@ every column new to a vintage.
 **Known caveats, shipped rather than filed.** A newly admitted series' first
 increment is computed against its entry-year frontier; where that baseline is thin
 (SWE-bench Verified: one 2024 evaluation; ToMBench: two), the 2025 increment is an
-upper bound, revisable as evaluation suites score earlier models retrospectively. For 2025 the original basket splits three ways, and the distinction matters for
+upper bound, revisable as evaluation suites score earlier models retrospectively.
+The same caution applies to the borrowed standard deviations: halving or
+doubling the scale-family values that the four young applications borrow moves
+the size of the 2025 composite increment by a factor of roughly three in either
+direction, while leaving occupation rankings essentially unchanged (Spearman at
+least 0.995 across occupations, increments and levels alike;
+`scripts/robustness_g2_sigma_prior.py`). The level of the 2025 step should
+therefore be read as provisional, and cross-sectional comparisons of
+occupations as robust. For 2025 the original basket splits three ways, and the distinction matters for
 `daioe_g2all`'s denominator. Four applications are unobserved in 2025 (abstract
 strategy games, real-time video games, language modelling, translation): their
 sources' reporting ended, their series are carried at the last level, and they are

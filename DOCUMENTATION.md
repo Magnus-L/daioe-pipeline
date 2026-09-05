@@ -194,7 +194,12 @@ earlier values, so their histories are short and their early movements rest on f
 series: agentic on one primary series (METR), and mathematical and scientific
 reasoning showing, with software engineering, the largest standardised 2025
 increments of any application (each about 2.8 historical standard deviations),
-all on thin entry-year baselines and revisable.
+all on thin entry-year baselines and revisable. The borrowed standard
+deviations behind the standardised units matter for levels but not for ranks:
+halving or doubling them moves the size of the 2025 composite increment by a
+factor of roughly three while leaving occupation rankings essentially unchanged
+(Spearman at least 0.995; `scripts/robustness_g2_sigma_prior.py` in the
+repository).
 
 ## 6. Reading and rescaling the scores
 
