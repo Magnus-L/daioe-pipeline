@@ -271,7 +271,8 @@ save `t'
 restore
 merge 1:1 code using `t', keep(match) nogen
 egen pctl = rank(daioe_allapps)                    // average rank on ties = midrank
-replace pctl = round(100 * pctl / _N, .1)
+replace pctl = 100 * pctl / _N
+format pctl %9.1f                                  // display rounding, locale-proof
 gsort -daioe_allapps                               // full list, most to least exposed
 list code title daioe_allapps pctl in 1/10         // top 10
 list code title daioe_allapps pctl in -10/l        // bottom 10
