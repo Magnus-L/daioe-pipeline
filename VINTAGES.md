@@ -125,48 +125,46 @@ broadened composite exists instead as `daioe_g2gen` below, in standardised
 units, where newly admitted applications cannot dominate by scale. The two new
 application areas are not members of either legacy composite, by design.
 
-**A second-generation generative composite** (`daioe_g2gen`) enters as an
-additional column: the second-generation construction (next paragraph) restricted
-to the four generative applications (language modelling, image generation,
-conversation and software engineering). Same sigma table, same
-mean-over-observed-members rule; the column is carried at zero until its first
-members enter in 2012. Its member shares are described rather than gated: the
-dominance cap applies from five observed members (the main composite's own
-convention for young cross-sections), a threshold a four-member composite can
-never reach, so for `daioe_g2gen` the cap never binds and per-year member
-shares are reported in the release documentation instead, and its 2025 movement is
-still carried mainly by software engineering's first chained increment, an upper
-bound revisable as baselines back-fill. Within-year rank agreement with the
-legacy genai column is 0.97–0.99.
+**A second-generation overall composite** (`daioe_g2all`) enters as an
+additional column. As capability domains with different native scales enter the
+basket, a companion aggregate is useful in which scale plays no role: each
+application's annual progress is divided by the standard deviation of its own
+historical year-to-year changes, and the composite is the mean over the
+applications observed that year. An application observed for fewer than five
+years has no usable standard deviation of its own, so it borrows the value
+estimated for benchmarks on the same measurement scale until its own history
+accumulates; the later switch to its own history is prospective, revises no
+earlier level, and the released table (`g2_sigma_v1.csv`) records each
+application's standard deviation, its basis and the switch rule. The composite
+has values over the full 2010--2025 window. Each year's mean runs over the
+applications observed that year (a measured zero counts as observed; a year with
+no source does not), so early years have few members (three in 2013) and 2025
+runs on partial coverage (see the caveats). It is therefore not a
+constant-basket series: a movement between years can mix capability progress
+with a change in which applications are observed, and should be read
+accordingly. Two bounds are checked on every build, and the build stops if
+either fails: recomputing with the METR series on its percentage axis must move
+the 2025 composite increment by less than 15 per cent (it moves it by 13.7),
+and no application may contribute more than half of any chained year's summed
+standardised progress (the maximum observed is 35 per cent). Within-year rank
+agreement with `daioe_allapps` is reported as a diagnostic rather than
+enforced, since the two aggregates weight the basket differently by design
+(Spearman over O*NET-SOC 2010 occupations, per year: 0.74 in the three-member
+2013 cross-section, 0.97 by 2016, 0.99 in 2023 and 2025). The original
+all-applications composite continues unchanged.
 
-**A second-generation overall composite** (`daioe_g2all`) enters as an additional
-column. As new capability domains with different native scales enter the basket, a
-companion aggregate is useful in which every application's annual progress is
-expressed in units of its historical year-to-year variation and averaged over the
-applications observed that year. Applications with fewer than five observed years
-borrow their scale family's benchmark-increment variation until a declared
-sigma-basis switch (a change of standardisation basis only, prospective, distinct
-from the level chain point: it does not revise any pre-switch level, while
-increments from the switch year onward, and hence the levels they cumulate into,
-use the new basis); the released sigma table
-states each application's basis and the switch rule. The composite has values over
-the full 2010–2025 window; each year's mean runs over the applications observed
-that year (an application with a measured zero increment counts as observed; one
-with no source that year does not), so early years have few members (the 2013
-cross-section has three) and 2025 runs on partial coverage (see the caveats).
-Like the broadened generative composite, `daioe_g2all` is therefore not a
-constant-basket time series: a movement between years can mix capability progress
-with a change in which applications are observed, and should be read accordingly.
-Two hard bounds are checked on every build, and the build stops if either fails: a sensitivity bound on the axis
-convention for the METR series (recomputing with METR on its percentage axis moves
-the 2025 composite increment by 13.7%, against a pre-set bound of 15%), and a
-dominance bound (no application's share of any chained year's summed standardised
-progress may exceed one half; the maximum is 35%). Within-year rank agreement with
-`daioe_allapps` is reported as a diagnostic rather than gated, since the two
-aggregate the basket differently by design (Spearman over O*NET-SOC 2010
-occupations, per year: 0.74 in the three-member 2013 cross-section, 0.97 by 2016,
-0.99 in 2023 and 2025). The original all-applications composite continues
-unchanged; the σ-table ships as `g2_sigma_v1.csv`.
+**A second-generation generative composite** (`daioe_g2gen`) is the same
+construction restricted to the four generative applications: language
+modelling, image generation, conversation and software engineering. It uses the
+same standard deviations and the same mean over observed members, and it equals
+zero until its first members begin in 2012. Because it has at most four
+members, the concentration bound above (which applies from five observed
+members) can never bind; the release documentation instead reports each
+member's share by year. In 2025 most of its movement comes from software
+engineering's first measured year, computed against a thin baseline and best
+read as an upper bound that later vintages will revise as more evaluations
+accumulate. Within a year its ranking of occupations agrees closely with the
+legacy generative composite (Spearman 0.97--0.99).
 
 **Tie-invariant percentiles.** Every `daioe_*` column gains a `pctl_mid_*`
 companion: the within-year midrank percentile (average rank of the tied group over
