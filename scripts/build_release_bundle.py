@@ -241,17 +241,44 @@ itself (see "Percentile ranks and ties" below and `VINTAGES.md`).
 
 ## Quick start
 
+In Python:
+
 ```python
 import pandas as pd
 d = pd.read_stata("refresh-2024/daioe_ssyk2012.dta")          # or any taxonomy panel
 titles = pd.read_csv("occupation_titles_ssyk.csv", dtype={{"code": str}}).query("taxonomy=='ssyk2012'")
-top10 = (d[d.year == 2024].nlargest(10, "daioe_allapps")
-         .assign(code=lambda x: x.ssyk2012_4.astype(int).astype(str).str.zfill(4))
-         .merge(titles, on="code"))[["code", "title", "daioe_allapps"]]
+ranked = (d[d.year == 2024].dropna(subset=["daioe_allapps"])   # some codes carry no score
+          .assign(code=lambda x: x.ssyk2012_4.astype(int).astype(str).str.zfill(4),
+                  pctl=lambda x: (100 * x.daioe_allapps.rank(method="average") / len(x)).round(1))
+          .merge(titles, on="code")
+          .sort_values("daioe_allapps", ascending=False)
+          )[["code", "title", "daioe_allapps", "pctl"]]      # full list, most to least exposed
+top10, bottom10 = ranked.head(10), ranked.tail(10)
+path = d[d.ssyk2012_4.astype(int) == 2512][["year", "daioe_allapps"]]   # one occupation over time
 ```
 
-To standardise as the paper does: merge `standardisation_moments_v1.csv` and
-compute `z = (value - mean) / sd`. Details, caveats and citing: `VINTAGES.md`
+Or in Stata:
+
+```stata
+use refresh-2024/daioe_ssyk2012, clear
+keep if year == 2024 & !missing(daioe_allapps)
+gen code = string(ssyk2012_4, "%04.0f")
+preserve
+import delimited occupation_titles_ssyk.csv, clear stringcols(2)
+keep if taxonomy == "ssyk2012"
+tempfile t
+save `t'
+restore
+merge 1:1 code using `t', keep(match) nogen
+egen pctl = rank(daioe_allapps)                    // average rank on ties = midrank
+replace pctl = round(100 * pctl / _N, .1)
+gsort -daioe_allapps                               // full list, most to least exposed
+list code title daioe_allapps pctl in 1/10         // top 10
+list code title daioe_allapps pctl in -10/l        // bottom 10
+```
+
+To standardise the way the paper does, merge `standardisation_moments_v1.csv`
+and compute `z = (value - mean) / sd`. Details, caveats and citing: `VINTAGES.md`
 here, and `DOCUMENTATION.md` in the repository.
 
 ## The folders are different objects
