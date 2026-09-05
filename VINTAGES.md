@@ -159,7 +159,10 @@ modelling, image generation, conversation and software engineering. It uses the
 same standard deviations and the same mean over observed members, and it equals
 zero until its first members begin in 2012. The overall composite above has up to thirteen members, and its assembly stops
 if any single member ever accounts for more than half of a year's total
-movement: among that many members, such dominance would signal a fault. The
+movement. The reason: if one application out of thirteen were driving more than
+half of the total, the likeliest explanation would be an error in that
+application's data or scale rather than genuine progress, so the build stops
+for inspection instead of publishing. The
 generative composite has at most four members, and in a typical year only three
 with data. Among so few, one member will often account for more than half even
 when everything works as intended, just as one person in a group of three often
