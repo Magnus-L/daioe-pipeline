@@ -93,9 +93,8 @@ guarantee covers.
 Cite the release *and* the paper, and name the object you used. Both matter: the
 release fixes which version of the measure, the paper documents what it is.
 
-- **This version (v1.0.0):** https://doi.org/10.5281/zenodo.21873968 (reserved;
-  resolves once the first deposit is published)
-- **All versions:** the concept DOI on the Zenodo record, added here at first deposit.
+- **This version (v1.0.0):** https://doi.org/10.5281/zenodo.21873968
+- **All versions:** https://doi.org/10.5281/zenodo.21873967
 - v1.0.0 contains two objects, so cite the DOI, the object ("frozen 2010–2023 index"
   or "2024 refresh"), and the filename you loaded.
 - **The paper:** Engberg et al., "AI Unboxed: Capability Arrival and the Clerical

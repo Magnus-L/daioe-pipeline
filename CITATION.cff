@@ -64,7 +64,7 @@ repository-code: "https://github.com/Magnus-L/daioe-pipeline"
 # which always resolves to the newest version, appears after the first publication
 # and belongs in the manuscript and on the landing page instead.
 version: "1.0.0"
-doi: "10.5281/zenodo.21873968"
+doi: "10.5281/zenodo.21873968"  # this version; all versions: 10.5281/zenodo.21873967
 date-released: "2026-09-05"
 # -----------------------------------------------------------------------------
 references:
