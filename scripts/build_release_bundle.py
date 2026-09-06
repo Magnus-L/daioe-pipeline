@@ -68,6 +68,24 @@ EXTRAS = [
      "SOC 2018 build on the frozen 2010-2023 window; panel export, not Publication format."),
 ]
 
+if VERSION >= "1.1.0":
+    VINTAGES.append(
+        ("vintage-2025",
+         ROOT / "data" / "vintage" / "vintage_2025_v110rc3_20260905" / "out" / "Publication",
+         "The 2025 vintage: frozen window verbatim, 2024-2025 chained at the seam; "
+         "adds daioe_agentic, daioe_mathsci and the three second-generation "
+         "composites (g2all, g2gen, g2nine), each with pctl_mid_ companions."))
+    EXTRAS.append(
+        ("vintage-2025/soc2018/daioe_panel_soc2018.dta",
+         ROOT / "data" / "vintage" / "vintage_2025_v110rc3_20260905" / "out" / "daioe_panel_soc2018.dta",
+         "SOC 2018 build on the 2010-2025 window; panel export, not Publication format."))
+    EXTRAS.append(
+        ("g2_sigma_v2.csv",
+         ROOT / "data" / "derived" / "g2_sigma_v2.csv",
+         "The shrinkage standard deviations behind the second-generation composites: "
+         "each application's own history blended with its scale-family prior, "
+         "components and weights per application."))
+
 DOCS = [
     (ROOT / "CITATION.cff", "CITATION.cff"),
     (ROOT / "LICENSE-DATA", "LICENSE-DATA"),
@@ -294,10 +312,15 @@ cell-for-cell identically at stored precision and appends 2024, chained on the f
 2023 level; its 2024 rows are new and do not appear in any published estimate. Cite
 the vintage you used.
 
-The 2025-onward vintage is not in this release. It exists, but several of its
-properties are still provisional, so it ships separately as v1.1.0 rather than being
-frozen into a permanent record before it settles. `VINTAGES.md` in this bundle
-documents all vintages and marks that section as forthcoming.
+{("The 2025 vintage is in this release (folder vintage-2025/), chained at the "
+   "2023-2024 seam with the frozen window carried verbatim; its documented caveats "
+   "-- thin entry baselines, entrant weight, partial 2025 coverage -- are in "
+   "VINTAGES.md and its values beyond 2023 are revisable in later vintages.")
+  if VERSION >= "1.1.0" else
+  ("The 2025-onward vintage is not in this release. It exists, but several of its "
+   "properties are still provisional, so it ships separately as v1.1.0 rather than "
+   "being frozen into a permanent record before it settles. VINTAGES.md in this "
+   "bundle documents all vintages and marks that section as forthcoming.")}
 
 ## Known errors and intended use
 
