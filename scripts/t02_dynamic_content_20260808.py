@@ -139,8 +139,11 @@ def chronology() -> None:
     for parent, colr in show.items():
         g = sl[(sl["parent_name"] == parent) & (sl["year"] >= 2010)].sort_values("year")
         cum = g["mean"].cumsum()
+        # British spelling for the printed legend only. _APP_NAME's values are
+        # keys into _APP_ID and into the released panels, so the map itself is
+        # left alone (paper house style is British English; 22 Sep 2026).
         ax.plot(g["year"], cum / cum.iloc[-1], color=colr, lw=2,
-                label=s2._APP_NAME[parent])
+                label=s2._APP_NAME[parent].replace("modeling", "modelling"))
     for k, (yr, lab) in enumerate(marks.items()):
         ax.axvline(yr, color=GRAY, lw=0.7, alpha=0.5)
         ax.text(yr, 1.02 + 0.045 * (k % 2), lab, rotation=0, fontsize=7,
