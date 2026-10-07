@@ -481,7 +481,7 @@ depend on tie order, and from v1.1.0 every panel carries tie-invariant
 `pctl_mid_*` companions. And a clean pipeline run from raw inputs reproduces
 every substantive cell but not the legacy tie ordering; full reproduction of
 the rank columns uses the deposited v1.0.0 artefact, by construction. One record for comparers: the
-2024 refresh deposited inside v1.0.0 carries the pipeline's own ranks, not the
-original ones, on SOC 2010's 68 year-less rows (735 rank cells); from v1.1.0 every
-object carries the original v1.0.0 ranks on those rows, as the freeze scope above
-requires.
+2024 refresh, deposited in v1.0.0 and carried unchanged since, has the pipeline's own
+ranks rather than the original ones on SOC 2010's 68 year-less rows (735 rank cells,
+all substantive values identical); the frozen index and the 2025 vintage carry the
+original v1.0.0 ranks on those rows, as the freeze scope above requires.
