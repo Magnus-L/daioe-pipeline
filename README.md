@@ -80,10 +80,10 @@ cite the one you used.
   or to compare against published work.
 - **2024 refresh**: the newest released object; appends 2024 under the seam
   discipline. Use it for current analysis.
-- **2025 vintage (v1.1.0)**: forthcoming. It adds two application areas, two
-  second-generation composites (overall and generative) and a balanced
+- **2025 vintage (v1.1.0)**: the newest released object. It adds two application
+  areas, two second-generation composites (overall and generative) and a balanced
   nine-member companion, while the legacy composites keep their original
-  membership. Use it for current analysis when released.
+  membership. Use it for current analysis.
 
 `VINTAGES.md` is the full record of what each vintage contains and what the freeze
 guarantee covers.
@@ -93,12 +93,13 @@ guarantee covers.
 Cite the release *and* the paper, and name the object you used. Both matter: the
 release fixes which version of the measure, the paper documents what it is.
 
-- **This version (v1.0.0):** https://doi.org/10.5281/zenodo.21873968
+- **This version (v1.1.0):** https://doi.org/10.5281/zenodo.22551410
+- **v1.0.0 (the frozen 2010–2023 index the paper estimates on):** https://doi.org/10.5281/zenodo.21873968
 - **All versions:** https://doi.org/10.5281/zenodo.21873967
-- v1.0.0 contains two objects, so cite the DOI, the object ("frozen 2010–2023 index"
-  or "2024 refresh"), and the filename you loaded.
-- **The paper:** Engberg et al., "AI Unboxed: Capability Arrival and the Clerical
-  Decline". The full bibliographic form is in `CITATION.cff`, updated on publication.
+- A release contains several objects, so cite the DOI, the object ("frozen 2010–2023
+  index", "2024 refresh" or "2025 vintage"), and the filename you loaded.
+- **The paper:** Engberg et al., "AI Unboxed: AI Exposure and Clerical Employment
+  within Firms". The full bibliographic form is in `CITATION.cff`, updated on publication.
 
 `CITATION.cff` carries the machine-readable form; GitHub's "Cite this repository"
 button reads it.

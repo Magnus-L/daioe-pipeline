@@ -44,10 +44,10 @@ authors:
     orcid: "https://orcid.org/0000-0003-3724-2399"
 abstract: >-
   DAIOE translates measured performance gains on public AI benchmarks into
-  occupation-year exposure scores, separately for nine capability subdomains and a
-  generative-AI composite. Unlike static exposure indices it varies over time as well
-  as across occupations, so the timing of capability arrival is observable and
-  testable. Released with the full construction pipeline, its tests, and the vintage
+  occupation-year exposure scores, overall and separately for each AI application
+  and for composites of them. Unlike static exposure indices it varies over time as
+  well as across occupations, so it records how far and when measured AI performance
+  advanced. Released with the full construction pipeline, its tests, and the vintage
   gates that keep the frozen publication index separate from later updates.
 keywords:
   - artificial intelligence
@@ -60,16 +60,16 @@ license: CC-BY-4.0
 license-url: "https://creativecommons.org/licenses/by/4.0/"
 repository-code: "https://github.com/Magnus-L/daioe-pipeline"
 # This is the VERSION DOI, reserved on Zenodo before publishing, and it is the
-# right one here: CITATION.cff describes v1.0.0 specifically. The CONCEPT DOI,
+# right one here: CITATION.cff describes v1.1.0 specifically. The CONCEPT DOI,
 # which always resolves to the newest version, appears after the first publication
 # and belongs in the manuscript and on the landing page instead.
-version: "1.0.0"
-doi: "10.5281/zenodo.21873968"  # this version; all versions: 10.5281/zenodo.21873967
-date-released: "2026-09-05"
+version: "1.1.0"
+doi: "10.5281/zenodo.22551410"  # this version; v1.0.0: 10.5281/zenodo.21873968; all versions: 10.5281/zenodo.21873967
+date-released: "2026-10-08"
 # -----------------------------------------------------------------------------
 references:
   - type: article
-    title: "AI Unboxed: Capability Arrival and the Clerical Decline"
+    title: "AI Unboxed: AI Exposure and Clerical Employment within Firms"
     authors:
       - family-names: Engberg
         given-names: Erik

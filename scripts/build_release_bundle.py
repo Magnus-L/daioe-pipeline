@@ -40,11 +40,9 @@ VINTAGES = [
      ROOT / "data" / "vintage" / "refresh2024_seam_20260825" / "out" / "Publication",
      "The 2024 annual refresh: frozen 2010-2023 verbatim, 2024 chained at the seam."),
     # HELD BACK FROM v1.0.0 (decision, 10 Aug 2026). The 2025-onward vintage ships as
-    # v1.1.0 once the co-authors have signed off on it. Its three documented caveats
-    # (SWE-bench Verified's 2025 increment is an upper bound on a single 2024
-    # evaluation; five of nine original applications have no living 2025 source;
-    # ceiling-type anchors await a uniform convention) make it the object most likely
-    # to change, and a published Zenodo record cannot be withdrawn. Zenodo versioning
+    # v1.1.0 (below). Its documented caveats ('Known caveats' in VINTAGES.md) made it
+    # the object most likely to change, and a published Zenodo record cannot be
+    # withdrawn. Zenodo versioning
     # exists for exactly this: the concept DOI will resolve to v1.1.0 when it lands.
     # ("vintage-2025",
     #  ROOT / "data" / "vintage" / "vintage_2025_20260808" / "out" / "Publication",
@@ -197,7 +195,9 @@ def main():
             dst = STAGE / rel
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dst)
-            present.append((rel.split("/")[0] if "/" in rel else rel, desc, 1))
+            # folder of the extra (all but the file name), so a nested extra such as
+            # vintage-2025/soc2018/ is not listed under its parent folder's name
+            present.append(("/".join(rel.split("/")[:-1]) if "/" in rel else rel, desc, 1))
             print(f"  {rel}: 1 file")
 
     for src, rel in DOCS:
@@ -314,8 +314,8 @@ the vintage you used.
 
 {("The 2025 vintage is in this release (folder vintage-2025/), chained at the "
    "2023-2024 seam with the frozen window carried verbatim; its documented caveats "
-   "-- thin entry baselines, entrant weight, partial 2025 coverage -- are in "
-   "VINTAGES.md and its values beyond 2023 are revisable in later vintages.")
+   "are listed under 'Known caveats' in VINTAGES.md, and its values beyond 2023 are "
+   "revisable in later vintages.")
   if VERSION >= "1.1.0" else
   ("The 2025-onward vintage is not in this release. It exists, but several of its "
    "properties are still provisional, so it ships separately as v1.1.0 rather than "
@@ -359,7 +359,7 @@ ranges and asserted keys — generated from the staged files at build time.
 | `daioe_allapps` | the aggregate index over the nine original applications: cumulative exposure to AI progress |
 | `daioe_<subdomain>` | the same for one capability subdomain: `stratgames` (abstract strategy games), `videogames` (real-time video games), `imgrec` (image recognition), `imgcompr` (image comprehension / visual question answering), `imggen` (image generation), `readcompr` (reading comprehension), `lngmod` (language modelling), `translat` (translation), `speechrec` (speech recognition) |
 | `daioe_genai` | generative-AI composite (membership documented per vintage in `VINTAGES.md`) |
-| `pctl_rank_*` | within-year percentile rank of the corresponding index, legacy tie convention — read the tie warning below before using |
+{('| `daioe_agentic`, `daioe_mathsci` | the two application areas added in the 2025 vintage (agentic task execution; mathematical and scientific reasoning), missing before their 2024 chain year |' + chr(10) + '| `daioe_g2all`, `daioe_g2gen`, `daioe_g2nine` | the second-generation composites of the 2025 vintage: overall, generative, and the balanced nine-member companion (`VINTAGES.md` documents membership and weights) |' + chr(10)) if VERSION >= "1.1.0" else ''}| `pctl_rank_*` | within-year percentile rank of the corresponding index, legacy tie convention — read the tie warning below before using |
 | `pctl_mid_*` | tie-invariant within-year midrank percentile: identical values share identical percentiles; prefer these where ties could matter. In v1.0.0 they ship in the SOC 2018 extra; the taxonomy panels carry them from v1.1.0, and for v1.0.0 the recipe is one line: 100 * rank(value, method "average", within year) / count(within year) |
 
 ## Percentile ranks and ties
@@ -380,7 +380,7 @@ The index is cumulative and has no natural units, so what to compare depends on 
 question. For cross-sectional standing within a year, the percentile ranks give an
 ordinal reading, subject to the tie warning above. For levels and growth over time,
 rescale the raw values to the frozen-window peak as documented in
-`DOCUMENTATION.md` section 5 of the repository; raw cross-year comparisons are
+`DOCUMENTATION.md` section 6 of the repository; raw cross-year comparisons are
 meaningful but combine common capability progress with occupational ability
 weights, so interpret them against the estimand you actually want.
 

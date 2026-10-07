@@ -140,10 +140,9 @@ composite value at the chain point. Automated checks verify on every assembly
 that the protected window is cell-identical (all taxonomies, stored precision)
 and that no admitted series carries a value before its chain point.
 
-## 4. Vintage v2025 (release candidate; assembled August 2026, amended 4 September, revised 5 September 2026)
+## 4. Vintage v2025 (released as v1.1.0; assembled August 2026, amended 4 September, revised 5 September 2026)
 
-Until v1.1.0 is deposited, everything here describes the assembled release
-candidate.
+Everything here describes the vintage as deposited in v1.1.0.
 
 **Sources for the appended years.** The recovered Papers with Code archive (the
 2024 refresh of surviving series) and Epoch AI's benchmark data (CC BY 4.0),

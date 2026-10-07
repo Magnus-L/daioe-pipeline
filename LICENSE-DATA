@@ -47,9 +47,8 @@ permits redistribution of derived work under CC BY with attribution.
 
 ## The METR basis, stated in full
 
-METR's task-horizon evaluations are the primary agentic series of the v1.1.0
-release candidate; the summary row above exists because that candidate is
-assembled, and no METR-derived value ships until v1.1.0 is deposited. Their basis differs from every row that does: METR's `eval-analysis-public`
+METR's task-horizon evaluations are the primary agentic series of the 2025
+vintage, released as v1.1.0; v1.0.0 carries no METR-derived value. Their basis differs from every row that does: METR's `eval-analysis-public`
 repository carries no licence file, and our use rests on **written permission granted to
 the AI-Econ Lab on 13 Aug 2026** to derive occupation-year values and redistribute them as
 part of this index. A permission granted to us is not a licence that travels with the
@@ -60,7 +59,7 @@ construction several derivations downstream.
 **Upgrade in progress.** METR committed on 18 Aug 2026 to adding a CC BY 4.0 licence to
 the repository, in reply to our asking. When it lands, METR stops being an exception and
 joins the inheritance table above on the same footing as Epoch AI, and the paragraph above
-is replaced rather than amended. It was not in place as of 18 Aug; the state is checked by
+is replaced rather than amended. It was not in place as of 8 Oct 2026; the state is checked by
 `scripts/check_metr_licence.py`.
 
 Attribution required wherever that series is redistributed:

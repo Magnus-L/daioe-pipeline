@@ -3,8 +3,7 @@
 This file is the public record of what each vintage of the measure contains and
 why. It ships inside each release bundle and lives at the head of the
 repository; when the two copies differ, the copy inside a deposited bundle is
-the record for that version and the repository head describes the forthcoming
-one. The paper and its online appendix document the frozen 2010–2023 index that
+the record for that version and the repository head describes the next one. The paper and its online appendix document the frozen 2010–2023 index that
 every published estimate uses. Everything below concerns later vintages, and
 none of it can change a frozen value: assembly stops rather than produce a
 vintage in which any published 2010–2023 cell would differ (see "Provenance and
@@ -96,15 +95,13 @@ transformed units; one language-QA metric, 0.02). It is a one-off
 understatement at the seam, in the same direction as the entry-lag bias
 already disclosed.
 
-## The 2025 vintage, forthcoming as v1.1.0 (not part of v1.0.0)
+## The 2025 vintage, released as v1.1.0
 
-Everything in this section describes the v1.1.0 release candidate, currently at
-revision 3 (5 September 2026: shrinkage standard deviations replace the
-five-year rule, a balanced nine-member composite column is added, and a fresh
-Epoch retrieval verified that no 2024 frontier revises, so the thin-baseline
-caveat stands as stated). The candidate is assembled and verified, but until
-v1.1.0 is deposited its details are provisional, and this section rather than
-any deposited record is where they may still change.
+This section describes the 2025 vintage as deposited in v1.1.0 (release
+candidate revision 3 of 5 September 2026: shrinkage standard deviations replace
+the five-year rule, a balanced nine-member composite column is added, and a
+fresh Epoch retrieval verified that no 2024 frontier revises, so the
+thin-baseline caveat stands as stated).
 
 The vintage covers 2010–2025 with its level chain point at the 2023–2024 seam.
 It adds three things: eight admitted benchmark series, two new application
@@ -341,7 +338,7 @@ column new to a vintage.
 
 ### Known caveats, shipped rather than filed
 
-Four things a user of the appended years should know, each with its number.
+Five things a user of the appended years should know, each with its number.
 
 **Thin entry baselines.** A newly admitted series' first increment is computed
 against its entry-year frontier. The 2024 evaluation counts are: SWE-bench
@@ -483,4 +480,8 @@ ties matter; the substantive `daioe_*` columns are authoritative and never
 depend on tie order, and from v1.1.0 every panel carries tie-invariant
 `pctl_mid_*` companions. And a clean pipeline run from raw inputs reproduces
 every substantive cell but not the legacy tie ordering; full reproduction of
-the rank columns uses the deposited v1.0.0 artefact, by construction.
+the rank columns uses the deposited v1.0.0 artefact, by construction. One record for comparers: the
+2024 refresh deposited inside v1.0.0 carries the pipeline's own ranks, not the
+original ones, on SOC 2010's 68 year-less rows (735 rank cells); from v1.1.0 every
+object carries the original v1.0.0 ranks on those rows, as the freeze scope above
+requires.

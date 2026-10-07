@@ -48,7 +48,9 @@ for stem, keys in TAXMAP.items():
     got = dio.read_dta(PUB / f"{stem}.dta")
     pcols = [c for c in ref.columns if c.startswith("pctl_rank_") and c in got.columns]
     ref_idx = ref.set_index(keys)
-    frozen_mask = got["year"] <= 2023
+    # 8 Oct 2026 (ML): the frozen window includes the year-less rows (SOC 2010's 68 inherited
+    # rows); masking on year <= 2023 alone silently excluded them (735 cells, readiness note 17 Sep).
+    frozen_mask = (got["year"] <= 2023) | got["year"].isna()
     gk = pd.MultiIndex.from_frame(got[keys])
     n_changed = 0
     for c in pcols:
@@ -68,8 +70,8 @@ for stem, keys in TAXMAP.items():
     chk = dio.read_dta(PUB / f"{stem}.dta")
     cols = [c for c in ref.columns
             if c.startswith(("daioe_", "pctl_rank_")) and c in chk.columns]
-    g = chk[chk["year"] <= 2023].set_index(keys)[cols].sort_index()
-    r = ref[ref["year"] <= 2023].set_index(keys)[cols].sort_index()
+    g = chk[(chk["year"] <= 2023) | chk["year"].isna()].set_index(keys)[cols].sort_index()
+    r = ref[(ref["year"] <= 2023) | ref["year"].isna()].set_index(keys)[cols].sort_index()
     assert g.index.equals(r.index), f"{stem}: row sets differ"
     diff = (g.astype("float32").fillna(-9e9).values
             != r.astype("float32").fillna(-9e9).values).sum()
