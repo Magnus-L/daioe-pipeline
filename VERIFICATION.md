@@ -62,6 +62,19 @@ Ledger under the AI-Econ Lab code-verification protocol (pilot: proworker-gov,
   share, not per-worker (noted); stale CERTIFICATION.txt describes the superseded
   algebraic variant build; the transparency source-note points at the daioe notes dir.
 
+### 2026-10-09 — PL-L roe double-spike, documented (fix open)
+
+- **Check:** released v1.1.0 SOC 2018 panels read directly. Frozen panel: `roe` populated
+  in 2023 only. Vintage-2025 panel: the robotics unit step (stage 2 dummy row at
+  `year_final`) is entered again in 2025, so occupation-mean `exp_cumul_roe` goes 0.314 →
+  0.629 with `pctl_mid_roe` identical within every occupation. A constant that reads as
+  robotics progress.
+- **Action:** DOCUMENTATION.md Section 1 and VINTAGES.md (sixth known caveat) state that
+  `roe` is a cross-section, use the 2023 value, never difference it. Released bundle and
+  Zenodo deposit untouched. `tests/test_roe_cross_section.py` pins the documented numbers
+  on the bundle and carries a strict-xfail guard that fails once the fix lands.
+- **Open:** next release ships `roe` as one cross-section outside the yearly panels.
+
 ### AI provenance (Rule V8)
 The pipeline was built and validated with AI assistance across the Aug 2026 sessions
 under ML's specifications (see VALIDATION.md); this review was performed by Claude lens

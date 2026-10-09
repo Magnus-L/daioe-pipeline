@@ -338,7 +338,7 @@ column new to a vintage.
 
 ### Known caveats, shipped rather than filed
 
-Five things a user of the appended years should know, each with its number.
+Six things a user of the appended years should know, each with its number.
 
 **Thin entry baselines.** A newly admitted series' first increment is computed
 against its entry-year frontier. The 2024 evaluation counts are: SWE-bench
@@ -425,6 +425,14 @@ shrinkage sigmas, which give the entrants more weight. Per-year increment rank
 agreement across occupations is 0.94–1.00 throughout; for the generative pair
 it is 0.98–0.99 until 2025 and 0.89 in 2025, the first year the two
 constructions genuinely differ.
+
+**The robotics series does not move with time** (added 9 October 2026, after
+the v1.1.0 deposit). `roe`, shipped only in the two SOC 2018 panels, is one
+expert-elicited mapping with no progress series behind it, entered as a unit
+step in the build's final year. The vintage repeats that step in 2025, so
+`exp_cumul_roe` doubles from 2023 to 2025 (occupation mean 0.314 to 0.629)
+with no change in any ranking (`pctl_mid_roe` identical). Read it as a
+cross-section, using the 2023 value; see DOCUMENTATION.md, Section 1.
 
 ## Citing a vintage
 

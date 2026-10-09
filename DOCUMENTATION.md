@@ -86,6 +86,21 @@ literature (Felten-Raj-Seamans, Webb, Eloundou et al., Frey-Osborne; sources
 and terms in `LICENSE-DATA`); its headline cumulative column `exp_cumul`
 corresponds to `daioe_allapps`.
 
+**The robotics columns are a cross-section, not a time series.**
+`exp_change_roe`, `exp_cumul_roe` and `pctl_mid_roe` rest on a single
+expert-elicited mapping of robotics onto 19 physical and psychomotor O*NET
+abilities (a 2024 survey of engineering students). No benchmark series measures
+progress in robotics, so the pipeline enters it, as the original Stata
+construction did, as one unit step dated in the build's final year. In the
+frozen SOC 2018 panel the columns are therefore populated in 2023 only. In the
+2025 vintage panel the same step is entered again in 2025, so `exp_cumul_roe`
+doubles between 2023 and 2025 (occupation mean 0.314 to 0.629) while
+`pctl_mid_roe` is unchanged. The doubling is an artefact of the construction,
+not measured progress in robotics. Use `roe` as a time-invariant occupational
+characteristic: take the 2023 value of `exp_cumul_roe`, or `pctl_mid_roe` for
+rankings, and never difference it over years. A later release will ship it as
+a single cross-section outside the yearly panels.
+
 ## 2. Vintages
 
 **The frozen window, 2010–2023, is the series estimated in the paper.** Its
