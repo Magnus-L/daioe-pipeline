@@ -143,7 +143,7 @@ def data_dictionary(stage: Path) -> None:
     import json
     import pandas as pd
     d = {"_conventions": {
-        "missing": "empty cells are missing values, never zeros",
+        "missing": "empty cells are missing values; the crosswalked classifications (ISCO-08, SSYK, SOC 2018) also store exact zeros as missing (VINTAGES.md)",
         "tsv_delimiter": "\\t",
         "unique_key": "asserted on the staged file; null means the file is not "
                       "keyed on (occupation code, year)"}}
@@ -164,7 +164,8 @@ def data_dictionary(stage: Path) -> None:
     (stage / "DATA_DICTIONARY.json").write_text(json.dumps(d, indent=1),
                                                 encoding="utf-8")
     lines = ["# Data dictionary (generated from the staged files at build time)",
-             "", "Empty cells are missing values, never zeros. `.tsv` files are",
+             "", "Empty cells are missing values. In ISCO-08, SSYK and SOC 2018 they also stand",
+             "for exact zeros (see VINTAGES.md). `.tsv` files are",
              "tab-separated. The `.csv`-free naming is deliberate.", ""]
     for rel, e in d.items():
         if rel.startswith("_"):
