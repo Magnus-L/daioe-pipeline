@@ -12,6 +12,19 @@ Ledger under the AI-Econ Lab code-verification protocol (pilot: proworker-gov,
 
 ## Entries
 
+### 2026-11-23 — SOC 2018 publication format (v1.1.1 candidate), self-checking build
+- **Change:** `scripts/build_soc2018_publication_20261123.py` (renames only) and the bundle
+  wiring; commit `97ceca1`. Single change, so the script's own fatal checks stand in for a
+  lens review (T1 data released publicly; screen again at deposit, V15).
+- **Checks, all passing:** daioe_* equals exp_cumul_* cell for cell; on clean 1:1
+  SOC2010->SOC2018 pairs every daioe_* equals the SOC 2010 publication file exactly
+  (frozen 9,940 rows, vintage 2025 11,360); SOC 2018 is missing only where SOC 2010 is
+  exactly zero (the crosswalk zero-to-missing rule, now documented); pctl_rank_allapps
+  reproduces the panel's column; pctl_mid_* tie-invariant. Local bundle 1.1.1: every
+  v1.1.0 data file byte-identical, six new files, SHA256SUMS verified.
+- **Tests run:** `pytest tests -q` -> 62 passed, 1 xfailed (113 s).
+- **Open:** CITATION.cff bump and Zenodo deposit await ML.
+
 ### 2026-08-08 — construction-vs-paper lens (Eqs 1–6, freeze, vintage)
 - **Result, clean:** every equation of Section 2.1 verified in `src` (r_oj, Δe_jt, Δe_ot,
   S_o, weight-before-square, cumulation from 2010; non-negativity structural); the
