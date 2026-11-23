@@ -1,41 +1,68 @@
-# DAIOE — Dynamic AI Occupational Exposure
+# DAIOE: how exposed is each occupation to AI?
 
-**How exposed is an occupation to artificial intelligence, to which capabilities, and
-when did that exposure arrive?** DAIOE answers all three. It converts measured
-performance gains on public AI benchmarks into exposure scores by occupation *and
-year*, separately for nine capability subdomains and their composites. Exposure
-therefore moves as capabilities arrive, instead of sitting as a single static score.
+DAIOE scores every occupation by how applicable AI's measured capabilities are to
+what the occupation does, every year since 2012. It is built from progress on public
+AI benchmarks, so exposure moves as capabilities arrive. A high score means AI can be
+applied to much of the work; it is not a forecast of job loss.
 
-The two dimensions together are the unboxing in the paper's title. A static aggregate
-can say which occupations look exposed. The subdomain scores describe what kind of AI
-progress that exposure rests on, and the time dimension lets you ask whether
-labour-market outcomes moved *when* the relevant capabilities did: a testable claim
-rather than a correlation.
+## Just the scores
 
-## Quick start
+One CSV per classification, ready to open in Excel, Stata, R or Python:
 
-A few lines get you the full ranking, top and bottom ten, and one occupation's
-path over time; no manual needed. From the Zenodo bundle, in Python:
+| Classification | Latest year (2025), one row per occupation | All years, 2012–2025 |
+|---|---|---|
+| ISCO-08 (international) | [`scores/daioe_isco08_2025.csv`](scores/daioe_isco08_2025.csv) | [`scores/daioe_isco08_all_years.csv`](scores/daioe_isco08_all_years.csv) |
+| SOC 2010 (United States) | [`scores/daioe_soc2010_2025.csv`](scores/daioe_soc2010_2025.csv) | [`scores/daioe_soc2010_all_years.csv`](scores/daioe_soc2010_all_years.csv) |
+| SSYK 2012 (Sweden, Swedish titles) | [`scores/daioe_ssyk2012_2025.csv`](scores/daioe_ssyk2012_2025.csv) | [`scores/daioe_ssyk2012_all_years.csv`](scores/daioe_ssyk2012_all_years.csv) |
+
+Each file has seven columns:
+
+| Column | Meaning |
+|---|---|
+| `code`, `title` | the occupation (4-digit ISCO-08 or SSYK 2012; 6-digit SOC 2010) |
+| `year` | the year the score refers to |
+| `genai` | exposure to **generative AI** (language models, image generation, conversation, software engineering) |
+| `genai_pctl` | its percentile among all occupations that year: 90 means more exposed than 90 per cent of occupations |
+| `allai` | exposure to **all AI** (all thirteen capability areas) |
+| `allai_pctl` | its percentile, as above |
+
+Read the percentiles first. The scores themselves have no natural unit: they rank
+occupations and show change over time, but a value of 10 does not mean "10 per cent".
+
+In Python, one line: `pd.read_csv("https://raw.githubusercontent.com/Magnus-L/daioe-pipeline/main/scores/daioe_isco08_2025.csv", dtype={"code": str})`
+
+Prefer to browse? Search any occupation, in English or Swedish, on the
+[DAIOE page](https://ai-econlab.com/daioe/).
+
+These files are taken from the citable release (v1.1.0, 2025 vintage,
+https://doi.org/10.5281/zenodo.22551410) by `scripts/build_simple_scores.py`, which
+checks the release's checksums first. Cite that DOI (see "Citing" below).
+
+## Going further: the full release
+
+The release on Zenodo adds the thirteen capability areas one by one, the legacy
+composites the paper uses, two more classifications (O\*NET-SOC, SSYK 96) and Stata
+and Excel versions. A few lines get you the full ranking and one occupation's path
+over time. In Python, from the unzipped bundle:
 
 ```python
 import pandas as pd
-d = pd.read_stata("refresh-2024/daioe_ssyk2012.dta")          # or any taxonomy panel
+d = pd.read_stata("vintage-2025/daioe_ssyk2012.dta")          # or any taxonomy panel
 titles = pd.read_csv("occupation_titles_ssyk.csv", dtype={"code": str}).query("taxonomy=='ssyk2012'")
-ranked = (d[d.year == 2024].dropna(subset=["daioe_allapps"])   # some codes carry no score
-          .assign(code=lambda x: x.ssyk2012_4.astype(int).astype(str).str.zfill(4),
-                  pctl=lambda x: (100 * x.daioe_allapps.rank(method="average") / len(x)).round(1))
+ranked = (d[d.year == 2025].dropna(subset=["daioe_g2gen"])     # some codes carry no score
+          .assign(code=lambda x: x.ssyk2012_4.astype(int).astype(str).str.zfill(4))
           .merge(titles, on="code")
-          .sort_values("daioe_allapps", ascending=False)
-          )[["code", "title", "daioe_allapps", "pctl"]]      # full list, most to least exposed
+          .sort_values("daioe_g2gen", ascending=False)
+          )[["code", "title", "daioe_g2gen", "pctl_mid_g2gen"]]   # most to least exposed
 top10, bottom10 = ranked.head(10), ranked.tail(10)
-path = d[d.ssyk2012_4.astype(int) == 2512][["year", "daioe_allapps"]]   # one occupation over time
+path = d[d.ssyk2012_4.astype(int) == 2512][["year", "daioe_g2gen"]]   # one occupation over time
 ```
 
 Or in Stata:
 
 ```stata
-use refresh-2024/daioe_ssyk2012, clear
-keep if year == 2024 & !missing(daioe_allapps)
+use vintage-2025/daioe_ssyk2012, clear
+keep if year == 2025 & !missing(daioe_g2gen)
 gen code = string(ssyk2012_4, "%04.0f")
 preserve
 import delimited occupation_titles_ssyk.csv, clear stringcols(2)
@@ -44,18 +71,15 @@ tempfile t
 save `t'
 restore
 merge 1:1 code using `t', keep(match) nogen
-egen pctl = rank(daioe_allapps)                    // average rank on ties = midrank
-replace pctl = 100 * pctl / _N
-format pctl %9.1f                                  // display rounding, locale-proof
-gsort -daioe_allapps                               // full list, most to least exposed
-list code title daioe_allapps pctl in 1/10         // top 10
-list code title daioe_allapps pctl in -10/l        // bottom 10
+gsort -daioe_g2gen                                        // most to least exposed
+list code title daioe_g2gen pctl_mid_g2gen in 1/10        // top 10
+list code title daioe_g2gen pctl_mid_g2gen in -10/l       // bottom 10
 ```
 
-To standardise the way the paper does, merge `standardisation_moments_v1.csv`
-and compute `z = (value - mean) / sd`. To cite, see "Citing" below. Everything
-else (vintages, caveats, rescaling) is in the two documents this README
-points to.
+`pctl_mid_*` is the tie-safe percentile (midrank within year). To standardise the way
+the paper does, merge `standardisation_moments_v1.csv` and compute
+`z = (value - mean) / sd`. Everything else (vintages, caveats, rescaling) is in the
+two documents this README points to.
 
 ## What the release contains
 
@@ -78,8 +102,8 @@ cite the one you used.
 
 - **Frozen 2010–2023**: the index behind the published estimates. Use it to replicate,
   or to compare against published work.
-- **2024 refresh**: the newest released object; appends 2024 under the seam
-  discipline. Use it for current analysis.
+- **2024 refresh**: appends 2024 under the seam discipline. Superseded for current
+  analysis by the 2025 vintage; kept so that work done on it can be reproduced.
 - **2025 vintage (v1.1.0)**: the newest released object. It adds two application
   areas, two second-generation composites (overall and generative) and a balanced
   nine-member companion, while the legacy composites keep their original
