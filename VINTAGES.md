@@ -169,7 +169,7 @@ beside it.)
 
 Conversation and software engineering use their original expert rows. Both new
 columns are chained: missing (not zero) before 2024 in every format, zero at
-the 2024 chain year, and cumulating from there. The pre-history convention
+the 2024 chain year (missing in the crosswalked classifications, see below), and cumulating from there. The pre-history convention
 differs by object on one rule. A subdomain column is missing before its
 construct is measured, because a zero there would assert a level for something
 never observed; a composite is defined (at zero) wherever its formula has
@@ -181,12 +181,19 @@ SOC 2010 panels.
 **Zeros become missing in the crosswalked classifications.** ISCO-08, SSYK 2012,
 SSYK 96 and SOC 2018 are built from SOC 2010 through crosswalks, and that step
 keeps a rule of the original Stata construction: a cumulative value of exactly
-zero is stored as missing. A composite with no measured progress yet is
-therefore zero in the two US panels and missing in the four crosswalked ones.
-In practice this concerns `daioe_genai` and `daioe_g2gen` in 2010–2011, where
-every occupation is zero. Read those cells as zero. The rule is frozen with the
-published ISCO and SSYK files and is documented rather than changed (noted
-23 November 2026).
+zero is stored as missing. Those four files therefore contain no zeros at all,
+and the zero-versus-missing distinction drawn above holds only in the
+O*NET-SOC 2010 and SOC 2010 panels. Concretely, in the crosswalked files a
+subdomain is missing before its first measured progress (image comprehension
+to 2015, image generation and translation to 2014, reading comprehension to
+2013, video games to 2012, language modelling to 2011), `daioe_genai` and
+`daioe_g2gen` are missing in 2010-2011, and `daioe_agentic` and
+`daioe_mathsci` are missing in their 2024 chain year as well as before it.
+The distinction is recoverable: a code missing in every year has no O*NET
+match; for `agentic` and `mathsci`, missing before 2024 means not measured and
+missing in 2024 means zero; for every other column, missing before the code's
+first value means zero. The rule is frozen with the published ISCO and SSYK
+files and is documented rather than changed (noted 23 November 2026).
 
 ### Composite membership (amended 4 September 2026)
 

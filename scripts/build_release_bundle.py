@@ -371,11 +371,13 @@ three formats:
    '`daioe_panel_soc2018.dta` beside it holds the same values under the pipeline\'s '
    'internal names (`exp_cumul` = `daioe_allapps`, `exp_cumul_<app>` = `daioe_<app>`).'
    + chr(10) + chr(10)) if VERSION >= "1.1.1" else ''}Each panel's unique key is (occupation code, `year`). Empty cells are missing
-values, not zeros, with one exception: in the crosswalked classifications
-(ISCO-08, SSYK, SOC 2018) a cumulative value of exactly zero is stored as
-missing, so a composite with no measured progress yet (`daioe_genai`,
-`daioe_g2gen` in 2010-2011) is empty there and zero in the US SOC 2010 and
-O*NET-SOC panels. Read those cells as zero; `VINTAGES.md` documents the rule. `DATA_DICTIONARY.json` and `DATA_DICTIONARY.md` in the bundle
+values, not zeros, in the US SOC 2010 and O*NET-SOC panels. The crosswalked
+classifications (ISCO-08, SSYK, SOC 2018) store every exact zero as missing, so
+there an empty cell can also mean "no measured progress yet": a subdomain
+before its first measured year, `daioe_genai` and `daioe_g2gen` in 2010-2011,
+`daioe_agentic` and `daioe_mathsci` in their 2024 chain year. A code empty in
+every year has no O*NET match. `VINTAGES.md` documents the rule and how to
+recover the zeros. `DATA_DICTIONARY.json` and `DATA_DICTIONARY.md` in the bundle
 root give the exact schema of every table — columns, dtypes, row counts, year
 ranges and asserted keys — generated from the staged files at build time.
 
