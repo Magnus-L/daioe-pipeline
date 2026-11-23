@@ -84,7 +84,13 @@ robotics series excluded from the index (`roe`), a seven-member non-generative
 variant of the aggregate (`redux`), and comparator exposure measures from the
 literature (Felten-Raj-Seamans, Webb, Eloundou et al., Frey-Osborne; sources
 and terms in `LICENSE-DATA`); its headline cumulative column `exp_cumul`
-corresponds to `daioe_allapps`.
+corresponds to `daioe_allapps`, and every `exp_cumul_<app>` to `daioe_<app>`.
+From v1.1.1 the bundle also ships `soc2018/daioe_soc2018.*` (and its
+vintage-2025 counterpart) in the publication format of the other five
+taxonomies: the same values under the `daioe_*` names, with `pctl_rank_*` and
+`pctl_mid_*` companions and the crosswalk flags `n_soc2010_sources` and
+`is_split` (`scripts/build_soc2018_publication_20261123.py`). The panel export
+stays in the bundle unchanged, so code written against it keeps working.
 
 **The robotics columns are a cross-section, not a time series.**
 `exp_change_roe`, `exp_cumul_roe` and `pctl_mid_roe` rest on a single

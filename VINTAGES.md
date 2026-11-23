@@ -175,7 +175,18 @@ construct is measured, because a zero there would assert a level for something
 never observed; a composite is defined (at zero) wherever its formula has
 members, because its zero reads "no measured progress on any member yet" and
 keeps cumulation well defined from the panel start. This is why `daioe_g2gen`
-carries zeros in 2010–2011 and values from 2012.
+carries zeros in 2010–2011 and values from 2012 in the O*NET-SOC 2010 and
+SOC 2010 panels.
+
+**Zeros become missing in the crosswalked classifications.** ISCO-08, SSYK 2012,
+SSYK 96 and SOC 2018 are built from SOC 2010 through crosswalks, and that step
+keeps a rule of the original Stata construction: a cumulative value of exactly
+zero is stored as missing. A composite with no measured progress yet is
+therefore zero in the two US panels and missing in the four crosswalked ones.
+In practice this concerns `daioe_genai` and `daioe_g2gen` in 2010–2011, where
+every occupation is zero. Read those cells as zero. The rule is frozen with the
+published ISCO and SSYK files and is documented rather than changed (noted
+23 November 2026).
 
 ### Composite membership (amended 4 September 2026)
 

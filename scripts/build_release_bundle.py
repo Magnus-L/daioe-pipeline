@@ -63,7 +63,7 @@ EXTRAS = [
      "so users standardise on the correct window without recomputing."),
     ("soc2018/daioe_panel_soc2018.dta",
      ROOT / "data" / "out" / "daioe_panel_soc2018.dta",
-     "SOC 2018 build on the frozen 2010-2023 window; panel export, not Publication format."),
+     "`daioe_panel_soc2018.dta`: SOC 2018 build on the frozen 2010-2023 window; panel export, not Publication format."),
 ]
 
 if VERSION >= "1.1.0":
@@ -76,13 +76,26 @@ if VERSION >= "1.1.0":
     EXTRAS.append(
         ("vintage-2025/soc2018/daioe_panel_soc2018.dta",
          ROOT / "data" / "vintage" / "vintage_2025_v110rc3_20260905" / "out" / "daioe_panel_soc2018.dta",
-         "SOC 2018 build on the 2010-2025 window; panel export, not Publication format."))
+         "`daioe_panel_soc2018.dta`: SOC 2018 build on the 2010-2025 window; panel export, not Publication format."))
     EXTRAS.append(
         ("g2_sigma_v2.csv",
          ROOT / "data" / "derived" / "g2_sigma_v2.csv",
          "The shrinkage standard deviations behind the second-generation composites: "
          "each application's own history blended with its scale-family prior, "
          "components and weights per application."))
+
+# v1.1.1 (23 Nov 2026): SOC 2018 in publication format, beside the panel exports,
+# built by scripts/build_soc2018_publication_20261123.py (renames only; values
+# checked equal to SOC 2010 on 1:1 crosswalk pairs). The panel exports stay.
+if VERSION >= "1.1.1":
+    _S18 = ROOT / "data" / "derived" / "soc2018_publication"
+    for _win, _rel in [("frozen-2010-2023", "soc2018"),
+                       ("vintage-2025", "vintage-2025/soc2018")]:
+        for _ext in ("dta", "tsv", "xlsx"):
+            EXTRAS.append(
+                (f"{_rel}/daioe_soc2018.{_ext}", _S18 / _win / f"daioe_soc2018.{_ext}",
+                 "`daioe_soc2018.*`: SOC 2018 in publication format (daioe_* names, pctl_rank_* and "
+                 "pctl_mid_*, crosswalk flags); same values as the panel export."))
 
 DOCS = [
     (ROOT / "CITATION.cff", "CITATION.cff"),
@@ -245,7 +258,13 @@ def main():
 
 
 def readme(present):
-    rows = "\n".join(f"| `{n}{'' if '.' in n else '/'}` | {d} |" for n, d, _ in present)
+    # one row per (folder, description): the v1.1.1 SOC 2018 files come in three formats
+    seen, uniq = set(), []
+    for n, d, _ in present:
+        if (n, d) not in seen:
+            seen.add((n, d))
+            uniq.append((n, d))
+    rows = "\n".join(f"| `{n}{'' if '.' in n else '/'}` | {d} |" for n, d in uniq)
     return f"""# DAIOE — Dynamic AI Occupational Exposure, scores v{VERSION}
 
 Occupation-year AI exposure scores, built from measured performance gains on public AI
@@ -346,8 +365,17 @@ three formats:
   `pd.read_csv(f, sep="\\t")` in Python or `import delimited, delimiters(tab)` in
   Stata).
 
-Each panel's unique key is (occupation code, `year`). Empty cells are missing
-values, not zeros. `DATA_DICTIONARY.json` and `DATA_DICTIONARY.md` in the bundle
+{('US SOC 2018 is in `soc2018/` (and `vintage-2025/soc2018/`): `daioe_soc2018.*` '
+   'in the same format as the five above, plus `n_soc2010_sources` and `is_split`, '
+   'which flag codes merged from, or split out of, SOC 2010 codes. The older '
+   '`daioe_panel_soc2018.dta` beside it holds the same values under the pipeline\'s '
+   'internal names (`exp_cumul` = `daioe_allapps`, `exp_cumul_<app>` = `daioe_<app>`).'
+   + chr(10) + chr(10)) if VERSION >= "1.1.1" else ''}Each panel's unique key is (occupation code, `year`). Empty cells are missing
+values, not zeros, with one exception: in the crosswalked classifications
+(ISCO-08, SSYK, SOC 2018) a cumulative value of exactly zero is stored as
+missing, so a composite with no measured progress yet (`daioe_genai`,
+`daioe_g2gen` in 2010-2011) is empty there and zero in the US SOC 2010 and
+O*NET-SOC panels. Read those cells as zero; `VINTAGES.md` documents the rule. `DATA_DICTIONARY.json` and `DATA_DICTIONARY.md` in the bundle
 root give the exact schema of every table — columns, dtypes, row counts, year
 ranges and asserted keys — generated from the staged files at build time.
 
