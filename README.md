@@ -117,7 +117,8 @@ guarantee covers.
 Cite the release *and* the paper, and name the object you used. Both matter: the
 release fixes which version of the measure, the paper documents what it is.
 
-- **This version (v1.1.0):** https://doi.org/10.5281/zenodo.22551410
+- **This version (v1.1.1):** https://doi.org/10.5281/zenodo.24494713 (no score changes from v1.1.0; adds SOC 2018 in the common format)
+- **v1.1.0:** https://doi.org/10.5281/zenodo.22551410
 - **v1.0.0 (the frozen 2010–2023 index the paper estimates on):** https://doi.org/10.5281/zenodo.21873968
 - **All versions:** https://doi.org/10.5281/zenodo.21873967
 - A release contains several objects, so cite the DOI, the object ("frozen 2010–2023

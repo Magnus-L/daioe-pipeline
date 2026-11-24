@@ -60,12 +60,12 @@ license: CC-BY-4.0
 license-url: "https://creativecommons.org/licenses/by/4.0/"
 repository-code: "https://github.com/Magnus-L/daioe-pipeline"
 # This is the VERSION DOI, reserved on Zenodo before publishing, and it is the
-# right one here: CITATION.cff describes v1.1.0 specifically. The CONCEPT DOI,
+# right one here: CITATION.cff describes v1.1.1 specifically. The CONCEPT DOI,
 # which always resolves to the newest version, appears after the first publication
 # and belongs in the manuscript and on the landing page instead.
-version: "1.1.0"
-doi: "10.5281/zenodo.22551410"  # this version; v1.0.0: 10.5281/zenodo.21873968; all versions: 10.5281/zenodo.21873967
-date-released: "2026-10-08"
+version: "1.1.1"
+doi: "10.5281/zenodo.24494713"  # this version; v1.1.0: 10.5281/zenodo.22551410; v1.0.0: 10.5281/zenodo.21873968; all versions: 10.5281/zenodo.21873967
+date-released: "2026-11-24"
 # -----------------------------------------------------------------------------
 references:
   - type: article
