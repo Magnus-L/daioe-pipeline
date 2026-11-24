@@ -13,7 +13,7 @@ WHAT
 From the PUBLISHED v1.1.0 bundle (doi:10.5281/zenodo.22551410), folder vintage-2025, for ISCO-08,
 SOC 2010 and SSYK 2012:
   scores/daioe_<tax>_2025.csv   one row per occupation, latest year
-  scores/daioe_<tax>_all_years.csv   the same occupations, 2012-2025 (2010-2011 are empty)
+  scores/daioe_<tax>_all_years.csv   the same occupations, 2012-2025 (2010-2011 left out: every occupation is zero, stored as missing in ISCO and SSYK)
 Columns: code, title, year, genai (second-generation generative composite daioe_g2gen), genai_pctl,
 allai (second-generation all-applications composite daioe_g2all), allai_pctl.
 
@@ -36,7 +36,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BUNDLE = ROOT / "dist" / "daioe-v1.1.0-scores"
 VINTAGE = "vintage-2025"
 OUT = ROOT / "scores"
-FIRST_YEAR = 2012  # benchmark coverage starts in 2012; 2010 and 2011 are empty in every panel
+FIRST_YEAR = 2012  # g2gen is zero for every occupation in 2010-2011 (missing in the crosswalked panels), so start at 2012
 
 # bundle column -> simple column
 KEEP = {"daioe_g2gen": "genai", "pctl_mid_g2gen": "genai_pctl",
